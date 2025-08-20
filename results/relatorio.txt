@@ -1,0 +1,125 @@
+# Relatório de Segurança - http://testphp.vulnweb.com/
+
+## plugins.curl_headers
+
+Saída:
+```
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 200 OK
+Server: nginx/1.19.0
+Date: Wed, 20 Aug 2025 17:18:56 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+X-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1
+
+...
+```
+
+- Verificação de cabeçalhos HTTP.
+
+## plugins.curl_files
+
+Saída:
+```
+=== robots.txt ===
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   153  100   153    0     0    193      0 --:--:-- --:--:-- --:--:--   193100   153  100   153    0     0    193      0 --:--:-- --:--:-- --:--:--   193
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.19.0</center>
+</body>
+</html>
+
+=== sitemap.xml ===
+  % Total  ...
+```
+
+- Verificação de arquivos públicos (robots.txt, sitemap, etc).
+
+## plugins.nmap_services
+
+Saída:
+```
+[FALHA CMD] Command '['nmap', '-sV', '-F', 'testphp.vulnweb.com']' timed out after 30 seconds...
+```
+
+- Possível exposição de portas/serviços.
+
+## plugins.nmap_http_methods
+
+Saída:
+```
+Starting Nmap 7.80 ( https://nmap.org ) at 2025-08-20 14:19 -03
+Nmap scan report for testphp.vulnweb.com (44.228.249.3)
+Host is up (0.22s latency).
+rDNS record for 44.228.249.3: ec2-44-228-249-3.us-west-2.compute.amazonaws.com
+
+PORT    STATE    SERVICE
+80/tcp  open     http
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+443/tcp filtered https
+
+Nmap done: 1 IP address (1 host up) scanned in 11.15 seconds
+...
+```
+
+- Possível exposição de portas/serviços.
+
+## plugins.dig_dns
+
+Saída:
+```
+=== dig testphp.vulnweb.com ===
+
+; <<>> DiG 9.18.30-0ubuntu0.20.04.2-Ubuntu <<>> testphp.vulnweb.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26616
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;testphp.vulnweb.com.		IN	A
+
+;; ANSWER SECTION:
+testphp.vulnweb.com.	3522	IN	A	44.228.249.3
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Wed Aug 20 14:19:40 -03 2025
+;; MSG SIZE  rcvd: 64
+
+
+=== dig A testphp.vulnweb.com ...
+```
+
+- Informações de DNS coletadas.
+
+## plugins.sslscan
+
+Saída:
+```
+[ERRO PLUGIN] No module named 'plugins.sslscan'...
+```
+
+- Teste de protocolos e cifras SSL/TLS.
+
+## plugins.exiftool
+
+Saída:
+```
+[FALHA CMD] [Errno 2] No such file or directory: 'exiftool'...
+```
+
+
+## Recomendações Gerais
+- Restringir serviços expostos
+- Configurar cabeçalhos de segurança
+- Monitorar certificados e CORS
