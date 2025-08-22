@@ -1,0 +1,9 @@
+{
+  "login_path": "/login",
+  "username_field": "user",
+  "password_field": "pass",
+  "fixed_user": "admin",
+  "userlist": null,
+  "password_list": "configs/wordlists/passwords.txt",
+  "fail_string": "Invalid"
+}

@@ -1,0 +1,14 @@
+admin
+login
+dashboard
+config
+uploads
+includes
+backup
+old
+test
+phpmyadmin
+robots.txt
+sitemap.xml
+.htaccess
+.htpasswd

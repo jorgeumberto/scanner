@@ -1,0 +1,5 @@
+{
+  "wordlist": "configs/wordlists/directories.txt",
+  "threads": 10,
+  "extra_flags": "--no-error"
+}

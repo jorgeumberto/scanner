@@ -1,0 +1,5 @@
+{
+  "ports": "1-1000",
+  "scripts": "default,vuln",
+  "extra_flags": "-sV -sC"
+}
