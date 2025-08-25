@@ -1,0 +1,8 @@
+{
+  "curl_files": "/robots.txt=404, /sitemap.xml=404",
+  "curl_headers": "HTTP/1.1 200 OK, Server=nginx/1.19.0",
+  "dig_dns": "IPs encontrados: ;; Warning: Message parser reports malformed message packet., 10 8 EO/VmnmO6tE=",
+  "nmap_http_methods": "Nenhum m\u00e9todo identificado",
+  "nmap_services": "80/tcp:http",
+  "nmap_top_ports": "80/tcp:http"
+}

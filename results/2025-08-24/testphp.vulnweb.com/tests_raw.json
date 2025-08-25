@@ -1,0 +1,87 @@
+{
+  "curl_files": {
+    "plugin": "CurlFiles",
+    "target": "http://testphp.vulnweb.com",
+    "raw": "/robots.txt:404\n/sitemap.xml:404",
+    "parsed": {
+      "/robots.txt": "404",
+      "/sitemap.xml": "404"
+    },
+    "summary": "/robots.txt=404, /sitemap.xml=404",
+    "analysis": null,
+    "status": "OK"
+  },
+  "curl_headers": {
+    "plugin": "CurlHeaders",
+    "target": "http://testphp.vulnweb.com",
+    "raw": "HTTP/1.1 200 OK\nServer: nginx/1.19.0\nDate: Sun, 24 Aug 2025 14:30:31 GMT\nContent-Type: text/html; charset=UTF-8\nConnection: keep-alive\nX-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1\n% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0",
+    "parsed": {
+      "Status-Line": "HTTP/1.1 200 OK",
+      "Server": "nginx/1.19.0",
+      "Date": "Sun, 24 Aug 2025 14:30:31 GMT",
+      "Content-Type": "text/html; charset=UTF-8",
+      "Connection": "keep-alive",
+      "X-Powered-By": "PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1"
+    },
+    "summary": "HTTP/1.1 200 OK, Server=nginx/1.19.0",
+    "analysis": null,
+    "status": "OK"
+  },
+  "dig_dns": {
+    "plugin": "Dig",
+    "target": "http://testphp.vulnweb.com",
+    "raw": ";; Warning: Message parser reports malformed message packet.\n10 8 EO/VmnmO6tE=",
+    "parsed": {
+      "A": [
+        ";; Warning: Message parser reports malformed message packet.",
+        "10 8 EO/VmnmO6tE="
+      ]
+    },
+    "summary": "IPs encontrados: ;; Warning: Message parser reports malformed message packet., 10 8 EO/VmnmO6tE=",
+    "analysis": null,
+    "status": "OK"
+  },
+  "nmap_http_methods": {
+    "plugin": "NmapHttpMethods",
+    "target": "http://testphp.vulnweb.com",
+    "raw": "Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-08-24 11:30 -03\nNmap scan report for testphp.vulnweb.com (44.228.249.3)\nHost is up (0.94s latency).\n\nPORT    STATE    SERVICE\n80/tcp  open     http\n| http-methods: \n|_  Supported Methods: GET HEAD POST\n443/tcp filtered https\n\nNmap done: 1 IP address (1 host up) scanned in 15.41 seconds",
+    "parsed": {
+      "ports": {
+        "80/tcp": {
+          "methods": []
+        }
+      }
+    },
+    "summary": "Nenhum m\u00e9todo identificado",
+    "analysis": null,
+    "status": "OK"
+  },
+  "nmap_services": {
+    "plugin": "NmapServices",
+    "target": "http://testphp.vulnweb.com",
+    "raw": "Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-08-24 11:30 -03\nNmap scan report for testphp.vulnweb.com (44.228.249.3)\nHost is up (0.26s latency).\nNot shown: 999 filtered tcp ports (no-response)\nPORT   STATE SERVICE VERSION\n80/tcp open  http    nginx 1.19.0\n\nService detection performed. Please report any incorrect results at https://nmap.org/submit/ .\nNmap done: 1 IP address (1 host up) scanned in 49.29 seconds",
+    "parsed": {
+      "80/tcp": {
+        "state": "open",
+        "service": "http"
+      }
+    },
+    "summary": "80/tcp:http",
+    "analysis": null,
+    "status": "OK"
+  },
+  "nmap_top_ports": {
+    "plugin": "NmapTopPorts",
+    "target": "http://testphp.vulnweb.com",
+    "raw": "Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-08-24 11:31 -03\nNmap scan report for testphp.vulnweb.com (44.228.249.3)\nHost is up (0.25s latency).\nNot shown: 999 filtered tcp ports (no-response)\nPORT   STATE SERVICE\n80/tcp open  http\n\nNmap done: 1 IP address (1 host up) scanned in 23.44 seconds",
+    "parsed": {
+      "80/tcp": {
+        "state": "open",
+        "service": "http"
+      }
+    },
+    "summary": "80/tcp:http",
+    "analysis": null,
+    "status": "OK"
+  }
+}
