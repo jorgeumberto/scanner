@@ -4,32 +4,16 @@ import json
 from analysis import analisar
 
 # 🎯 Configurações globais
-TARGET = "https://example.com"   # alvo principal
+TARGET = "psdatab.com.br"   # alvo principal
 OUTPUT_PATH = "results/"
 SAVE_INDIVIDUAL = False          # salva relatórios separados por plugin?
 
 # Lista de plugins a executar
 PLUGINS = [
     "plugins.curl_headers",
-    "plugins.curl_files",
-    "plugins.nmap_services",
-    "plugins.nmap_http_methods",
-    "plugins.dig_dns",
-    "plugins.sslscan",
-    "plugins.whatweb",
-    "plugins.wafw00f",
-    "plugins.nikto",
-    "plugins.gobuster",
-    "plugins.theHarvester",
-    "plugins.sublist3r",
-    "plugins.dnsrecon",
-    "plugins.testssl",
-    "plugins.hydra_login",
-    "plugins.zap_api",
-    "plugins.dos_ab",
-    "plugins.dos_siege",
-    "plugins.dos_slowloris"
+    "plugins.curl_files"
 ]
+
 
 def carregar_config(plugin_name: str) -> dict:
     """Carrega config JSON de um plugin, se existir."""

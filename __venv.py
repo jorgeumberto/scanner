@@ -3,7 +3,6 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install python-dotenv openai
 pip install python-owasp-zap-v2.4
-pip install python-owasp-zap-v2.4
 
 
 
