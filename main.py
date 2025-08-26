@@ -7,12 +7,12 @@ from datetime import datetime
 # 🔹 Configurações principais
 TARGET = "http://testphp.vulnweb.com"
 CONFIG_DIR = "configs"
-PLUGINS_DIR = "plugins"
+PLUGINS_DIR = "plugins_ok"
 RESULTS_DIR = "results"
 
 # 🔹 Ativar/desativar análise com ChatGPT
-USE_CHATGPT = False   # Troque para True quando quiser usar a API
-OPENAI_KEY = "SUA_CHAVE_API"
+USE_CHATGPT = True   # Troque para True quando quiser usar a API
+OPENAI_KEY = "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"
 
 # Se for usar ChatGPT
 if USE_CHATGPT:
@@ -30,7 +30,7 @@ if USE_CHATGPT:
         """
 
         resp = client.chat.completions.create(
-            model="gpt-5",
+            model="gpt-4.1",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=300
         )
@@ -75,7 +75,7 @@ def main():
             result = plugin_obj.execute(TARGET, cfg)
 
             # 🔹 opcional: análise com ChatGPT
-            if USE_CHATGPT and result["status"] == "OK":
+            if USE_CHATGPT:
                 try:
                     result["analysis"] = analisar_com_chatgpt(result)
                     print(f"[AI] {plugin_name} analisado com ChatGPT")
@@ -83,10 +83,18 @@ def main():
                     result["analysis"] = f"Erro na análise: {str(e)}"
 
             tests[plugin_name] = result
-            print(f"[{result['status']}] {plugin_name}")
+            print(f"[OK] {plugin_name} executado")
 
         except Exception as e:
-            print(f"[ERRO_FATAL] {plugin_name}: {e}")
+            tests[plugin_name] = {
+                "plugin": plugin_name,
+                "target": TARGET,
+                "raw": "",
+                "parsed": {},
+                "summary": f"Erro: {str(e)}",
+                "analysis": None
+            }
+            print(f"[ERRO] {plugin_name}: {e}")
 
     # 🔹 cria estrutura results/YYYY-MM-DD/host/
     hoje = datetime.now().strftime("%Y-%m-%d")
@@ -107,9 +115,7 @@ def main():
 
     print(f"\n[+] Resultados salvos em {results_path}")
 
-# opcional: enviar para API
-#resposta_api = enviar_resultados(json_path)
-#print("[API]", resposta_api)    
+    
 
 if __name__ == "__main__":
     main()

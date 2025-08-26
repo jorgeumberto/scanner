@@ -2,7 +2,7 @@ import requests
 
 import json
 
-API_URL = "http://sua-api.com/endpoint"
+API_URL = "http://localhost:8000/api/scan-results"
 API_TOKEN = "seu_token_aqui"   # opcional
 
 def enviar_resultados(filepath: str) -> dict:
