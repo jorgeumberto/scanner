@@ -12,7 +12,7 @@ RESULTS_DIR = "results"
 
 # 🔹 Ativar/desativar análise com ChatGPT
 USE_CHATGPT = True   # Troque para True quando quiser usar a API
-OPENAI_KEY = ""
+OPENAI_KEY = "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"
 
 # Se for usar ChatGPT
 if USE_CHATGPT:
