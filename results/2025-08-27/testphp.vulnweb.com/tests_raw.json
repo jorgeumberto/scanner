@@ -1,0 +1,24 @@
+{
+  "curl_headers": {
+    "plugin": "CurlHeaders",
+    "description": "Verifica cabe\u00e7alhos HTTP do alvo",
+    "category": "web",
+    "tags": [
+      "curl",
+      "headers",
+      "http"
+    ],
+    "target": "http://testphp.vulnweb.com",
+    "client_id": null,
+    "timestamp": "2025-08-27T14:36:44.604846Z",
+    "duration": 0.45,
+    "raw": "HTTP/1.1 200 OK\nServer: nginx/1.19.0\nDate: Wed, 27 Aug 2025 14:36:44 GMT\nContent-Type: text/html; charset=UTF-8\nConnection: keep-alive\nX-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1\n% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0",
+    "parsed": {},
+    "summary": "HTTP/1.1 200 OK\nServer: nginx/1.19.0\nDate: Wed, 27 Aug 2025 14:36:44 GMT\nContent-Type: text/html; charset=UTF-8\nConnection: keep-alive\nX-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1\n% Total ...",
+    "analysis": null,
+    "status": "OK",
+    "severity": null,
+    "finding_count": null,
+    "reference": "owasp"
+  }
+}
