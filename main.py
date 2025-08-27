@@ -3,6 +3,7 @@ import json
 import os
 from urllib.parse import urlparse
 from datetime import datetime
+from api_client import enviar_resultados
 
 # 🔹 Configurações principais
 TARGET = "http://testphp.vulnweb.com"
@@ -11,7 +12,7 @@ PLUGINS_DIR = "plugins_ok"
 RESULTS_DIR = "results"
 
 # 🔹 Ativar/desativar análise com ChatGPT
-USE_CHATGPT = True   # Troque para True quando quiser usar a API
+USE_CHATGPT = False   # Troque para True quando quiser usar a API
 OPENAI_KEY = ""
 
 # Se for usar ChatGPT
@@ -115,7 +116,9 @@ def main():
 
     print(f"\n[+] Resultados salvos em {results_path}")
 
-    
-
+    # opcional: enviar para API
+    resposta_api = enviar_resultados(json_path)
+    print("[API]", resposta_api)
+        
 if __name__ == "__main__":
     main()
