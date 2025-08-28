@@ -1,0 +1,6 @@
+{
+  "timeout": 60,
+  "aggression": 3,
+  "no_errors": true,
+  "plugins": []
+}

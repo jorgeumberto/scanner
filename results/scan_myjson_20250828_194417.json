@@ -1,0 +1,143 @@
+{
+  "cliente_api": "your-team-api-key",
+  "name": "Scan Automático",
+  "target": "http://testphp.vulnweb.com",
+  "description": "Scan automático via API",
+  "finding_count": 10,
+  "analysis": null,
+  "duration": 0.596,
+  "scan_results": [
+    {
+      "plugin": "CurlHeaders",
+      "result": [
+        {
+          "plugin_uuid": "uuid-001",
+          "scan_item_uuid": "uuid-001",
+          "result": "Server: nginx/1.19.0",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-002",
+          "scan_item_uuid": "uuid-002",
+          "result": "X-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-019",
+          "scan_item_uuid": "uuid-019",
+          "result": "HSTS ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-020",
+          "scan_item_uuid": "uuid-020",
+          "result": "X-Content-Type-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-031",
+          "scan_item_uuid": "uuid-031",
+          "result": "X-Frame-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-032",
+          "scan_item_uuid": "uuid-032",
+          "result": "CSP ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-033",
+          "scan_item_uuid": "uuid-033",
+          "result": "CORS ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-034",
+          "scan_item_uuid": "uuid-034",
+          "result": "Proteção MIME ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-038",
+          "scan_item_uuid": "uuid-038",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-039",
+          "scan_item_uuid": "uuid-039",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.585,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-040",
+          "scan_item_uuid": "uuid-040",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.585,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "curl_files",
+      "result": [],
+      "error": "'Timer' object has no attribute 't1'"
+    },
+    {
+      "plugin": "CurlHttpMethods",
+      "result": [
+        {
+          "plugin_uuid": "uuid-022",
+          "scan_item_uuid": "uuid-022",
+          "result": "Allow ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.59,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-023",
+          "scan_item_uuid": "uuid-023",
+          "result": "Nenhum método perigoso permitido",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.59,
+          "auto": true
+        }
+      ]
+    }
+  ]
+}

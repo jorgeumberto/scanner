@@ -1,0 +1,7 @@
+{
+  "timeout": 10,
+  "records": ["A", "AAAA", "MX", "TXT"],
+  "ptr": true,
+  "spf_match": "v=spf1",
+  "dmarc_domain_prefix": "_dmarc"
+}

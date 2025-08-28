@@ -1,0 +1,6 @@
+{
+  "timeout": 30,
+  "follow_redirects": true,
+  "extra_headers": [],
+  "user_agent": "Pentest-Auto/1.0"
+}

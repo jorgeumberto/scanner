@@ -1,0 +1,5 @@
+{
+  "timeout": 20,
+  "dangerous_methods": ["PUT", "DELETE", "TRACE", "CONNECT"],
+  "custom_headers": []
+}
