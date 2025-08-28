@@ -4,8 +4,8 @@ from typing import Dict, Any, List
 
 # UUIDs placeholders – troque pelos reais (22 e 23)
 UUIDS = {
-    22: "uuid-022",  # Métodos HTTP informados (OPTIONS/Allow)
-    23: "uuid-023",  # Métodos inseguros desabilitados
+    22: "uuid-022-allow",  # Métodos HTTP informados (OPTIONS/Allow)
+    23: "uuid-023-insec-methods",  # Métodos inseguros desabilitados
 }
 
 DANGEROUS = {"PUT", "DELETE", "TRACE", "CONNECT"}
@@ -26,7 +26,6 @@ def run_plugin(target: str, ai_fn):
     uuid22 = UUIDS[22]
     res22 = f"Allow: {allow}" if allow else "Allow ausente"
     items.append({
-        "plugin_uuid": uuid22,
         "scan_item_uuid": uuid22,
         "result": res22,
         "analysis_ai": ai_fn("CurlHttpMethods", uuid22, res22),
@@ -46,7 +45,6 @@ def run_plugin(target: str, ai_fn):
         res23 = "Nenhum método perigoso permitido"
         sev23 = "info" if allow else "low"
     items.append({
-        "plugin_uuid": uuid23,
         "scan_item_uuid": uuid23,
         "result": res23,
         "analysis_ai": ai_fn("CurlHttpMethods", uuid23, res23),

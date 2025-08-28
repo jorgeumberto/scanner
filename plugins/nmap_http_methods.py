@@ -16,7 +16,6 @@ def parse_nmap_http_methods(out: str) -> str:
     for line in out.splitlines():
         line = line.strip()
         if re.search(r"(Supported|Allowed)\s+Methods", line, re.I):
-            # normalizar separadores
             lines.append(re.sub(r"\s+", " ", line))
     return "\n".join(lines) if lines else "(não encontrado)"
 
@@ -25,22 +24,24 @@ def run_plugin(target: str, ai_fn):
     items: List[Dict[str, Any]] = []
 
     with Timer() as t:
-        # Porta default: tentamos 80 e 443
         out80  = run_cmd(["nmap", "-Pn", "-p", "80",  "--script", "http-methods", host], timeout=120)
         out443 = run_cmd(["nmap", "-Pn", "-p", "443", "--script", "http-methods", host], timeout=120)
-        parsed = []
+
+        parsed_sections = []
         p80 = parse_nmap_http_methods(out80)
         if p80 and p80 != "(não encontrado)":
-            parsed.append(f"[80]\n{p80}")
+            parsed_sections.append(f"[80]\n{p80}")
         p443 = parse_nmap_http_methods(out443)
         if p443 and p443 != "(não encontrado)":
-            parsed.append(f"[443]\n{p443}")
-        res = "\n\n".join(parsed) if parsed else "(não encontrado em 80/443)"
+            parsed_sections.append(f"[443]\n{p443}")
+
+        res = "\n\n".join(parsed_sections) if parsed_sections else "(não encontrado em 80/443)"
+    duration_total = t.duration  # <-- fora do with
 
     # severidade: se achar TRACE/PUT/DELETE/CONNECT em qualquer lista, high
     text_upper = res.upper()
     danger = any(x in text_upper for x in ["TRACE", "PUT", "DELETE", "CONNECT"])
-    severity = "high" if danger else ("info" if "GET" in text_upper or "POST" in text_upper else "low")
+    severity = "high" if danger else ("info" if any(y in text_upper for y in ["GET", "POST", "HEAD", "OPTIONS"]) else "low")
 
     items.append({
         "plugin_uuid": UUID,
@@ -48,7 +49,7 @@ def run_plugin(target: str, ai_fn):
         "result": res,
         "analysis_ai": ai_fn("NmapHttpMethods", UUID, res),
         "severity": severity,
-        "duration": t.duration,
+        "duration": duration_total,
         "auto": True
     })
 

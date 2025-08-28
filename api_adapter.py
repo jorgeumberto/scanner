@@ -50,7 +50,7 @@ def to_controller_payload(your_json: Dict[str, Any]) -> Dict[str, Any]:
                 "status": "completed",
                 "evidence": None,
                 # Extras úteis para futura resolução:
-                "scan_item_uuid": it.get("plugin_uuid"),
+                "scan_item_uuid": it.get("scan_item_uuid"),
                 "plugin": plugin_name,
                 "auto": "Y" if it.get("auto") else "N",
             })

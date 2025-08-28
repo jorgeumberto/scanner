@@ -19,21 +19,29 @@ FILES = {
 
 def run_plugin(target: str, ai_fn):
     items: List[Dict[str, Any]] = []
-    with Timer() as t:
-        for key, path in FILES.items():
-            url = target.rstrip("/") + "/" + path
-            code = run_cmd(["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}", url], timeout=15).strip()
-            ok = (code == "200")
-            result = f"{path} -> HTTP {code}"
-            severity = "low" if ok else ("info" if code == "404" else "low")
-            uuid = UUIDS[key]
-            items.append({
-                "plugin_uuid": uuid,
-                "scan_item_uuid": uuid,
-                "result": result,
-                "analysis_ai": ai_fn("CurlFiles", uuid, result),
-                "severity": severity,
-                "duration": t.duration,
-                "auto": True
-            })
+    for key, path in FILES.items():
+        url = target.rstrip("/") + "/" + path
+
+        # mede o tempo de cada requisição separadamente
+        with Timer() as t:
+            code = run_cmd(
+                ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}", url],
+                timeout=15
+            ).strip()
+
+        ok = (code == "200")
+        result = f"{path} -> HTTP {code}"
+        severity = "low" if ok else ("info" if code == "404" else "low")
+        uuid = UUIDS[key]
+
+        items.append({
+            "plugin_uuid": uuid,
+            "scan_item_uuid": uuid,
+            "result": result,
+            "analysis_ai": ai_fn("CurlFiles", uuid, result),
+            "severity": severity,
+            "duration": t.duration,   # agora é sempre válido
+            "auto": True
+        })
+
     return {"plugin": "CurlFiles", "result": items}

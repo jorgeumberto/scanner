@@ -3,34 +3,91 @@
   "name": "Scan Automático",
   "target": "http://testphp.vulnweb.com",
   "description": "Scan automático via API",
-  "finding_count": 10,
+  "finding_count": 12,
   "analysis": null,
-  "duration": 0.457,
+  "duration": 6.167,
   "scan_results": [
     {
-      "plugin": "curl_files",
-      "result": [],
-      "error": "'Timer' object has no attribute 't1'"
+      "plugin": "Dig",
+      "result": [
+        {
+          "plugin_uuid": "uuid-010",
+          "scan_item_uuid": "uuid-010",
+          "result": "== A ==\n44.228.249.3\n== AAAA ==\n(vazio)\n== MX ==\n(vazio)\n== TXT ==\n\"google-site-verification:toEctYsulNIxgraKk7H3z58PCyz2IOCc36pIupEPmYQ\"",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.09,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-011",
+          "scan_item_uuid": "uuid-011",
+          "result": "44.228.249.3 -> ec2-44-228-249-3.us-west-2.compute.amazonaws.com.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.052,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-012",
+          "scan_item_uuid": "uuid-012",
+          "result": "SPF não encontrado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.025,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-013",
+          "scan_item_uuid": "uuid-013",
+          "result": "DMARC não encontrado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.03,
+          "auto": true
+        }
+      ]
     },
     {
       "plugin": "CurlHttpMethods",
       "result": [
         {
-          "plugin_uuid": "uuid-022",
-          "scan_item_uuid": "uuid-022",
+          "scan_item_uuid": "uuid-022-allow",
           "result": "Allow ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.441,
+          "duration": 0.449,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-023",
-          "scan_item_uuid": "uuid-023",
+          "scan_item_uuid": "uuid-023-insec-methods",
           "result": "Nenhum método perigoso permitido",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.441,
+          "duration": 0.449,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "NmapTopPorts",
+      "result": [
+        {
+          "plugin_uuid": "uuid-017",
+          "scan_item_uuid": "uuid-017",
+          "result": "Abertas: nenhuma",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.007,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-025",
+          "scan_item_uuid": "uuid-025",
+          "result": "Não essenciais abertos: nenhum",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.007,
           "auto": true
         }
       ]
@@ -39,102 +96,146 @@
       "plugin": "CurlHeaders",
       "result": [
         {
-          "plugin_uuid": "uuid-001",
-          "scan_item_uuid": "uuid-001",
+          "scan_item_uuid": "uuid-001-server",
           "result": "Server: nginx/1.19.0",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-002",
-          "scan_item_uuid": "uuid-002",
+          "scan_item_uuid": "uuid-002-powered-by",
           "result": "X-Powered-By: PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-019",
-          "scan_item_uuid": "uuid-019",
+          "scan_item_uuid": "uuid-019-hsts",
           "result": "HSTS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-020",
-          "scan_item_uuid": "uuid-020",
+          "scan_item_uuid": "uuid-020-x-cont-types",
           "result": "X-Content-Type-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-031",
-          "scan_item_uuid": "uuid-031",
+          "scan_item_uuid": "uuid-031-x-frame",
           "result": "X-Frame-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-032",
-          "scan_item_uuid": "uuid-032",
+          "scan_item_uuid": "uuid-032-csp",
           "result": "CSP ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-033",
-          "scan_item_uuid": "uuid-033",
+          "scan_item_uuid": "uuid-033-cors",
           "result": "CORS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-034",
-          "scan_item_uuid": "uuid-034",
+          "scan_item_uuid": "uuid-034-mime-sniff",
           "result": "Proteção MIME ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-038",
-          "scan_item_uuid": "uuid-038",
+          "scan_item_uuid": "uuid-038-cookies-sec",
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-039",
-          "scan_item_uuid": "uuid-039",
+          "scan_item_uuid": "uuid-039-cookies-http-only",
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.452,
+          "duration": 0.463,
           "auto": true
         },
         {
-          "plugin_uuid": "uuid-040",
-          "scan_item_uuid": "uuid-040",
+          "scan_item_uuid": "uuid-040-cookies-samesite",
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.452,
+          "duration": 0.463,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "CurlFiles",
+      "result": [
+        {
+          "plugin_uuid": "uuid-003-robots",
+          "scan_item_uuid": "uuid-003-robots",
+          "result": "robots.txt -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.47,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-sitemap",
+          "scan_item_uuid": "uuid-003-sitemap",
+          "result": "sitemap.xml -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.505,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-humans",
+          "scan_item_uuid": "uuid-003-humans",
+          "result": "humans.txt -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.457,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-securitytxt",
+          "scan_item_uuid": "uuid-003-securitytxt",
+          "result": ".well-known/security.txt -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.443,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "NmapHttpMethods",
+      "result": [
+        {
+          "plugin_uuid": "uuid-024",
+          "scan_item_uuid": "uuid-024",
+          "result": "[80]\n|_ Supported Methods: GET HEAD POST",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 5.961,
           "auto": true
         }
       ]

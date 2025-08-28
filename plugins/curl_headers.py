@@ -3,17 +3,17 @@ from typing import Dict, Any, List
 
 # UUIDs dos itens na tabela scans_itens
 UUIDS = {
-    1:  "uuid-001",  # Banner do servidor exposto (Server)
-    2:  "uuid-002",  # Tecnologia exposta (X-Powered-By)
-    19: "uuid-019",  # HSTS presente
-    20: "uuid-020",  # X-Content-Type-Options presente
-    31: "uuid-031",  # X-Frame-Options presente
-    32: "uuid-032",  # Content-Security-Policy presente (CSP)
-    33: "uuid-033",  # CORS configurado
-    34: "uuid-034",  # Proteção contra MIME sniffing
-    38: "uuid-038",  # Cookies Secure
-    39: "uuid-039",  # Cookies HttpOnly
-    40: "uuid-040",  # Cookies SameSite
+    1:  "uuid-001-server",  # Banner do servidor exposto (Server)
+    2:  "uuid-002-powered-by",  # Tecnologia exposta (X-Powered-By)
+    19: "uuid-019-hsts",  # HSTS presente
+    20: "uuid-020-x-cont-types",  # X-Content-Type-Options presente
+    31: "uuid-031-x-frame",  # X-Frame-Options presente
+    32: "uuid-032-csp",  # Content-Security-Policy presente (CSP)
+    33: "uuid-033-cors",  # CORS configurado
+    34: "uuid-034-mime-sniff",  # Proteção contra MIME sniffing
+    38: "uuid-038-cookies-sec",  # Cookies Secure
+    39: "uuid-039-cookies-http-only",  # Cookies HttpOnly
+    40: "uuid-040-cookies-samesite",  # Cookies SameSite
 }
 
 def parse_headers(raw: str) -> Dict[str, Any]:
@@ -34,7 +34,6 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
 
     def make_item(uuid: str, result: str, severity: str) -> Dict[str, Any]:
         return {
-            "plugin_uuid": uuid,           # mantido
             "scan_item_uuid": uuid,        # novo → já sai no JSON final
             "result": result,
             "analysis_ai": ai_fn("CurlHeaders", uuid, result),
