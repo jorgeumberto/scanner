@@ -5,7 +5,7 @@ import json
 API_URL = "http://127.0.0.1:8000/api/scan-results"
 API_TOKEN = "seu_token_aqui"   # opcional
 
-def enviar_resultados(filepath: str) -> dict:
+def post_results(filepath: str) -> dict:
     """
     Envia o conteúdo do tests_raw.json para a API.
     Retorna a resposta da API como dict (ou erro).
