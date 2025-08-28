@@ -34,7 +34,8 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
 
     def make_item(uuid: str, result: str, severity: str) -> Dict[str, Any]:
         return {
-            "plugin_uuid": uuid,
+            "plugin_uuid": uuid,           # mantido
+            "scan_item_uuid": uuid,        # novo → já sai no JSON final
             "result": result,
             "analysis_ai": ai_fn("CurlHeaders", uuid, result),
             "severity": severity,
