@@ -1,0 +1,14 @@
+{
+  "timeout": 1800,
+  "modules": ["xss", "sql", "file", "commandinj", "ssrf"],
+  "max_depth": 4,
+  "max_links_per_page": 100,
+  "headers": [],
+  "severity_overrides": {
+    "xss": "medium",
+    "sql": "high",
+    "file": "high",
+    "commandinj": "high",
+    "ssrf": "high"
+  }
+}

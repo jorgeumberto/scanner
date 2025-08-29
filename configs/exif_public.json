@@ -1,0 +1,6 @@
+{
+  "timeout": 30,
+  "images": ["/images/team.jpg", "/uploads/banner.png"],
+  "extra_urls": [],
+  "absolute_only": false
+}

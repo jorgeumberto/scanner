@@ -1,0 +1,6 @@
+{
+  "timeout": 180,
+  "ports": [443],
+  "danger_protocols": ["SSLv2", "SSLv3", "TLSv1.0", "TLSv1.1"],
+  "weak_tokens": ["RC4", "NULL", "EXP", "EXPORT", "DES", "3DES", "MD5", "aNULL", "eNULL"]
+}

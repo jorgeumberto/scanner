@@ -1,0 +1,8 @@
+{
+  "timeout": 20,
+  "params": ["next","url","redirect","return","continue","dest","destination","redir","goto","target","r","u","back","to"],
+  "paths": ["/", "/login", "/logout", "/signin", "/redirect", "/out"],
+  "extra_params": [],
+  "extra_paths": [],
+  "limit_tests": 150
+}

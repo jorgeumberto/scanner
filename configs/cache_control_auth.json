@@ -1,0 +1,7 @@
+{
+  "timeout": 20,
+  "paths": ["/account", "/settings", "/checkout"],
+  "extra_urls": [],
+  "headers": ["Cookie: session=EXEMPLO123; Path=/; HttpOnly", "Authorization: Bearer TEST"],
+  "treat_all_as_sensitive": true
+}

@@ -1,0 +1,6 @@
+{
+  "timeout": 20,
+  "paths": ["/", "/login", "/account", "/checkout"],
+  "extra_urls": [],
+  "treat_all_as_sensitive": false
+}

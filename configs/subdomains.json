@@ -1,0 +1,16 @@
+{
+  "timeout_enum": 600,
+  "timeout_dns": 10,
+  "timeout_http": 10,
+  "prefer": ["subfinder", "amass", "sublist3r"],
+  "extra_args": {
+    "subfinder": ["-all"],
+    "amass": ["-src"],
+    "sublist3r": []
+  },
+  "sublist3r_threads": 40,
+  "sublist3r_wordlist": null,
+  "limit_results": 0,
+  "http_probe": true,
+  "providers_enabled": true
+}

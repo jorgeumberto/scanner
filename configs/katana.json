@@ -1,0 +1,12 @@
+{
+  "timeout": 600,
+  "depth": 3,
+  "concurrency": 10,
+  "use_jsonl": true,
+  "js_crawl": true,
+  "uniq": true,
+  "prefer": ["katana", "gospider"],
+  "extra_args_katana": [],
+  "extra_args_gospider": [],
+  "limit_results": 0
+}

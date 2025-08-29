@@ -1,0 +1,8 @@
+{
+  "timeout": 10,
+  "paths": ["/api/login", "/api/reset", "/api/otp"],
+  "requests_per_path": 20,
+  "sleep_between": 0.0,
+  "headers": [],
+  "treat_429_as_ok": true
+}

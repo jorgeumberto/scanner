@@ -1,0 +1,13 @@
+{
+  "timeout": 1800,
+  "tool_preference": ["gobuster", "dirb"],
+  "wordlist": "/usr/share/wordlists/dirb/common.txt",
+  "threads": 50,
+  "extensions": ["php","asp","aspx","jsp"],
+  "include_status": [200,204,301,302,307,401,403],
+  "exclude_status": [],
+  "follow_redirect": true,
+  "limit_results": 0,
+  "extra_args_gobuster": [],
+  "extra_args_dirb": []
+}

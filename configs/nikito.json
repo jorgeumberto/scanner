@@ -1,0 +1,13 @@
+{
+  "timeout": 600,
+  "plugins": [],
+  "useragent": "Pentest-Auto/1.0",
+  "ssl": false,
+  "root_only": false,
+  "severity_map": {
+    "sensitive_files": "high",
+    "dir_listing": "medium",
+    "logs_exposed": "medium",
+    "misc": "info"
+  }
+}
