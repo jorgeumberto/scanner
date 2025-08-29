@@ -1,0 +1,20 @@
+{
+  "timeout": 600,
+  "rate_limit": 150,
+  "concurrency": 30,
+  "severity_filter": [],
+  "templates_dir": null,
+  "extra_args": [
+    "-etags", "dos,fuzz" 
+  ],
+  "paths": [
+    "/",
+    "/login",
+    "/admin",
+    "/signup",
+    "/reset",
+    "/upload",
+    "/search?q=test"
+  ],
+  "no_findings_verbose": true
+}
