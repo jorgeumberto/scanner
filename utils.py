@@ -24,6 +24,13 @@ def extract_host(target: str) -> str:
         return host or target
     except Exception:
         return target
+    
+def extrair_host(target: str) -> str:
+    try:
+        host = urlparse(target).hostname
+        return host or target
+    except Exception:
+        return target    
 
 class Timer:
     def __enter__(self):

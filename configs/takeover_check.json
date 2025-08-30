@@ -1,0 +1,12 @@
+{
+  "timeout": 20,
+  "hosts": [
+    "naoexiste-exemplo-123.github.io",
+    "naoexiste-exemplo-456.herokuapp.com",
+    "naoexiste-exemplo-789.s3.amazonaws.com"
+  ],
+  "hosts_file": "",
+  "guess_from_target": true,
+  "paths": ["/", "/index.html"],
+  "only_https": false
+}

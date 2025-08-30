@@ -10,20 +10,30 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Tuple
 
+
+from dotenv import load_dotenv
+load_dotenv()  # <--- carrega variáveis do .env
+
 from utils import Timer
 from ai_analyzer import analyze_item
 from api_adapter import to_controller_payload
 from api_client import post_results
 
+# ---- BASE DIRS robustos ----
+BASE_DIR = Path(__file__).resolve().parent
+def _abs_path(p: str) -> Path:
+    pp = Path(p)
+    return pp if pp.is_absolute() else (BASE_DIR / pp)
+
 # =======================
 # Configs globais (ENV)
 # =======================
-TARGET        = os.getenv("TARGET", "http://testphp.vulnweb.com")
-API_KEY       = os.getenv("API_KEY", "your-team-api-key")
-API_URL       = os.getenv("API_URL", "http://localhost/api/scan-results")
-PLUGINS_DIR   = os.getenv("PLUGINS_DIR", "plugins")
-CONFIGS_DIR   = os.getenv("CONFIGS_DIR", "configs")
-MAX_WORKERS   = int(os.getenv("MAX_WORKERS", "4"))
+TARGET        = os.environ["TARGET"]
+API_KEY       = os.environ["API_KEY"]
+API_URL       = os.environ["API_URL"]
+PLUGINS_DIR   = os.environ.get("PLUGINS_DIR", "plugins")
+CONFIGS_DIR   = os.environ.get("CONFIGS_DIR", "configs")
+MAX_WORKERS   = int(os.environ.get("MAX_WORKERS", "4"))
 
 # Filtros opcionais (sem extensão .py), ex: "curl_headers,nmap_top_ports"
 PLUGINS_INCLUDE = {p.strip().lower() for p in os.getenv("PLUGINS_INCLUDE", "").split(",") if p.strip()}

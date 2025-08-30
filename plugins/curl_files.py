@@ -14,7 +14,7 @@ FILES = {
     "robots": "robots.txt",
     "sitemap": "sitemap.xml",
     "humans": "humans.txt",
-    "security_txt": ".well-known/security.txt",
+    "security_txt": ".well-known/security.txt",   
 }
 
 def run_plugin(target: str, ai_fn):

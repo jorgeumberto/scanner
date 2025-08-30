@@ -1,0 +1,11 @@
+{
+  "files": [
+    "robots.txt",
+    "sitemap.xml",
+    "humans.txt",
+    ".env",
+    ".git",
+    "backup.bak"
+  ],
+  "timeout": 5
+}

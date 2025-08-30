@@ -1,0 +1,5 @@
+{
+  "timeout": 15,
+  "paths": ["/", "/uploads/", "/static/", "/.well-known/", "/.git/"],
+  "extra_urls": []
+}
