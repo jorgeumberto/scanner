@@ -1,0 +1,15 @@
+{
+  "timeout": 30,
+  "endpoints": ["/upload"],
+  "field_name": "file",
+  "headers": [],
+  "extra_fields": {},
+  "tests": [
+    { "ext": "php",  "mime": "image/jpeg" },
+    { "ext": "html", "mime": "text/html" },
+    { "ext": "svg",  "mime": "image/svg+xml" },
+    { "ext": "txt",  "mime": "text/plain" }
+  ],
+  "absolute_only": false,
+  "verify_public_read": true
+}

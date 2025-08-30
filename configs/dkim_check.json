@@ -1,0 +1,4 @@
+{
+  "timeout": 15,
+  "selectors": ["default", "selector1", "selector2", "google", "mail", "s1", "s2"]
+}
