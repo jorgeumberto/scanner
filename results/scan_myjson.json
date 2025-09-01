@@ -3,20 +3,47 @@
   "name": "Scan Automático",
   "target": "http://testphp.vulnweb.com",
   "description": "Scan automático via API",
-  "finding_count": 1,
+  "finding_count": 0,
   "analysis": null,
-  "duration": 3.734,
+  "duration": 2.73,
   "scan_results": [
     {
-      "plugin": "TakeoverCheck",
+      "plugin": "CurlFiles",
       "result": [
         {
-          "plugin_uuid": "uuid-016",
-          "scan_item_uuid": "uuid-016",
-          "result": "- naoexiste-exemplo-123.github.io :: sem CNAME | sem fingerprint de takeover nas URLs testadas\n- naoexiste-exemplo-456.herokuapp.com :: CNAME=va02.ingress.herokuapp.com. | Fingerprint TAKEOVER: Heroku | URL: https://naoexiste-exemplo-456.herokuapp.com/\n- naoexiste-exemplo-789.s3.amazonaws.com :: CNAME=s3-1-w.amazonaws.com. | Fingerprint TAKEOVER: AWS S3 | URL: https://naoexiste-exemplo-789.s3.amazonaws.com/",
+          "plugin_uuid": "uuid-003-robots",
+          "scan_item_uuid": "uuid-003-robots",
+          "result": "robots.txt -> HTTP 404",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "high",
-          "duration": 3.732,
+          "severity": "info",
+          "duration": 1.092,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-sitemap",
+          "scan_item_uuid": "uuid-003-sitemap",
+          "result": "sitemap.xml -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.613,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-humans",
+          "scan_item_uuid": "uuid-003-humans",
+          "result": "humans.txt -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.511,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003-securitytxt",
+          "scan_item_uuid": "uuid-003-securitytxt",
+          "result": ".well-known/security.txt -> HTTP 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.513,
           "auto": true
         }
       ]
