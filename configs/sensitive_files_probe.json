@@ -1,0 +1,10 @@
+{
+  "timeout": 20,
+  "paths": [
+    "/.env", "/.git/config", "/.git/HEAD", "/.svn/entries",
+    "/config.php", "/config.yaml", "/config.yml",
+    "/backup.zip", "/db.sql", "/database.sql", "/dump.sql",
+    "/robots.txt", "/sitemap.xml", "/humans.txt", "/security.txt",
+    "/logs/access.log", "/logs/error.log", "/storage/logs/laravel.log"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "wordlist": "/usr/share/wordlists/dirb/common.txt",
+  "extensions": "php,txt,html",
+  "status-codes": "200,204,301,302,307,401,403",
+  "threads": 50,
+  "timeout": 30,
+  "add_paths_check": ["/", "/uploads/", "/static/"]
+}

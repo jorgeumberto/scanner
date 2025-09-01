@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "timeout": 15,
+  "get_paths": ["/products?id=1"],
+  "post_paths": [{"url":"/login","data":{"user":"a","pass":"b"}}],
+  "header_path": "/",
+  "headers_name": "X-Test"
+}

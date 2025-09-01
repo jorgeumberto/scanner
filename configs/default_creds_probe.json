@@ -1,0 +1,10 @@
+{
+  "enabled": false,
+  "timeout": 20,
+  "login_url": "http://example.com/login",
+  "user_field": "username",
+  "pass_field": "password",
+  "success_like": ["dashboard","logout","minha conta","profile"],
+  "headers": {},
+  "pairs": [["admin","admin"],["admin","password"],["root","root"],["test","test"]]
+}

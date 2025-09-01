@@ -1,173 +1,95 @@
 # plugins/upload_tester.py
-import os
-import tempfile
 from typing import Dict, Any, List, Tuple
 from utils import run_cmd, Timer
+import tempfile, os, base64, json
 
 PLUGIN_CONFIG_NAME = "upload_tester"
-PLUGIN_CONFIG_ALIASES = ["uploads", "file_upload"]
+PLUGIN_CONFIG_ALIASES = ["upload_check","file_upload"]
 
-UUID_026 = "uuid-026"  # ID 26 — Uploads de arquivos: validação de extensão/MIME/antivírus
-# Opcional: se quiser separar o checklist 58 também:
-# UUID_058 = "uuid-058"  # ID 58 — Validação de upload (extensão/MIME) aplicada
+UUID_026 = "uuid-026"  # (26) Uploads: validação de extensão/MIME/AV
+UUID_058 = "uuid-058"  # (58) Validação de upload aplicada
 
-def _mk_file(path: str, content: bytes) -> None:
-    with open(path, "wb") as f:
-        f.write(content)
+SMALL_PNG_B64 = (
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2P4//8/AwAI"
+    "AQMFCW1P5wAAAABJRU5ErkJggg=="  # 1x1 png
+)
+TINY_PHP = "<?php echo 'x'; ?>"
 
-def _curl_multipart(url: str, timeout: int, field: str, file_path: str, filename: str, mime: str, headers: List[str], extra_fields: Dict[str, str]) -> str:
-    cmd = ["curl", "-sS", "-i", "-m", str(timeout)]
-    for h in headers or []:
-        cmd += ["-H", h]
-    # campo do arquivo
-    file_spec = f"{field}=@{file_path};type={mime};filename={filename}"
-    cmd += ["-F", file_spec]
-    # campos extras
-    for k, v in (extra_fields or {}).items():
-        cmd += ["-F", f"{k}={v}"]
-    cmd += [url]
+def _mk_files(tmpdir: str) -> List[Tuple[str,str,str]]:
+    paths = []
+    png = os.path.join(tmpdir, "pixel.png")
+    with open(png, "wb") as f: f.write(base64.b64decode(SMALL_PNG_B64))
+    php = os.path.join(tmpdir, "test.php")
+    with open(php, "w") as f: f.write(TINY_PHP)
+    txt = os.path.join(tmpdir, "test.txt")
+    with open(txt, "w") as f: f.write("hello")
+    return [
+        (png, "image/png", "pixel.png"),
+        (php, "application/x-php", "test.php"),
+        (txt, "text/plain", "test.txt"),
+    ]
+
+def _curl_upload(url: str, field: str, filepath: str, filename: str, mime: str, timeout: int, extra_headers: Dict[str,str], cookie: str) -> str:
+    hdrs = []
+    for k,v in (extra_headers or {}).items():
+        hdrs += ["-H", f"{k}: {v}"]
+    if cookie:
+        hdrs += ["-H", f"Cookie: {cookie}"]
+    cmd = [
+        "bash","-lc",
+        f'curl -sS -L -m {timeout} {" ".join(hdrs)} -F "{field}=@{filepath};type={mime};filename={filename}" "{url}" -i'
+    ]
     return run_cmd(cmd, timeout=timeout+2)
 
-def _parse_http_code(hdrs: str) -> int:
-    # procura o último status na resposta (em caso de redirects)
-    for ln in reversed(hdrs.splitlines()):
-        if ln.startswith("HTTP/"):
-            try:
-                return int(ln.split()[1])
-            except Exception:
-                pass
-    return 0
-
-def _extract_location(hdrs: str) -> str:
-    for ln in hdrs.splitlines():
-        if ln.lower().startswith("location:"):
-            return ln.split(":", 1)[1].strip()
-    return ""
-
-def _http_get(url: str, timeout: int) -> str:
-    return run_cmd(["curl", "-sS", "-m", str(timeout), url], timeout=timeout+2)
-
-def _summarize(lines: List[str], checklist_name: str, max_lines: int = 12) -> str:
-    if not lines:
-        return f"Nenhum achado para {checklist_name}"
-    body = [f"- {l}" for l in lines[:max_lines]]
-    extra = len(lines) - len(body)
-    if extra > 0:
-        body.append(f"... +{extra} evidências")
-    return "\n".join(body)
-
-def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
+def run_plugin(target: str, ai_fn, cfg: Dict[str,Any]=None):
     """
-    cfg (configs/upload_tester.json):
+    cfg:
     {
-      "timeout": 30,
-      "endpoints": ["/upload"],            # endpoints de upload (POST multipart)
-      "field_name": "file",
-      "headers": [],
-      "extra_fields": {},
-      "tests": [
-        {"ext": "php", "mime": "image/jpeg"},
-        {"ext": "html", "mime": "image/png"},
-        {"ext": "svg", "mime": "image/svg+xml"},
-        {"ext": "txt", "mime": "text/plain"}
-      ],
-      "absolute_only": false,
-      "verify_public_read": true
+      "timeout": 25,
+      "endpoints": [{"url": "http://site/upload", "field": "file"}],
+      "headers": {},
+      "cookie": ""
     }
     """
     cfg = cfg or {}
-    timeout = int(cfg.get("timeout", 30))
-    endpoints = cfg.get("endpoints") or ["/upload"]
-    field = cfg.get("field_name", "file")
-    headers = cfg.get("headers") or []
-    extra_fields = cfg.get("extra_fields") or {}
-    tests = cfg.get("tests") or [
-        {"ext": "php", "mime": "image/jpeg"},
-        {"ext": "html", "mime": "text/html"},
-        {"ext": "svg", "mime": "image/svg+xml"},
-        {"ext": "txt", "mime": "text/plain"}
-    ]
-    absolute_only = bool(cfg.get("absolute_only", False))
-    verify_public = bool(cfg.get("verify_public_read", True))
+    timeout  = int(cfg.get("timeout", 25))
+    endpoints= cfg.get("endpoints") or []
+    headers  = cfg.get("headers") or {}
+    cookie   = cfg.get("cookie","")
 
-    evidences: List[str] = []
-    worst = "info"
+    evid_allow, evid_block = [], []
+    issues = 0
 
-    with Timer() as t:
+    with Timer() as t, tempfile.TemporaryDirectory() as td:
+        files = _mk_files(td)
+
+        if not endpoints:
+            txt = "Sem endpoints configurados para upload (configs/upload_tester.json)."
+            return {"plugin": "UploadTester", "result":[
+                {"plugin_uuid": UUID_026, "scan_item_uuid": UUID_026, "result": txt, "analysis_ai": ai_fn("UploadTester", UUID_026, txt), "severity":"info", "duration": t.duration, "auto": True},
+                {"plugin_uuid": UUID_058, "scan_item_uuid": UUID_058, "result": txt, "analysis_ai": ai_fn("UploadTester", UUID_058, txt), "severity":"info", "duration": t.duration, "auto": True}
+            ]}
+
         for ep in endpoints:
-            if ep.startswith("http://") or ep.startswith("https://"):
-                url = ep
-            else:
-                if absolute_only:
-                    continue
-                url = target.rstrip("/") + "/" + ep.lstrip("/")
+            url   = ep.get("url")
+            field = ep.get("field","file")
+            for path, mime, fname in files:
+                raw = _curl_upload(url, field, path, fname, mime, timeout, headers, cookie)
+                status = next((ln.split()[1] for ln in raw.splitlines() if ln.upper().startswith("HTTP/")), "?")
+                # Heurística: 200/201/202 + ausência de mensagens de erro => aceitou
+                if status in ("200","201","202") and all(tok not in raw.lower() for tok in ["invalid", "error", "denied", "forbidden", "blocked"]):
+                    issues += 1 if fname.endswith(".php") else 0
+                    evid_allow.append(f"{url} :: {fname} ({mime}) -> {status}")
+                else:
+                    evid_block.append(f"{url} :: {fname} ({mime}) -> {status} (bloqueio/erro aparente)")
 
-            for test in tests:
-                ext = test.get("ext", "txt")
-                mime = test.get("mime", "application/octet-stream")
+    res26 = "\n".join(f"- {e}" for e in evid_allow) if evid_allow else "Nenhum upload claramente aceito (ou bloqueado com erro)."
+    res58 = "\n".join(f"- {e}" for e in evid_block) if evid_block else "Sem evidência de bloqueio explícito."
 
-                with tempfile.TemporaryDirectory() as td:
-                    file_path = os.path.join(td, f"probe.{ext}")
-                    # conteúdo totalmente inofensivo
-                    _mk_file(file_path, b"pentest-upload-probe")
+    sev26 = "medium" if issues else ("info" if evid_allow else "low")
+    sev58 = "info" if evid_block else "low"
 
-                    hdrs = _curl_multipart(
-                        url=url,
-                        timeout=timeout,
-                        field=field,
-                        file_path=file_path,
-                        filename=os.path.basename(file_path),
-                        mime=mime,
-                        headers=headers,
-                        extra_fields=extra_fields
-                    )
-                    code = _parse_http_code(hdrs)
-                    loc  = _extract_location(hdrs)
-
-                    msg = f"{url} :: upload {ext} como {mime} -> HTTP {code}"
-                    if loc:
-                        msg += f" | Location: {loc}"
-
-                    # tentativa de leitura pública (se o servidor devolveu uma URL)
-                    if verify_public and loc and (loc.startswith("http://") or loc.startswith("https://")):
-                        body = _http_get(loc, timeout)
-                        if body:
-                            msg += " | leitura pública OK"
-                            # heurística de severidade
-                            if ext in ("php", "jsp", "asp", "aspx"):
-                                worst = "high"
-                            elif ext in ("html", "svg"):
-                                worst = "medium"
-                            else:
-                                worst = "low" if worst not in ("high", "medium") else worst
-                        else:
-                            msg += " | leitura pública FALHOU"
-
-                    # se o código foi 200/201/204, também é um indicador
-                    if code in (200, 201, 204):
-                        if ext in ("php", "jsp", "asp", "aspx"):
-                            worst = "high"
-                        elif ext in ("html", "svg"):
-                            worst = "medium"
-                        else:
-                            if worst not in ("high", "medium"):
-                                worst = "low"
-
-                    evidences.append(msg)
-
-    duration = t.duration
-    checklist = "Uploads de arquivos: validação de extensão/MIME"
-    result = _summarize(evidences, checklist)
-
-    return {
-        "plugin": "UploadTester",
-        "result": [{
-            "plugin_uuid": UUID_026,
-            "scan_item_uuid": UUID_026,
-            "result": result,
-            "analysis_ai": ai_fn("UploadTester", UUID_026, result),
-            "severity": worst,
-            "duration": duration,
-            "auto": True
-        }]
-    }
+    return {"plugin":"UploadTester","result":[
+        {"plugin_uuid": UUID_026, "scan_item_uuid": UUID_026, "result": res26, "analysis_ai": ai_fn("UploadTester", UUID_026, res26), "severity": sev26, "duration": t.duration, "auto": True},
+        {"plugin_uuid": UUID_058, "scan_item_uuid": UUID_058, "result": res58, "analysis_ai": ai_fn("UploadTester", UUID_058, res58), "severity": sev58, "duration": t.duration, "auto": True}
+    ]}

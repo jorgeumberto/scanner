@@ -1,0 +1,10 @@
+{
+  "timeout": 20,
+  "login_url": "http://example.com/login",
+  "user_field": "username",
+  "pass_field": "password",
+  "valid_like": ["exists","reset sent","found","usuário válido"],
+  "invalid_like": ["not found","unknown","inexistente"],
+  "headers": {},
+  "candidates": ["admin","test","user@example.com"]
+}

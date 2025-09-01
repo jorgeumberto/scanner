@@ -1,0 +1,7 @@
+{
+  "param": "next",
+  "payloads": ["https://google.com", "//google.com", "https://evil.com"],
+  "timeout": 30,
+  "filter_code": "302,301",
+  "extra_args": []
+}

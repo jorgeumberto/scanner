@@ -1,0 +1,9 @@
+{
+  "enabled": false,
+  "timeout": 20,
+  "login_url": "https://example.com/login",
+  "user_field": "username",
+  "pass_field": "password",
+  "username": "",
+  "password": ""
+}

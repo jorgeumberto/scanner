@@ -1,0 +1,8 @@
+{
+  "timeout": 20,
+  "endpoints": [
+    "/admin", "/admin/users", "/admin/panel", "/manager", "/dashboard",
+    "/api/users/1", "/api/users/2", "/api/orders/1", "/api/orders/2",
+    "/user/1", "/user/2", "/invoice/1", "/invoice/2"
+  ]
+}

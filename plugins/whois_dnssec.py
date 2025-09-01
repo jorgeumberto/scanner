@@ -1,97 +1,48 @@
 # plugins/whois_dnssec.py
-import re
 from typing import Dict, Any, List
-from utils import run_cmd, Timer, extract_host
+from utils import run_cmd, Timer, extrair_host
 
-# Ajuda o main dinâmico a achar configs/whois_dnssec.json
 PLUGIN_CONFIG_NAME = "whois_dnssec"
 PLUGIN_CONFIG_ALIASES = ["whois", "dnssec"]
 
-# UUID placeholder — troque pelo UUID real do item 9
-UUID_9 = "uuid-009"
+UUID_009 = "uuid-009"  # (9) WHOIS / DNSSEC
 
-def _parse_whois(raw: str) -> Dict[str, Any]:
-    """
-    Extrai dados relevantes do WHOIS: registrar, creation date, expiration, org/email.
-    """
-    data = {}
-    if not raw:
-        return data
-    for line in raw.splitlines():
-        low = line.lower()
-        if "registrar:" in low and "registrar whois server" not in low:
-            data["registrar"] = line.split(":",1)[1].strip()
-        elif "creation date:" in low:
-            data["creation_date"] = line.split(":",1)[1].strip()
-        elif "expiry date:" in low or "expiration date:" in low:
-            data["expiration_date"] = line.split(":",1)[1].strip()
-        elif "org:" in low or "organization:" in low:
-            data["organization"] = line.split(":",1)[1].strip()
-        elif "email:" in low:
-            data["email"] = line.split(":",1)[1].strip()
-    return data
-
-def _parse_dnssec(raw: str) -> str:
-    """
-    Verifica se DNSSEC está habilitado via dig +dnssec.
-    """
-    if not raw:
-        return "DNSSEC não detectado"
-    if "ad" in raw.lower() or "dnssec" in raw.lower():
-        return "DNSSEC possivelmente habilitado"
-    return "DNSSEC não detectado"
-
-def _summarize(whois_data: Dict[str, Any], dnssec_status: str) -> str:
-    if not whois_data and "não" in dnssec_status.lower():
-        return "Nenhum achado para WHOIS/DNSSEC"
-    lines = []
-    if whois_data:
-        if "registrar" in whois_data:
-            lines.append(f"Registrar: {whois_data['registrar']}")
-        if "organization" in whois_data:
-            lines.append(f"Org: {whois_data['organization']}")
-        if "email" in whois_data:
-            lines.append(f"Email: {whois_data['email']}")
-        if "creation_date" in whois_data:
-            lines.append(f"Criado em: {whois_data['creation_date']}")
-        if "expiration_date" in whois_data:
-            lines.append(f"Expira em: {whois_data['expiration_date']}")
-    lines.append(dnssec_status)
-    return "\n".join(lines)
+def _pick(lines: List[str], keys: List[str]) -> List[str]:
+    out = []
+    for k in keys:
+        for ln in lines:
+            if k.lower() in ln.lower():
+                out.append(ln.strip()); break
+    return out
 
 def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
-    """
-    cfg (opcional) em configs/whois_dnssec.json:
-    {
-      "timeout": 60
-    }
-    """
     cfg = cfg or {}
-    timeout = int(cfg.get("timeout", 60))
-    domain = extract_host(target)
+    timeout = int(cfg.get("timeout", 20))
+    host = extrair_host(target)
 
+    evid: List[str] = []
     with Timer() as t:
-        whois_raw = run_cmd(["whois", domain], timeout=timeout)
-        dnssec_raw = run_cmd(["dig", domain, "+dnssec"], timeout=timeout)
-    duration = t.duration
+        who = run_cmd(["whois", host], timeout=timeout)
+        lines = who.splitlines()
+        evid += _pick(lines, [
+            "Registrar", "Creation Date", "Registry Expiry Date",
+            "Registrant Organization", "Registrant Country"
+        ])
 
-    whois_data = _parse_whois(whois_raw)
-    dnssec_status = _parse_dnssec(dnssec_raw)
-    summary = _summarize(whois_data, dnssec_status)
+        dig = run_cmd(["dig", "+dnssec", host], timeout=timeout)
+        has_ad = any(" flags:" in ln and " ad;" in ln for ln in dig.splitlines())
+        evid.append("DNSSEC: validação AD presente" if has_ad else "DNSSEC: sem flag AD")
 
-    severity = "info"
-    if not whois_data and "não" in dnssec_status.lower():
-        severity = "info"
+    sev = "info" if has_ad else "low"
+    summary = "\n".join(f"- {e}" for e in evid) if evid else "Nenhum achado para WHOIS / DNSSEC"
 
-    items: List[Dict[str, Any]] = []
-    items.append({
-        "plugin_uuid": UUID_9,
-        "scan_item_uuid": UUID_9,
+    item = {
+        "plugin_uuid": UUID_009,
+        "scan_item_uuid": UUID_009,
         "result": summary,
-        "analysis_ai": ai_fn("WhoisDNSSEC", UUID_9, summary),
-        "severity": severity,
-        "duration": duration,
+        "analysis_ai": ai_fn("WhoisDNSSEC", UUID_009, summary),
+        "severity": sev,
+        "duration": t.duration,
         "auto": True
-    })
-
-    return {"plugin": "WhoisDNSSEC", "result": items}
+    }
+    return {"plugin": "WhoisDNSSEC", "result": [item]}
