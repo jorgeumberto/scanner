@@ -3,7 +3,7 @@ import os, json, requests
 from typing import Dict, Any
 
 API_URL  = os.getenv("API_URL", "http://192.168.248.111/api/scan-results")
-API_KEY  = os.getenv("API_KEY", "your-team-api-key")
+API_KEY  = os.getenv("API_KEY", "111gc8c042042094230942093420934920349023423409n234c90239c4")
 TIMEOUT  = int(os.getenv("API_TIMEOUT_S", "30"))
 
 def _default_headers() -> Dict[str, str]:
