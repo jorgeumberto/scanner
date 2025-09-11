@@ -245,8 +245,8 @@ def main():
         json.dump(controller_payload, f, indent=2, ensure_ascii=False)
     print(f"[+] Payload da API salvo em: {out_api}")
 
-   # api_resp = post_results(controller_payload)
-   # print("[API]", api_resp)
+    api_resp = post_results(controller_payload)
+    print("[API]", api_resp)
 
 if __name__ == "__main__":
     main()

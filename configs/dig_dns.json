@@ -1,7 +1,10 @@
 {
   "timeout": 10,
+  "dns_server": null,
+  "dig_extra_args": ["+time=2", "+tries=1"],
   "records": ["A", "AAAA", "MX", "TXT"],
-  "ptr": true,
-  "spf_match": "v=spf1",
-  "dmarc_domain_prefix": "_dmarc"
+  "reverse_enabled": true,
+
+  "spf_required_if_mx": true,
+  "dmarc_required_if_mx": true
 }

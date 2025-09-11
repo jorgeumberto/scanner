@@ -1,5 +1,5 @@
 {
-  "timeout": 15,
-  "paths": ["/", "/uploads/", "/static/", "/.well-known/", "/.git/"],
-  "extra_urls": []
+  "paths": ["/", "/webdav/", "/public/", "/uploads/", "/backup/", "/jquery/", "/phishi/"],
+  "timeout": 20,
+  "max_bytes": 200000
 }

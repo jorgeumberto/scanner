@@ -3,91 +3,1648 @@
   "name": "Scan Automático",
   "target": "http://192.168.248.113",
   "description": "Scan automático via API",
-  "finding_count": 7,
+  "finding_count": 53,
   "analysis": null,
-  "duration": 19.226,
+  "duration": 26.611,
   "scan_results": [
+    {
+      "plugin": "CmdInjectionProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-053",
+          "scan_item_uuid": "uuid-053",
+          "result": "Desabilitado (defina enabled=true e endpoint seguro).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "cache_control_auth",
+      "result": [],
+      "error": "'Timer' object has no attribute 't1'"
+    },
+    {
+      "plugin": "CrawlerEndpoints",
+      "result": [
+        {
+          "plugin_uuid": "uuid-008",
+          "scan_item_uuid": "uuid-008",
+          "result": "- http://www.w3.org/1999/xhtml\n- http://www.php.net/\n- http://www.zend.com/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.04,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "CurlHeaders",
+      "result": [
+        {
+          "plugin_uuid": "uuid-001",
+          "scan_item_uuid": "uuid-001",
+          "result": "Server: Apache/2.4.58 (Ubuntu) PHP/8.3.6",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-002",
+          "scan_item_uuid": "uuid-002",
+          "result": "X-Powered-By: PHP/8.3.6",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-019",
+          "scan_item_uuid": "uuid-019",
+          "result": "HSTS ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-020",
+          "scan_item_uuid": "uuid-020",
+          "result": "X-Content-Type-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-031",
+          "scan_item_uuid": "uuid-031",
+          "result": "X-Frame-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-032",
+          "scan_item_uuid": "uuid-032",
+          "result": "CSP ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-033",
+          "scan_item_uuid": "uuid-033",
+          "result": "Access-Control-Allow-Origin: *",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-034",
+          "scan_item_uuid": "uuid-034",
+          "result": "Proteção MIME ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-038",
+          "scan_item_uuid": "uuid-038",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-039",
+          "scan_item_uuid": "uuid-039",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-040",
+          "scan_item_uuid": "uuid-040",
+          "result": "sem Set-Cookie",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013,
+          "auto": true
+        }
+      ]
+    },
     {
       "plugin": "curl_http_methods",
       "result": [
         {
           "scan_item_uuid": "uuid-201-options-allow",
           "result": "http://192.168.248.113/ — OPTIONS/Allow presente: COPY, DELETE, GET, MKCOL, MOVE, OPTIONS, PATCH, POST, PROPFIND, PUT — Seguro: cabeçalho informativo; útil para clientes.",
-          "analysis_ai": "- Risco: Baixo",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.010956764221191406,
+          "duration": 0.015461921691894531,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-202-trace-enabled",
           "result": "http://192.168.248.113/ — TRACE HTTP 405 — Seguro: método desabilitado (405/501).",
-          "analysis_ai": "- Risco: Baixo",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 1.4316997528076172,
+          "duration": 0.03867602348327637,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-203-put-allowed",
           "result": "http://192.168.248.113/ — Allow contém PUT — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: Permitir o método PUT pode permitir a modificação não autorizada de recursos no servidor.\n- Explicação: Isso pode levar a vazamentos de dados ou comprometimento do sistema.\n- Recomendações:\n  - Desabilitar o método PUT se não for necessário.\n  - Implementar autenticação e autorização rigorosas.\n  - Monitorar logs de acesso para atividades suspeitas.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 3.144967555999756,
+          "duration": 0.038727521896362305,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-204-delete-allowed",
           "result": "http://192.168.248.113/ — Allow contém DELETE — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: Permitir o método DELETE pode levar à exclusão não autorizada de recursos. \n- Explicação: Isso pode comprometer a integridade dos dados da aplicação.\n- Recomendações:\n  - Implemente autenticação e autorização rigorosas.\n  - Desabilite o método DELETE se não for necessário.\n  - Revise as permissões de acesso a métodos HTTP.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 5.142968416213989,
+          "duration": 0.03873634338378906,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-205-patch-allowed",
           "result": "http://192.168.248.113/ — Allow contém PATCH — Atenção: método permitido; valide necessidade e controles.",
-          "analysis_ai": "- Risco: Médio\n- Impacto: Permitir o método PATCH pode levar a alterações não autorizadas em recursos. \n- Explicação: Isso pode comprometer a integridade dos dados da aplicação.\n- Recomendações:\n  - Revise a necessidade do método PATCH.\n  - Implemente controles de acesso adequados.\n  - Monitore e registre o uso de métodos HTTP.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 7.1683666706085205,
+          "duration": 0.0387415885925293,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-206-propfind-allowed",
           "result": "http://192.168.248.113/ — Allow contém PROPFIND — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: O método PROPFIND permite a exploração de informações sensíveis, potencialmente expondo dados do servidor.\n- Explicação: A permissão desse método pode levar a vazamentos de informações.\n- Recomendações:\n  - Desabilitar o método PROPFIND se não for necessário.\n  - Implementar autenticação e autorização rigorosas.\n  - Monitorar logs para acessos não autorizados.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 9.493467092514038,
+          "duration": 0.03874826431274414,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-207-mkcol-allowed",
           "result": "http://192.168.248.113/ — Allow contém MKCOL — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: Permitir o método MKCOL pode permitir a criação não autorizada de diretórios no servidor.\n- Explicação: Isso pode levar a exploração e manipulação de dados sensíveis.\n- Recomendações:\n  - Desabilitar o método MKCOL se não for necessário.\n  - Implementar autenticação e autorização rigorosas.\n  - Monitorar logs de acesso para atividades suspeitas.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 11.56519603729248,
+          "duration": 0.03875088691711426,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-208-move-allowed",
           "result": "http://192.168.248.113/ — Allow contém MOVE — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: Permitir o método MOVE pode permitir a manipulação não autorizada de arquivos no servidor.\n- Explicação: Isso pode levar a vazamentos de dados ou comprometimento do sistema.\n- Recomendações:\n  - Desabilitar o método MOVE se não for necessário.\n  - Implementar autenticação e autorização rigorosas.\n  - Monitorar logs de acesso para atividades suspeitas.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 13.58779239654541,
+          "duration": 0.03875279426574707,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-209-copy-allowed",
           "result": "http://192.168.248.113/ — Allow contém COPY — Risco: método sensível permitido; garanta autenticação/autorização estritas ou desabilite.",
-          "analysis_ai": "- Risco: Alto\n- Impacto: Permitir o método COPY pode permitir a manipulação não autorizada de recursos. \n- Explicação: Isso pode levar a vazamentos de dados ou alterações indesejadas.\n- Recomendações:\n  - Desabilitar o método COPY se não for necessário.\n  - Implementar autenticação e autorização rigorosas.\n  - Monitorar logs de acesso para atividades suspeitas.",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 15.839017629623413,
+          "duration": 0.03875470161437988,
           "auto": true
         },
         {
           "scan_item_uuid": "uuid-210-cors-preflight",
           "result": "http://192.168.248.113/ — Preflight respondeu. Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, PATCH, PROPFIND, MKCOL, MOVE, COPY; Access-Control-Allow-Origin: * — Info.",
-          "analysis_ai": "- Risco: Baixo",
+          "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 18.32038164138794,
+          "duration": 0.05467867851257324,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "DefaultCredsProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-060",
+          "scan_item_uuid": "uuid-060",
+          "result": "Probe desabilitado por padrão (defina enabled=true no config).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "DeserializationProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-057",
+          "scan_item_uuid": "uuid-057",
+          "result": "Desabilitado (defina enabled=true e endpoint de desserialização).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "AdminEndpointsGuard",
+      "result": [
+        {
+          "plugin_uuid": "uuid-071",
+          "scan_item_uuid": "uuid-071",
+          "result": "- /admin -> 301\n- /admin/ -> 200 (pode estar exposto sem auth)\n- /admin/login -> 404\n- /administrator -> 404\n- /manage -> 404\n- /panel -> 404\n- /wp-admin -> 404\n- /phpmyadmin -> 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.122,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "dir_listing_check",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Nenhum padrão de autoindex detectado em http://192.168.248.113",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.01437687873840332,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Listagem de diretórios parece desabilitada em http://192.168.248.113 (boa prática).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.01437687873840332,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Nenhum padrão de autoindex detectado em http://192.168.248.113/webdav/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013785839080810547,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Listagem de diretórios parece desabilitada em http://192.168.248.113/webdav/ (boa prática).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013785839080810547,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Listagem de diretórios habilitada em http://192.168.248.113/public/ | Amostra: ?C=N;O=D, ?C=M;O=A, ?C=S;O=A, ?C=D;O=A",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.010534048080444336,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Boa prática não atendida em http://192.168.248.113/public/: listagem de diretórios deveria estar desabilitada.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.010534048080444336,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Listagem de diretórios habilitada em http://192.168.248.113/uploads/ | Amostra: ?C=N;O=D, ?C=M;O=A, ?C=S;O=A, ?C=D;O=A",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.010790586471557617,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Boa prática não atendida em http://192.168.248.113/uploads/: listagem de diretórios deveria estar desabilitada.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.010790586471557617,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Nenhum padrão de autoindex detectado em http://192.168.248.113/backup/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013074398040771484,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Listagem de diretórios parece desabilitada em http://192.168.248.113/backup/ (boa prática).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.013074398040771484,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Nenhum padrão de autoindex detectado em http://192.168.248.113/jquery/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.011328458786010742,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Listagem de diretórios parece desabilitada em http://192.168.248.113/jquery/ (boa prática).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.011328458786010742,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-006-dir-listing",
+          "result": "Nenhum padrão de autoindex detectado em http://192.168.248.113/phishi/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.010082244873046875,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-027-dir-listing-off",
+          "result": "Listagem de diretórios parece desabilitada em http://192.168.248.113/phishi/ (boa prática).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.010082244873046875,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "Dirbust",
+      "result": [
+        {
+          "plugin_uuid": "uuid-005",
+          "scan_item_uuid": "uuid-005",
+          "result": "Nenhum achado para Descoberta de diretórios/arquivos por força bruta (wordlist)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "dig_dns",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-010-dns-records",
+          "result": "== A ==\n(vazio)\n== AAAA ==\n(vazio)\n== MX ==\n(vazio)\n== TXT ==\n(vazio)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.122,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-011-dns-reverse",
+          "result": "A/AAAA não resolvidos – PTR ignorado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-012-spf",
+          "result": "SPF não encontrado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.023,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-013-dmarc",
+          "result": "DMARC não encontrado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.024,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "DKIMCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-014",
+          "scan_item_uuid": "uuid-014",
+          "result": "Nenhum achado para DKIM publicado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.193,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "DosBasicCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-085",
+          "scan_item_uuid": "uuid-085",
+          "result": "- Ferramenta não encontrada; considere instalar 'ab' (apache2-utils) ou 'slowloris'.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.008,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "ExifMetaCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-086",
+          "scan_item_uuid": "uuid-086",
+          "result": "Nenhum achado para EXIF/Geo em imagens públicas",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.041,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "DOMXSSHeuristics",
+      "result": [
+        {
+          "plugin_uuid": "uuid-036",
+          "scan_item_uuid": "uuid-036",
+          "result": "Sem evidências heurísticas de DOM-XSS",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.214,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "ExifPublic",
+      "result": [
+        {
+          "plugin_uuid": "uuid-086",
+          "scan_item_uuid": "uuid-086",
+          "result": "Nenhum achado para Metadados EXIF/Geo em imagens públicas",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.031,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "GobusterDir",
+      "result": [
+        {
+          "plugin_uuid": "uuid-005",
+          "scan_item_uuid": "uuid-005",
+          "result": "Nenhum achado para brute force de diretórios/arquivos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.046,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-006",
+          "scan_item_uuid": "uuid-006",
+          "result": "- /uploads/ :: directory listing aparente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.046,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "curl_files",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-101-dir-listing",
+          "result": "http://192.168.248.113/ — HTTP 200 — Risco: diretório responde 200 (potencial listagem/índice acessível) | http://192.168.248.113/uploads/ — HTTP 200 — Risco: diretório responde 200 (potencial listagem/índice acessível)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.10669064521789551,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-102-git-exposed",
+          "result": "http://192.168.248.113/.git/HEAD — HTTP 404 — Seguro: .git não exposto",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.12978887557983398,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-103-env-exposed",
+          "result": "http://192.168.248.113/.env — HTTP 200 — Risco: .env acessível (segredos/credenciais podem vazar)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.13999176025390625,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-104-server-status-open",
+          "result": "http://192.168.248.113/server-status?auto — HTTP 403 — Risco: Apache status presente porém restrito | http://192.168.248.113/server-status — HTTP 403 — Risco: Apache status presente porém restrito",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.1607985496520996,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-105-phpinfo-exposed",
+          "result": "Não encontrado(s) — Seguro: arquivos de diagnóstico não expostos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.1924436092376709,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-106-backup-files",
+          "result": "Não encontrado(s) — Seguro: backups não expostos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.3025174140930176,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-107-archives-dumps",
+          "result": "Não encontrado(s) — Seguro: dumps/arquivos não expostos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.39770078659057617,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-108-dsstore-exposed",
+          "result": "http://192.168.248.113/.DS_Store — HTTP 404 — Seguro: .DS_Store não exposto",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.41416168212890625,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-109-svn-entries",
+          "result": "http://192.168.248.113/.svn/entries — HTTP 404 — Seguro: .svn não exposto",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.42787790298461914,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-110-package-files",
+          "result": "Não encontrado(s) — Seguro: manifests/locks não expostos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.49645519256591797,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-111-robots",
+          "result": "http://192.168.248.113/robots.txt — HTTP 200 — Info: arquivo presente (normal; pode listar rotas públicas)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.5069754123687744,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-112-sitemap",
+          "result": "http://192.168.248.113/sitemap.xml — HTTP 200 — Info: sitemap presente (normal; indica URLs públicas para crawlers)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.5293288230895996,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "IDORSequentialProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-068",
+          "scan_item_uuid": "uuid-068",
+          "result": "Sem indícios nos exemplos configurados",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-070",
+          "scan_item_uuid": "uuid-070",
+          "result": "Sem indícios nos exemplos configurados",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "JWTSecurity",
+      "result": [
+        {
+          "plugin_uuid": "uuid-046",
+          "scan_item_uuid": "uuid-046",
+          "result": "Nenhum achado para JWT seguro (alg!=none, exp/iat/aud/iss)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "KatanaCrawler",
+      "result": [
+        {
+          "plugin_uuid": "uuid-008",
+          "scan_item_uuid": "uuid-008",
+          "result": "Nenhum achado para Spider/crawler para endpoints públicos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.001,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "HeadersPolicies",
+      "result": [
+        {
+          "plugin_uuid": "uuid-021",
+          "scan_item_uuid": "uuid-021",
+          "result": "- http://192.168.248.113/login :: Cache-Control ausente, Pragma ausente (no-cache)\n- http://192.168.248.113/account :: Cache-Control ausente, Pragma ausente (no-cache)\n- http://192.168.248.113/checkout :: Cache-Control ausente, Pragma ausente (no-cache)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.066,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-029",
+          "scan_item_uuid": "uuid-029",
+          "result": "- http://192.168.248.113/ :: Referrer-Policy ausente | Permissions-Policy ausente\n- http://192.168.248.113/login :: Referrer-Policy ausente | Permissions-Policy ausente\n- http://192.168.248.113/account :: Referrer-Policy ausente | Permissions-Policy ausente\n- http://192.168.248.113/checkout :: Referrer-Policy ausente | Permissions-Policy ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.066,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "LoginHTTPSOnly",
+      "result": [
+        {
+          "plugin_uuid": "uuid-059",
+          "scan_item_uuid": "uuid-059",
+          "result": "- HTTPS possivelmente inacessível: https://192.168.248.113/login -> 000\ncurl: (60) SSL certificate problem: unable to get local issuer certificate\nMore details here: https://curl.haxx.se/docs/sslcerts.html\n\ncurl failed to verify the legitimacy of the server and therefore could not\nestablish a secure connection to it. To learn more about this situation and\nhow to fix it, please visit the web page mentioned above.\n- HTTP não redireciona (ruim): http://192.168.248.113/login -> 404",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.054,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "Nikto",
+      "result": [
+        {
+          "plugin_uuid": "uuid-004",
+          "scan_item_uuid": "uuid-004",
+          "result": "Nenhum achado para Arquivos sensíveis expostos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-006",
+          "scan_item_uuid": "uuid-006",
+          "result": "Nenhum achado para Listagem de diretórios habilitada",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-028",
+          "scan_item_uuid": "uuid-028",
+          "result": "Nenhum achado para Logs sensíveis acessíveis publicamente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-900-misc",
+          "scan_item_uuid": "uuid-900-misc",
+          "result": "Nenhum achado para Outros achados de configuração",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "MFAPresenceScanner",
+      "result": [
+        {
+          "plugin_uuid": "uuid-064",
+          "scan_item_uuid": "uuid-064",
+          "result": "Sem menções claras a MFA/2FA nas páginas amostradas",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.045,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "nmap_http_methods",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-201-options-allow",
+          "result": "http://192.168.248.113:80 — Não foi possível extrair métodos via Nmap (http-methods). Info: servidor pode não anunciar Allow ou requer caminhos específicos.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-202-trace-enabled",
+          "result": "http://192.168.248.113:80 — TRACE desabilitado (não detectado) — Seguro.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-203-put-allowed",
+          "result": "http://192.168.248.113:80 — PUT não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-204-delete-allowed",
+          "result": "http://192.168.248.113:80 — DELETE não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-205-patch-allowed",
+          "result": "http://192.168.248.113:80 — PATCH não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-206-propfind-allowed",
+          "result": "http://192.168.248.113:80 — PROPFIND não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-207-mkcol-allowed",
+          "result": "http://192.168.248.113:80 — MKCOL não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-208-move-allowed",
+          "result": "http://192.168.248.113:80 — MOVE não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-209-copy-allowed",
+          "result": "http://192.168.248.113:80 — COPY não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-210-cors-preflight",
+          "result": "http://192.168.248.113:80 — CORS/Preflight não avaliado por Nmap — Info: use o plugin curl_http_methods para testar ACA*.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.252,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "IdorRbacHeuristics",
+      "result": [
+        {
+          "plugin_uuid": "uuid-071",
+          "scan_item_uuid": "uuid-071",
+          "result": "Nenhum achado para Endpoints admin protegidos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.398,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-068",
+          "scan_item_uuid": "uuid-068",
+          "result": "Nenhum achado para IDOR / forced browsing",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.398,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-069",
+          "scan_item_uuid": "uuid-069",
+          "result": "Nenhum achado para Controles RBAC/ABAC",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.398,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-070",
+          "scan_item_uuid": "uuid-070",
+          "result": "Nenhum achado para Acesso horizontal/vertical",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.398,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "NmapSSL",
+      "result": [
+        {
+          "plugin_uuid": "uuid-075",
+          "scan_item_uuid": "uuid-075",
+          "result": "[443] protocolos: TLSv1.2",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.605,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-076",
+          "scan_item_uuid": "uuid-076",
+          "result": "Nenhuma cifra fraca típica detectada",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.605,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-077",
+          "scan_item_uuid": "uuid-077",
+          "result": "Issuer: organizationName=Wazuh | Subject: commonName=wazuh-dashboard/organizationName=Wazuh/countryName=US | Validade até: 2035-06-02T22:31:48",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.605,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-078",
+          "scan_item_uuid": "uuid-078",
+          "result": "Chave: 2048 bits | Assinatura: SHA256WITHRSAENCRYPTION",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.605,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "nma_top_ports",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-301-nmap-top-ports",
+          "result": "Portas (individuais): 22/tcp open ssh | 80/tcp open http | 443/tcp open https | 1514/tcp open fujitsu-dtcns | 1515/tcp open ifor-protocol | 10050/tcp open zabbix-agent | 10051/tcp open zabbix-trapper | 55000/tcp open unknown || Agregado: 65527 closed — Motivo: Encontrou porta(s) aberta(s) — serviço exposto; revisar ACL/exposição.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 1.166,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "OpenSSLCertDates",
+      "result": [
+        {
+          "plugin_uuid": "uuid-077",
+          "scan_item_uuid": "uuid-077",
+          "result": "- subject=C = US, L = California, O = Wazuh, OU = Wazuh, CN = wazuh-dashboard\n- issuer=OU = Wazuh, O = Wazuh, L = California\n- notBefore=Jun  4 22:31:48 2025 GMT\n- notAfter=Jun  2 22:31:48 2035 GMT\n- Expira em ~3551 dias",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.016,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-078",
+          "scan_item_uuid": "uuid-078",
+          "result": "Verificação complementar de validade executada (ver item 77 acima).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.016,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "PasswordPolicyInspector",
+      "result": [
+        {
+          "plugin_uuid": "uuid-062",
+          "scan_item_uuid": "uuid-062",
+          "result": "Sem pistas textuais de política de senha",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.014,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "PasswordResetSecurity",
+      "result": [
+        {
+          "plugin_uuid": "uuid-065",
+          "scan_item_uuid": "uuid-065",
+          "result": "Sem sinais textuais claros do fluxo seguro de reset",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.032,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-066",
+          "scan_item_uuid": "uuid-066",
+          "result": "Sem referência clara a token em URL",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.032,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "PathTraversalProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-055",
+          "scan_item_uuid": "uuid-055",
+          "result": "Sem sinais de LFI/traversal",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.183,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "PolicyHeadersDeep",
+      "result": [
+        {
+          "plugin_uuid": "uuid-029",
+          "scan_item_uuid": "uuid-029",
+          "result": "- Ausente: Referrer-Policy",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.016,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-029",
+          "scan_item_uuid": "uuid-029",
+          "result": "- Ausente: Permissions-Policy",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.016,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "OpenRedirectProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-035",
+          "scan_item_uuid": "uuid-035",
+          "result": "Nenhum achado para Redirecionamento aberto (open redirect)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 1.426,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "RateLimitProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-084",
+          "scan_item_uuid": "uuid-084",
+          "result": "- http://192.168.248.113/api/login :: nenhum 429 após 20 requisições (último=404)\n- http://192.168.248.113/api/reset :: nenhum 429 após 20 requisições (último=404)\n- http://192.168.248.113/api/otp :: nenhum 429 após 20 requisições (último=404)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.747,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "ReflectXSSProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-047",
+          "scan_item_uuid": "uuid-047",
+          "result": "Sem reflexão direta do payload",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.162,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SecHeadersExtra",
+      "result": [
+        {
+          "plugin_uuid": "uuid-021",
+          "scan_item_uuid": "uuid-021",
+          "result": "- Ausente: Cache-Control/Pragma",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-029",
+          "scan_item_uuid": "uuid-029",
+          "result": "- Ausente: Referrer-Policy\n- Ausente: Permissions-Policy",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-031",
+          "scan_item_uuid": "uuid-031",
+          "result": "- Ausente: X-Frame-Options",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-032",
+          "scan_item_uuid": "uuid-032",
+          "result": "- Ausente: Content-Security-Policy",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.013,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SensitiveFilesProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-030",
+          "scan_item_uuid": "uuid-030",
+          "result": "- /.env :: HTTP/1.1 200 OK",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.261,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-028",
+          "scan_item_uuid": "uuid-028",
+          "result": "Nenhum achado para Logs sensíveis públicos",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.261,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-003",
+          "scan_item_uuid": "uuid-003",
+          "result": "- /robots.txt :: HTTP/1.1 200 OK\n- /sitemap.xml :: HTTP/1.1 200 OK\n- /humans.txt :: HTTP/1.1 200 OK",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.261,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-004",
+          "scan_item_uuid": "uuid-004",
+          "result": "- /.env :: HTTP/1.1 200 OK",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.261,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SessionIDEntropy",
+      "result": [
+        {
+          "plugin_uuid": "uuid-041",
+          "scan_item_uuid": "uuid-041",
+          "result": "Nenhum Set-Cookie coletado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.118,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SessionLogoutInvalidation",
+      "result": [
+        {
+          "plugin_uuid": "uuid-044",
+          "scan_item_uuid": "uuid-044",
+          "result": "Desabilitado (defina enabled=true e endpoints de login/logout).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SessionRegenerationProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-042",
+          "scan_item_uuid": "uuid-042",
+          "result": "Desabilitado (defina enabled=true e credenciais).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SessionTimeoutProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-043",
+          "scan_item_uuid": "uuid-043",
+          "result": "Nenhum Set-Cookie observado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.017,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SPF_DMARC_Check",
+      "result": [
+        {
+          "plugin_uuid": "uuid-012",
+          "scan_item_uuid": "uuid-012",
+          "result": "Nenhum achado para SPF (TXT v=spf1)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.058,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-013",
+          "scan_item_uuid": "uuid-013",
+          "result": "Nenhum achado para DMARC (TXT v=DMARC1)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.058,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SQLiProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-049",
+          "scan_item_uuid": "uuid-049",
+          "result": "Sem indícios via GET",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.039,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-050",
+          "scan_item_uuid": "uuid-050",
+          "result": "Sem indícios via POST",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.039,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-051",
+          "scan_item_uuid": "uuid-051",
+          "result": "Sem indícios via headers",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.039,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SSRFProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-056",
+          "scan_item_uuid": "uuid-056",
+          "result": "Desabilitado (defina enabled=true e endpoint de fetch).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "AuthRateLimitProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-063",
+          "scan_item_uuid": "uuid-063",
+          "result": "Sem evidência clara de rate limit",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 4.793,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-084",
+          "scan_item_uuid": "uuid-084",
+          "result": "- tentativa 1: HTTP ?\n- tentativa 2: HTTP ?\n- tentativa 3: HTTP ?\n- tentativa 4: HTTP ?\n- tentativa 5: HTTP ?\n- tentativa 6: HTTP ?",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 4.793,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "RateLimitCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-084",
+          "scan_item_uuid": "uuid-084",
+          "result": "- Burst 1:\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n- Burst 2:\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n- Burst 3:\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n-   - 200 em 0.01s\n- Nenhum sinal claro de rate limiting (checagem leve).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 3.488,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "SubdomainEnum",
+      "result": [
+        {
+          "plugin_uuid": "uuid-015",
+          "scan_item_uuid": "uuid-015",
+          "result": "Nenhum achado para Enumeração de subdomínios",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.02,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "TakeoverCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-016",
+          "scan_item_uuid": "uuid-016",
+          "result": "- naoexiste-exemplo-123.github.io :: sem CNAME | sem fingerprint de takeover nas URLs testadas\n- naoexiste-exemplo-456.herokuapp.com :: CNAME=ie01.ingress.herokuapp.com. | Fingerprint TAKEOVER: Heroku | URL: https://naoexiste-exemplo-456.herokuapp.com/\n- naoexiste-exemplo-789.s3.amazonaws.com :: CNAME=s3-1-w.amazonaws.com. | Fingerprint TAKEOVER: AWS S3 | URL: https://naoexiste-exemplo-789.s3.amazonaws.com/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 1.606,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "TemplateInjectionProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-054",
+          "scan_item_uuid": "uuid-054",
+          "result": "Desabilitado (defina enabled=true e endpoint específico).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "TestsslTLS",
+      "result": [
+        {
+          "plugin_uuid": "uuid-075",
+          "scan_item_uuid": "uuid-075",
+          "result": "- Somente TLS 1.2+ aceito (conforme saída)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-076",
+          "scan_item_uuid": "uuid-076",
+          "result": "- Nenhuma cifra fraca aparente nas aceitas",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-077",
+          "scan_item_uuid": "uuid-077",
+          "result": "- Certificado aparente válido (cadeia/validade ok)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-078",
+          "scan_item_uuid": "uuid-078",
+          "result": "- Chave/assinatura aparentam ser fortes",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "tls_crypto_inspector",
+      "result": [],
+      "error": "name 're' is not defined"
+    },
+    {
+      "plugin": "TLSFallbackOpenSSL",
+      "result": [
+        {
+          "plugin_uuid": "uuid-077",
+          "scan_item_uuid": "uuid-077",
+          "result": "- Subject: C = US, L = California, O = Wazuh, OU = Wazuh, CN = wazuh-dashboard\n- Issuer: OU = Wazuh, O = Wazuh, L = California",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.018,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-078",
+          "scan_item_uuid": "uuid-078",
+          "result": "- Assinatura: sha256WithRSAEncryption\n- Chave: 2048 bits",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.018,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "upload_tester",
+      "result": [],
+      "error": "'str' object has no attribute 'get'"
+    },
+    {
+      "plugin": "UserEnumProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-061",
+          "scan_item_uuid": "uuid-061",
+          "result": "- admin: resposta neutra/ambígua\n- test: resposta neutra/ambígua\n- user@example.com: resposta neutra/ambígua",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 2.015,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "VerificationSignals",
+      "result": [
+        {
+          "plugin_uuid": "uuid-067",
+          "scan_item_uuid": "uuid-067",
+          "result": "Sem sinais de verificação de e-mail/telefone",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.057,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "Wapiti",
+      "result": [
+        {
+          "plugin_uuid": "uuid-047",
+          "scan_item_uuid": "uuid-047",
+          "result": "Nenhum achado para XSS refletido",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-048",
+          "scan_item_uuid": "uuid-048",
+          "result": "Nenhum achado para XSS armazenado",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-049",
+          "scan_item_uuid": "uuid-049",
+          "result": "Nenhum achado para SQL Injection (GET/POST)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-055",
+          "scan_item_uuid": "uuid-055",
+          "result": "Nenhum achado para Path Traversal / LFI/RFI",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-053",
+          "scan_item_uuid": "uuid-053",
+          "result": "Nenhum achado para Command Injection",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-056",
+          "scan_item_uuid": "uuid-056",
+          "result": "Nenhum achado para SSRF",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "WfuzzOpenRedirect",
+      "result": [
+        {
+          "plugin_uuid": "uuid-035",
+          "scan_item_uuid": "uuid-035",
+          "result": "Nenhum achado para Open Redirect",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.002,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "WhatWeb",
+      "result": [
+        {
+          "plugin_uuid": "uuid-007",
+          "scan_item_uuid": "uuid-007",
+          "result": "Nenhum achado para Fingerprints de tecnologias",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.003,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "WhoisDNSSEC",
+      "result": [
+        {
+          "plugin_uuid": "uuid-009",
+          "scan_item_uuid": "uuid-009",
+          "result": "- DNSSEC: sem flag AD",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.031,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "XXEProbe",
+      "result": [
+        {
+          "plugin_uuid": "uuid-052",
+          "scan_item_uuid": "uuid-052",
+          "result": "Desabilitado (defina enabled=true e endpoint XML controlado).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "StorageExposure",
+      "result": [
+        {
+          "plugin_uuid": "uuid-018",
+          "scan_item_uuid": "uuid-018",
+          "result": "- existe mas protegido: http://168.s3.amazonaws.com/\n- não encontrado: http://168-248.s3.amazonaws.com/\n- não encontrado: http://168248.s3.amazonaws.com/\n- não encontrado: http://192-168-248-113.s3.amazonaws.com/\n- não encontrado: http://192168248113.s3.amazonaws.com/\n- existe mas protegido: http://248.s3.amazonaws.com/\n- não encontrado: http://248-113.s3.amazonaws.com/",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 18.154,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "OpenSSL",
+      "result": [
+        {
+          "plugin_uuid": "uuid-077",
+          "scan_item_uuid": "uuid-077",
+          "result": "Nenhum achado para Certificado válido (CA, CN/SAN, expiração)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 25.028,
+          "auto": true
+        },
+        {
+          "plugin_uuid": "uuid-078",
+          "scan_item_uuid": "uuid-078",
+          "result": "Nenhum achado para Assinatura/chave fortes (SHA-256+, RSA≥2048/ECDSA)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 25.028,
+          "auto": true
+        }
+      ]
+    },
+    {
+      "plugin": "StorageExposureCheck",
+      "result": [
+        {
+          "plugin_uuid": "uuid-018",
+          "scan_item_uuid": "uuid-018",
+          "result": "- https://192.s3.amazonaws.com :: bucket/existe sem listagem (AccessDenied/sem permissão)\n- https://192.s3.amazonaws.com/?list-type=2 :: bucket/existe sem listagem (AccessDenied/sem permissão)\n- https://storage.googleapis.com/192 :: bucket/existe sem listagem (AccessDenied/sem permissão)\n- https://storage.googleapis.com/192/?prefix= :: bucket/existe sem listagem (AccessDenied/sem permissão)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 21.801,
           "auto": true
         }
       ]
