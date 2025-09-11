@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 PLUGIN_CONFIG_NAME = "admin_endpoints_guard"
 PLUGIN_CONFIG_ALIASES = ["admin_guard"]
-UUID_071 = "uuid-071"  # (71)
+UUID_071 = "uuid-071-admin-protected"  # (71)
 
 COMMON = ["/admin", "/admin/", "/admin/login", "/administrator", "/manage", "/panel", "/wp-admin", "/phpmyadmin"]
 

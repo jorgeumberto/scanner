@@ -6,10 +6,10 @@ from utils import run_cmd, Timer
 PLUGIN_CONFIG_NAME = "sensitive_files_probe"
 PLUGIN_CONFIG_ALIASES = ["files_probe", "sensitive_files"]
 
-UUID_030 = "uuid-030"  # ENV/propriedades sensíveis não expostas
-UUID_028 = "uuid-028"  # Logs sensíveis
-UUID_003 = "uuid-003"  # Arquivos comuns expostos
-UUID_004 = "uuid-004"  # Arquivos sensíveis expostos
+UUID_030 = "uuid-030-env"  # ENV/propriedades sensíveis não expostas
+UUID_028 = "uuid-028-sensitive-logs"  # Logs sensíveis
+UUID_003 = "uuid-003-files"  # Arquivos comuns expostos
+UUID_004 = "uuid-004-sensitive-files"  # Arquivos sensíveis expostos
 
 DEFAULT_PATHS = [
   "/.env", "/.git/config", "/.git/HEAD", "/.svn/entries",

@@ -5,8 +5,8 @@ from urllib.parse import urlencode
 
 PLUGIN_CONFIG_NAME = "auth_rate_limit_probe"
 PLUGIN_CONFIG_ALIASES = ["rl_auth"]
-UUID_063 = "uuid-063"  # (63)
-UUID_084 = "uuid-084"  # (84)
+UUID_063 = "uuid-063-bruteforce-limit"  # (63)
+UUID_084 = "uuid-084-rate-limit"  # (84)
 
 def _post(url: str, data: Dict[str,str], timeout: int) -> str:
     form = urlencode(data)
