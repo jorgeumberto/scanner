@@ -1,0 +1,48 @@
+{
+  "cliente_api": "111gc8c042042094230942093420934920349023423409n234c90239c4",
+  "name": "Scan Automático",
+  "target": "http://localhost",
+  "description": "Scan automático via API",
+  "finding_count": 0,
+  "analysis": null,
+  "duration": 0.07,
+  "scan_results": [
+    {
+      "plugin": "dig_dns",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-010-dns-records",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-011-dns-reverse",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-012-spf",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        },
+        {
+          "scan_item_uuid": "uuid-013-dmarc",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true
+        }
+      ]
+    }
+  ]
+}

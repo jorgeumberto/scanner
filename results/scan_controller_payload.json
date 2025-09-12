@@ -1,0 +1,72 @@
+{
+  "results": [
+    {
+      "api_key": "111gc8c042042094230942093420934920349023423409n234c90239c4",
+      "scan_name": "Scan Automático",
+      "scan_description": "Scan automático via API",
+      "target": "http://localhost",
+      "status": "completed",
+      "finding_count": 0,
+      "analysis": null,
+      "duration": "0.07",
+      "scan_results": [
+        {
+          "scan_item_id": null,
+          "scan_id": null,
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analisys": "[AI desabilitada]",
+          "duration": "0.0",
+          "severity": "info",
+          "item": "dig_dns",
+          "status": "completed",
+          "evidence": null,
+          "scan_item_uuid": "uuid-010-dns-records",
+          "plugin": "dig_dns",
+          "auto": "Y"
+        },
+        {
+          "scan_item_id": null,
+          "scan_id": null,
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analisys": "[AI desabilitada]",
+          "duration": "0.0",
+          "severity": "info",
+          "item": "dig_dns",
+          "status": "completed",
+          "evidence": null,
+          "scan_item_uuid": "uuid-011-dns-reverse",
+          "plugin": "dig_dns",
+          "auto": "Y"
+        },
+        {
+          "scan_item_id": null,
+          "scan_id": null,
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analisys": "[AI desabilitada]",
+          "duration": "0.0",
+          "severity": "info",
+          "item": "dig_dns",
+          "status": "completed",
+          "evidence": null,
+          "scan_item_uuid": "uuid-012-spf",
+          "plugin": "dig_dns",
+          "auto": "Y"
+        },
+        {
+          "scan_item_id": null,
+          "scan_id": null,
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analisys": "[AI desabilitada]",
+          "duration": "0.0",
+          "severity": "info",
+          "item": "dig_dns",
+          "status": "completed",
+          "evidence": null,
+          "scan_item_uuid": "uuid-013-dmarc",
+          "plugin": "dig_dns",
+          "auto": "Y"
+        }
+      ]
+    }
+  ]
+}
