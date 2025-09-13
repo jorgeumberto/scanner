@@ -113,7 +113,9 @@ def run_plugin(target: str, ai_fn):
                 "analysis_ai": _ai(ai_fn, uuid, msg),
                 "severity": "info",
                 "duration": t_dep.duration,
-                "auto": True
+                "auto": True,
+                "file_name": "dig_dns.py",
+                "description": "Consulta registros DNS e analisa configurações de email (SPF/DMARC).",
             })
         return {"plugin": PLUGIN_NAME, "result": items}
 
@@ -146,7 +148,9 @@ def run_plugin(target: str, ai_fn):
         "analysis_ai": _ai(ai_fn, uuid10, res10),
         "severity": "info",
         "duration": t10.duration,
-        "auto": True
+        "auto": True,
+        "file_name": "dig_dns.py",
+        "description": "Consulta o registro AAAA do domínio alvo.",
     })
 
     # 11) PTR reverso (se habilitado)
@@ -170,7 +174,9 @@ def run_plugin(target: str, ai_fn):
             "analysis_ai": _ai(ai_fn, uuid11, res11),
             "severity": "info",
             "duration": t11.duration,
-            "auto": True
+            "auto": True,
+            "file_name": "dig_dns.py",
+            "description": "Consulta o registro PTR reverso dos endereços IP associados ao domínio alvo.",
         })
 
     # 12) SPF (TXT com v=spf1)
@@ -192,7 +198,9 @@ def run_plugin(target: str, ai_fn):
         "analysis_ai": _ai(ai_fn, uuid12, res12),
         "severity": sev12,
         "duration": t12.duration,
-        "auto": True
+        "auto": True,
+        "file_name": "dig_dns.py",
+        "description": "Consulta o registro SPF do domínio alvo.",
     })
 
     # 13) DMARC (TXT em _dmarc.<host> com v=DMARC1)
@@ -213,7 +221,9 @@ def run_plugin(target: str, ai_fn):
         "analysis_ai": _ai(ai_fn, uuid13, res13),
         "severity": sev13,
         "duration": t13.duration,
-        "auto": True
+        "auto": True,
+        "file_name": "dig_dns.py",
+        "description": "Consulta o registro DMARC do domínio alvo.",
     })
 
     return {"plugin": PLUGIN_NAME, "result": items}

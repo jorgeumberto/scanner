@@ -19,6 +19,8 @@ from ai_analyzer import analyze_item
 from api_adapter import to_controller_payload
 from api_client import post_results
 
+from catalog_builder import load_catalog_from_file, send_catalog_to_api
+
 # ---- BASE DIRS robustos ----
 BASE_DIR = Path(__file__).resolve().parent
 def _abs_path(p: str) -> Path:

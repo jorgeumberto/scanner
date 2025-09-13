@@ -3,22 +3,6 @@ from urllib.parse import urljoin
 from utils import run_cmd
 import time
 
-# ====== UUIDs da “lista 2” (ajuste se tiver IDs próprios) ======
-UUIDS = {
-    101: "uuid-101-dir-listing",         # Listagem de diretório habilitada
-    102: "uuid-102-git-exposed",         # .git exposto
-    103: "uuid-103-env-exposed",         # .env exposto
-    104: "uuid-104-server-status-open",  # /server-status acessível
-    105: "uuid-105-phpinfo-exposed",     # phpinfo exposto
-    106: "uuid-106-backup-files",        # arquivos de backup (.bak, ~ etc.)
-    107: "uuid-107-archives-dumps",      # dumps/arquivos (zip/tar/sql)
-    108: "uuid-108-dsstore-exposed",     # .DS_Store exposto
-    109: "uuid-109-svn-entries",         # .svn/entries exposto
-    110: "uuid-110-package-files",       # package/composer/yarn lockfiles
-    111: "uuid-111-robots",              # robots.txt presente/ausente
-    112: "uuid-112-sitemap",             # sitemap.xml / sitemap_index.xml presente/ausente
-}
-
 # ---------- helpers ----------
 
 def safe_join(base: str, path: str) -> str:
@@ -63,6 +47,8 @@ def build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn) -> Di
         "severity": severity,
         "duration": duration,
         "auto": True,
+        "file_name": "curl_files.py",
+        "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência.",
     }
 
 def check_one(base: str, path: str, motivo_ok: str, motivo_risco_200: str, motivo_risco_restr: str,
@@ -112,7 +98,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200="diretório responde 200 (potencial listagem/índice acessível)",
         motivo_risco_restr="diretório existe mas restrito (401/403)"
     )
-    items.append(build_item(UUIDS[101], msg, "high" if found else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-101-dir-listing", msg, "high" if found else "info", time.time()-t0, ai_fn))
 
     # 102) .git/HEAD
     _, msg, sev = check_one(
@@ -121,7 +107,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200=".git acessível (metadados e histórico podem vazar)",
         motivo_risco_restr=".git presente porém restrito (existe no docroot)"
     )
-    items.append(build_item(UUIDS[102], msg, sev, time.time()-t0, ai_fn))
+    items.append(build_item("uuid-102-git-exposed", msg, sev, time.time()-t0, ai_fn))
 
     # 103) .env
     _, msg, sev = check_one(
@@ -130,7 +116,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200=".env acessível (segredos/credenciais podem vazar)",
         motivo_risco_restr=".env presente porém restrito (indica arquivo sensível no docroot)"
     )
-    items.append(build_item(UUIDS[103], msg, sev, time.time()-t0, ai_fn))
+    items.append(build_item("uuid-103-env-exposed", msg, sev, time.time()-t0, ai_fn))
 
     # 104) /server-status
     # Qualquer existência importa; se 200 → medium; se 401/403 → medium (revelação parcial)
@@ -148,7 +134,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     )
     sev = "high" if ("— Risco:" in msg_auto and sev_auto == "high") or ("— Risco:" in msg_plain and sev_plain == "high") else ("medium" if ("— Risco:" in msg_auto or "— Risco:" in msg_plain) else "info")
     msg = " | ".join(m for m in [msg_auto, msg_plain] if m)
-    items.append(build_item(UUIDS[104], msg, "medium" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-104-server-status-open", msg, "medium" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
 
     # 105) phpinfo.php / info.php / test.php
     found, msg, sev = check_many(
@@ -157,7 +143,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200="arquivo de diagnóstico acessível (vaza versão/paths/extensões)",
         motivo_risco_restr="arquivo presente porém restrito"
     )
-    items.append(build_item(UUIDS[105], msg, "medium" if found else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-105-phpinfo-exposed", msg, "medium" if found else "info", time.time()-t0, ai_fn))
 
     # 106) Arquivos de backup comuns
     found, msg, sev = check_many(
@@ -167,7 +153,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200="backup acessível",
         motivo_risco_restr="backup presente porém restrito"
     )
-    items.append(build_item(UUIDS[106], msg, "high" if found else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-106-backup-files", msg, "high" if found else "info", time.time()-t0, ai_fn))
 
     # 107) Dumps e pacotes comuns
     found, msg, sev = check_many(
@@ -177,7 +163,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200="dump/pacote acessível",
         motivo_risco_restr="dump/pacote presente porém restrito"
     )
-    items.append(build_item(UUIDS[107], msg, "high" if found else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-107-archives-dumps", msg, "high" if found else "info", time.time()-t0, ai_fn))
 
     # 108) .DS_Store
     _, msg, sev = check_one(
@@ -186,7 +172,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200=".DS_Store acessível (pode revelar estrutura de diretórios)",
         motivo_risco_restr=".DS_Store presente porém restrito"
     )
-    items.append(build_item(UUIDS[108], msg, "low" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-108-dsstore-exposed", msg, "low" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
 
     # 109) .svn/entries
     _, msg, sev = check_one(
@@ -195,7 +181,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_200=".svn/entries acessível (metadados e paths do repositório)",
         motivo_risco_restr=".svn presente porém restrito"
     )
-    items.append(build_item(UUIDS[109], msg, "medium" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-109-svn-entries", msg, "medium" if "— Risco:" in msg else "info", time.time()-t0, ai_fn))
 
     # 110) Arquivos de manifesto/lock (exposição informacional)
     found, msg, sev = check_many(
@@ -206,7 +192,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         high_if_200=False,  # tratar como informacional/medium
         medium_if_restricted=True
     )
-    items.append(build_item(UUIDS[110], msg, ("medium" if found else "info"), time.time()-t0, ai_fn))
+    items.append(build_item("uuid-110-package-files", msg, ("medium" if found else "info"), time.time()-t0, ai_fn))
 
     # 111) robots.txt (informativo)
     _, msg, _ = check_one(
@@ -216,7 +202,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         motivo_risco_restr="arquivo presente porém restrito"
     )
     # robots não é risco por si só
-    items.append(build_item(UUIDS[111], msg.replace("— Risco:", "— Info:"), "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-111-robots", msg.replace("— Risco:", "— Info:"), "info", time.time()-t0, ai_fn))
 
     # 112) sitemap.xml / sitemap_index.xml (informativo)
     found, msg, sev = check_many(
@@ -227,6 +213,6 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     )
     # sitemap também não é risco por si só
     msg = msg.replace("— Risco:", "— Info:")
-    items.append(build_item(UUIDS[112], msg, "info", time.time()-t0, ai_fn))
+    items.append(build_item("uuid-112-sitemap", msg, "info", time.time()-t0, ai_fn))
 
     return {"plugin": "curl_files", "result": items}

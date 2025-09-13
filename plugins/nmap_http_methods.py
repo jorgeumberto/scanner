@@ -187,6 +187,8 @@ def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn) ->
         "severity": severity,
         "duration": duration,
         "auto": True,
+        "file_name": "nmap_http_methods.py",
+        "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap.",
     }
 
 # ===== plugin =====
