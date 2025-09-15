@@ -10,6 +10,8 @@ def to_controller_payload(your_json: Dict[str, Any]) -> Dict[str, Any]:
     para o formato atual do Controller:
       {"results": [ { api_key, scan_name, scan_description, target, status, finding_count, analysis, duration, scan_results: [ ... ] } ]}
     """
+    return your_json
+
     scan_results_input = your_json.get("scan_results", [])
 
     # Achados totais = somar FAILs/medium/high, etc. Aqui usamos o tamanho total mesmo.
@@ -53,6 +55,9 @@ def to_controller_payload(your_json: Dict[str, Any]) -> Dict[str, Any]:
                 "scan_item_uuid": it.get("scan_item_uuid"),
                 "plugin": plugin_name,
                 "auto": "Y" if it.get("auto") else "N",
+                "file_name": it.get("file_name"),
+                "description": it.get("description"),
+
             })
 
     return {"results": [controller_scan]}

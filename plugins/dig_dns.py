@@ -1,4 +1,4 @@
-# plugins/dig_dns.py
+# plugins/dig_dns.py (alinhado ao padrão de saída do curl_files)
 from utils import run_cmd, Timer, extract_host
 from typing import Dict, Any, List, Optional
 import shutil, re, json, os
@@ -9,8 +9,8 @@ PLUGIN_NAME = "dig_dns"
 DEFAULT_UUIDS: Dict[str, str] = {
     "dns_records": "uuid-010-dns-records",  # A/AAAA/MX/TXT
     "reverse_ptr": "uuid-011-dns-reverse",  # PTR
-    "spf":         "uuid-012-spf",  # SPF (TXT v=spf1)
-    "dmarc":       "uuid-013-dmarc",  # DMARC (TXT v=DMARC1)
+    "spf":         "uuid-012-spf",          # SPF (TXT v=spf1)
+    "dmarc":       "uuid-013-dmarc",        # DMARC (TXT v=DMARC1)
 }
 
 def _load_config() -> Dict[str, Any]:
@@ -65,27 +65,37 @@ def _txt_lines_to_strings(txt_output: str) -> List[str]:
             lines.append("".join(parts))
         else:
             # Pode vir sem aspas dependendo do resolver
-            lines.append(line.strip())
-    # Remove vazios
-    return [l for l in lines if l]
-    
+            line = line.strip()
+            if line:
+                lines.append(line)
+    return lines
+
 def _has_mx(mx_output: str) -> bool:
     # `dig +short MX` -> "10 mx1.example.com." linhas; qualquer conteúdo não vazio conta
     return any(line.strip() for line in mx_output.splitlines())
 
-def _severity(base: str, condition: bool, elevate_to: str) -> str:
-    return elevate_to if condition else base
+# ---------- helpers padronizados (espelhando curl_files) ----------
+
+def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn) -> Dict[str, Any]:
+    return {
+        "scan_item_uuid": uuid,
+        "result": msg,
+        "analysis_ai": _ai(ai_fn, uuid, msg),
+        "severity": severity,
+        "duration": duration,
+        "auto": True,
+        "file_name": "dig_dns.py",
+        "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC.",
+    }
+
+# ---------- plugin ----------
 
 def run_plugin(target: str, ai_fn):
     """
-    Mantém assinatura existente. Config opcional lida internamente.
-    Resultados por item seguem o contrato:
-      - scan_item_uuid
-      - result
-      - analysis_ai
-      - severity
-      - duration
-      - auto
+    Contrato igual ao dos plugins curl_*:
+      retorna {"plugin": "dig_dns", "result": [items]}
+      e cada item contém:
+        - scan_item_uuid, result, analysis_ai, severity, duration, auto, file_name, description
     """
     cfg = _load_config()
     uuids = _uuids(cfg)
@@ -100,26 +110,17 @@ def run_plugin(target: str, ai_fn):
     items: List[Dict[str, Any]] = []
     host = extract_host(target) or target
 
-    # Checagem de dependência
+    # Dependência
     if shutil.which("dig") is None:
         msg = "Dependência ausente: 'dig' não encontrado no PATH."
         for key in ["dns_records", "reverse_ptr", "spf", "dmarc"]:
             uuid = uuids[key]
             with Timer() as t_dep:
                 pass
-            items.append({
-                "scan_item_uuid": uuid,
-                "result": msg,
-                "analysis_ai": _ai(ai_fn, uuid, msg),
-                "severity": "info",
-                "duration": t_dep.duration,
-                "auto": True,
-                "file_name": "dig_dns.py",
-                "description": "Consulta registros DNS e analisa configurações de email (SPF/DMARC).",
-            })
+            items.append(_build_item(uuid, msg, "info", t_dep.duration, ai_fn))
         return {"plugin": PLUGIN_NAME, "result": items}
 
-    # 10) Registros DNS solicitados (A/AAAA/MX/TXT por padrão)
+    # 10) Registros DNS (A/AAAA/MX/TXT)
     with Timer() as t10:
         outputs = []
         a_addrs: List[str] = []
@@ -128,7 +129,6 @@ def run_plugin(target: str, ai_fn):
         for rr in records:
             out = _run_dig(host, rr, cfg, timeout=timeout)
             if rr.upper() == "TXT":
-                # Normalizar TXT para leitura humana
                 txt_norm = "\n".join(_txt_lines_to_strings(out))
                 outputs.append(f"== {rr.upper()} ==\n{txt_norm if txt_norm else '(vazio)'}")
             else:
@@ -141,43 +141,22 @@ def run_plugin(target: str, ai_fn):
                 mx_raw = out
 
     res10 = "\n".join(outputs).strip()
-    uuid10 = uuids["dns_records"]
-    items.append({
-        "scan_item_uuid": uuid10,
-        "result": res10,
-        "analysis_ai": _ai(ai_fn, uuid10, res10),
-        "severity": "info",
-        "duration": t10.duration,
-        "auto": True,
-        "file_name": "dig_dns.py",
-        "description": "Consulta o registro AAAA do domínio alvo.",
-    })
+    items.append(_build_item(uuids["dns_records"], res10, "info", t10.duration, ai_fn))
 
     # 11) PTR reverso (se habilitado)
     if reverse_enabled:
         with Timer() as t11:
-            ptrs: List[str] = []
-            ips = a_addrs + aaaa_addrs
+            ips = [*a_addrs, *aaaa_addrs]
             if not ips:
                 res11 = "A/AAAA não resolvidos – PTR ignorado"
             else:
+                ptrs: List[str] = []
                 for ipaddr in ips:
-                    out_ptr = _run_dig(ipaddr, None, cfg, timeout=timeout)  # `dig +short <ip>` resolve forward; usar -x para PTR
-                    # Garantir PTR com -x (mais correto)
                     out_ptr = run_cmd(_dig_args(["dig", "+short", "-x", ipaddr], cfg), timeout=timeout) or ""
-                    ptrs.append(f"{ipaddr} -> {out_ptr.strip() if out_ptr.strip() else '(sem PTR)'}")
+                    out_ptr = out_ptr.strip() if out_ptr.strip() else "(sem PTR)"
+                    ptrs.append(f"{ipaddr} -> {out_ptr}")
                 res11 = "\n".join(ptrs) if ptrs else "Sem IPs para resolver PTR"
-        uuid11 = uuids["reverse_ptr"]
-        items.append({
-            "scan_item_uuid": uuid11,
-            "result": res11,
-            "analysis_ai": _ai(ai_fn, uuid11, res11),
-            "severity": "info",
-            "duration": t11.duration,
-            "auto": True,
-            "file_name": "dig_dns.py",
-            "description": "Consulta o registro PTR reverso dos endereços IP associados ao domínio alvo.",
-        })
+        items.append(_build_item(uuids["reverse_ptr"], res11, "info", t11.duration, ai_fn))
 
     # 12) SPF (TXT com v=spf1)
     with Timer() as t12:
@@ -185,23 +164,12 @@ def run_plugin(target: str, ai_fn):
         txt_lines = _txt_lines_to_strings(txt_raw)
         spf_hit = next((l for l in txt_lines if "v=spf1" in l.lower()), "")
     res12 = spf_hit if spf_hit else "SPF não encontrado"
-    uuid12 = uuids["spf"]
-    # Elevar severidade se houver MX e SPF exigido
     base_sev_spf = "info" if spf_hit else "low"
     sev12 = base_sev_spf
     if not spf_hit and spf_required_if_mx and _has_mx(mx_raw):
         sev12 = "medium"
     sev12 = cfg.get("severity_overrides", {}).get("spf", sev12)
-    items.append({
-        "scan_item_uuid": uuid12,
-        "result": res12,
-        "analysis_ai": _ai(ai_fn, uuid12, res12),
-        "severity": sev12,
-        "duration": t12.duration,
-        "auto": True,
-        "file_name": "dig_dns.py",
-        "description": "Consulta o registro SPF do domínio alvo.",
-    })
+    items.append(_build_item(uuids["spf"], res12, sev12, t12.duration, ai_fn))
 
     # 13) DMARC (TXT em _dmarc.<host> com v=DMARC1)
     with Timer() as t13:
@@ -209,21 +177,11 @@ def run_plugin(target: str, ai_fn):
         dmarc_lines = _txt_lines_to_strings(dmarc_raw)
         dmarc_hit = next((l for l in dmarc_lines if "v=dmarc1" in l.lower()), "")
     res13 = dmarc_hit if dmarc_hit else "DMARC não encontrado"
-    uuid13 = uuids["dmarc"]
     base_sev_dm = "info" if dmarc_hit else "low"
     sev13 = base_sev_dm
     if not dmarc_hit and dmarc_required_if_mx and _has_mx(mx_raw):
         sev13 = "medium"
     sev13 = cfg.get("severity_overrides", {}).get("dmarc", sev13)
-    items.append({
-        "scan_item_uuid": uuid13,
-        "result": res13,
-        "analysis_ai": _ai(ai_fn, uuid13, res13),
-        "severity": sev13,
-        "duration": t13.duration,
-        "auto": True,
-        "file_name": "dig_dns.py",
-        "description": "Consulta o registro DMARC do domínio alvo.",
-    })
+    items.append(_build_item(uuids["dmarc"], res13, sev13, t13.duration, ai_fn))
 
     return {"plugin": PLUGIN_NAME, "result": items}

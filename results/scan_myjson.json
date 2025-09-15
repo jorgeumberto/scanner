@@ -1,159 +1,54 @@
 {
   "cliente_api": "111gc8c042042094230942093420934920349023423409n234c90239c4",
   "name": "Scan Automático",
-  "target": "http://192.168.248.113",
+  "target": "http://localhost",
   "description": "Scan automático via API",
-  "finding_count": 8,
+  "finding_count": 9,
   "analysis": null,
-  "duration": 125.968,
+  "duration": 1.875,
   "scan_results": [
-    {
-      "plugin": "nmap_http_methods",
-      "result": [
-        {
-          "scan_item_uuid": "uuid-201-options-allow",
-          "result": "http://192.168.248.113:80 — Não foi possível extrair métodos via Nmap (http-methods). Info: servidor pode não anunciar Allow ou requer caminhos específicos.",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-202-trace-enabled",
-          "result": "http://192.168.248.113:80 — TRACE desabilitado (não detectado) — Seguro.",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-203-put-allowed",
-          "result": "http://192.168.248.113:80 — PUT não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-204-delete-allowed",
-          "result": "http://192.168.248.113:80 — DELETE não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-205-patch-allowed",
-          "result": "http://192.168.248.113:80 — PATCH não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-206-propfind-allowed",
-          "result": "http://192.168.248.113:80 — PROPFIND não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-207-mkcol-allowed",
-          "result": "http://192.168.248.113:80 — MKCOL não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-208-move-allowed",
-          "result": "http://192.168.248.113:80 — MOVE não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-209-copy-allowed",
-          "result": "http://192.168.248.113:80 — COPY não anunciado/detectado — Seguro (no contexto desta rota/host).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        },
-        {
-          "scan_item_uuid": "uuid-210-cors-preflight",
-          "result": "http://192.168.248.113:80 — CORS/Preflight não avaliado por Nmap — Info: use o plugin curl_http_methods para testar ACA*.",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.144,
-          "auto": true,
-          "file_name": "nmap_http_methods.py",
-          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
-        }
-      ]
-    },
     {
       "plugin": "dig_dns",
       "result": [
         {
           "scan_item_uuid": "uuid-010-dns-records",
-          "result": "== A ==\n(vazio)\n== AAAA ==\n(vazio)\n== MX ==\n(vazio)\n== TXT ==\n(vazio)",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.07,
-          "auto": true,
-          "file_name": "dig_dns.py",
-          "description": "Consulta o registro AAAA do domínio alvo."
-        },
-        {
-          "scan_item_uuid": "uuid-011-dns-reverse",
-          "result": "A/AAAA não resolvidos – PTR ignorado",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
           "duration": 0.0,
           "auto": true,
           "file_name": "dig_dns.py",
-          "description": "Consulta o registro PTR reverso dos endereços IP associados ao domínio alvo."
+          "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC."
+        },
+        {
+          "scan_item_uuid": "uuid-011-dns-reverse",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.0,
+          "auto": true,
+          "file_name": "dig_dns.py",
+          "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC."
         },
         {
           "scan_item_uuid": "uuid-012-spf",
-          "result": "SPF não encontrado",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "low",
-          "duration": 0.117,
+          "severity": "info",
+          "duration": 0.0,
           "auto": true,
           "file_name": "dig_dns.py",
-          "description": "Consulta o registro SPF do domínio alvo."
+          "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC."
         },
         {
           "scan_item_uuid": "uuid-013-dmarc",
-          "result": "DMARC não encontrado",
+          "result": "Dependência ausente: 'dig' não encontrado no PATH.",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "low",
-          "duration": 0.03,
+          "severity": "info",
+          "duration": 0.0,
           "auto": true,
           "file_name": "dig_dns.py",
-          "description": "Consulta o registro DMARC do domínio alvo."
+          "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC."
         }
       ]
     },
@@ -163,10 +58,10 @@
         {
           "plugin_uuid": "uuid-001-server",
           "scan_item_uuid": "uuid-001-server",
-          "result": "Header Server ausente",
+          "result": "Server: Apache/2.4.58 (Ubuntu)",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 3.08,
+          "severity": "low",
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -177,7 +72,7 @@
           "result": "X-Powered-By ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -188,7 +83,7 @@
           "result": "HSTS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -199,7 +94,7 @@
           "result": "X-Content-Type-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -210,7 +105,7 @@
           "result": "X-Frame-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -221,7 +116,7 @@
           "result": "CSP ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -232,7 +127,7 @@
           "result": "CORS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -243,7 +138,7 @@
           "result": "Proteção MIME ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -254,7 +149,7 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -265,7 +160,7 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
@@ -276,10 +171,115 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 3.08,
+          "duration": 0.167,
           "auto": true,
           "file_name": "curl_headers.py",
           "description": "Usa curl para obter e analisar os cabeçalhos HTTP de um servidor web."
+        }
+      ]
+    },
+    {
+      "plugin": "nmap_http_methods",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-201-options-allow",
+          "result": "http://localhost:80 — Não foi possível extrair métodos via Nmap (http-methods). Info: servidor pode não anunciar Allow ou requer caminhos específicos.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-202-trace-enabled",
+          "result": "http://localhost:80 — TRACE desabilitado (não detectado) — Seguro.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-203-put-allowed",
+          "result": "http://localhost:80 — PUT não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-204-delete-allowed",
+          "result": "http://localhost:80 — DELETE não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-205-patch-allowed",
+          "result": "http://localhost:80 — PATCH não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-206-propfind-allowed",
+          "result": "http://localhost:80 — PROPFIND não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-207-mkcol-allowed",
+          "result": "http://localhost:80 — MKCOL não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-208-move-allowed",
+          "result": "http://localhost:80 — MOVE não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-209-copy-allowed",
+          "result": "http://localhost:80 — COPY não anunciado/detectado — Seguro (no contexto desta rota/host).",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
+        },
+        {
+          "scan_item_uuid": "uuid-210-cors-preflight",
+          "result": "http://localhost:80 — CORS/Preflight não avaliado por Nmap — Info: use o plugin curl_http_methods para testar ACA*.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.123,
+          "auto": true,
+          "file_name": "nmap_http_methods.py",
+          "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap."
         }
       ]
     },
@@ -288,40 +288,40 @@
       "result": [
         {
           "scan_item_uuid": "uuid-101-dir-listing",
-          "result": "Não encontrado(s) — Seguro: diretórios não expostos",
+          "result": "http://localhost/ — HTTP 200 — Risco: diretório responde 200 (potencial listagem/índice acessível)",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 24.585251331329346,
+          "severity": "high",
+          "duration": 0.29723167419433594,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-102-git-exposed",
-          "result": "http://192.168.248.113/.git/HEAD — HTTP 0 — Seguro: .git não exposto",
+          "result": "http://localhost/.git/HEAD — HTTP 404 — Seguro: .git não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 27.65705180168152,
+          "duration": 0.4818751811981201,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-103-env-exposed",
-          "result": "http://192.168.248.113/.env — HTTP 0 — Seguro: .env não exposto",
+          "result": "http://localhost/.env — HTTP 404 — Seguro: .env não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 30.72882843017578,
+          "duration": 0.7077269554138184,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-104-server-status-open",
-          "result": "http://192.168.248.113/server-status?auto — HTTP 0 — Seguro: server-status ausente | http://192.168.248.113/server-status — HTTP 0 — Seguro: server-status ausente",
+          "result": "http://localhost/server-status?auto — HTTP 200 — Risco: Apache status exposto (informações operacionais) | http://localhost/server-status — HTTP 200 — Risco: Apache status exposto (informações operacionais)",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 36.87308359146118,
+          "severity": "medium",
+          "duration": 1.6079890727996826,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
@@ -331,7 +331,7 @@
           "result": "Não encontrado(s) — Seguro: arquivos de diagnóstico não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 46.088661193847656,
+          "duration": 1.664703369140625,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
@@ -341,7 +341,7 @@
           "result": "Não encontrado(s) — Seguro: backups não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 70.66498279571533,
+          "duration": 1.7365474700927734,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
@@ -351,27 +351,27 @@
           "result": "Não encontrado(s) — Seguro: dumps/arquivos não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 95.23997211456299,
+          "duration": 1.797834873199463,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-108-dsstore-exposed",
-          "result": "http://192.168.248.113/.DS_Store — HTTP 0 — Seguro: .DS_Store não exposto",
+          "result": "http://localhost/.DS_Store — HTTP 404 — Seguro: .DS_Store não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 98.31320285797119,
+          "duration": 1.805147647857666,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-109-svn-entries",
-          "result": "http://192.168.248.113/.svn/entries — HTTP 0 — Seguro: .svn não exposto",
+          "result": "http://localhost/.svn/entries — HTTP 404 — Seguro: .svn não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 101.38467311859131,
+          "duration": 1.80995512008667,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
@@ -381,17 +381,17 @@
           "result": "Não encontrado(s) — Seguro: manifests/locks não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 116.74586915969849,
+          "duration": 1.849747657775879,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
         },
         {
           "scan_item_uuid": "uuid-111-robots",
-          "result": "http://192.168.248.113/robots.txt — HTTP 0 — Seguro: arquivo não presente; opcional",
+          "result": "http://localhost/robots.txt — HTTP 404 — Seguro: arquivo não presente; opcional",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 119.8169801235199,
+          "duration": 1.8560876846313477,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."
@@ -401,7 +401,7 @@
           "result": "Não encontrado(s) — Seguro: sitemap ausente; opcional",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 125.96552920341492,
+          "duration": 1.8662469387054443,
           "auto": true,
           "file_name": "curl_files.py",
           "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência."

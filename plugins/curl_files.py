@@ -49,6 +49,7 @@ def build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn) -> Di
         "auto": True,
         "file_name": "curl_files.py",
         "description": "Usa curl para baixar arquivos específicos de um servidor web e verificar sua existência.",
+        "Category": "Information Disclosure",
     }
 
 def check_one(base: str, path: str, motivo_ok: str, motivo_risco_200: str, motivo_risco_restr: str,
