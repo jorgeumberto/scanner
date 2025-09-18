@@ -19,6 +19,9 @@ from ai_analyzer import analyze_item
 from api_adapter import to_controller_payload
 from api_client import post_results
 
+import socket, platform
+from datetime import datetime
+
 # ---- BASE DIRS robustos ----
 BASE_DIR = Path(__file__).resolve().parent
 def _abs_path(p: str) -> Path:
@@ -222,14 +225,25 @@ def main():
                 plugins_output.append(call_run_plugin(mod, name))
 
     finding_count = compute_finding_count(plugins_output)
+
+    hostname = socket.gethostname()
+    try:
+        ip_origem = socket.gethostbyname(hostname)
+    except Exception:
+        ip_origem = None  
+
     my_json = {
         "cliente_api": API_KEY,
         "name": "Scan Automático",
         "target": TARGET,
         "description": "Scan automático via API",
         "finding_count": finding_count,
-        "analysis": None,
         "duration": t_scan.duration,
+        "data_hora": datetime.now().isoformat(),
+        "ip_origem": ip_origem,
+        "hostname": hostname,
+        "usuario": os.getlogin(),
+        "sistema": platform.platform(),
         "scan_results": plugins_output
     }
 

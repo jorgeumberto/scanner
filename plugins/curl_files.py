@@ -47,9 +47,6 @@ def build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_
         "severity": severity,
         "duration": duration,
         "auto": True,
-        "file_name": "curl_files.py",
-        "description": "Uses curl to download specific files from a web server and check for their existence.",
-        "category": "Information Gathering",
         "item_name": item_name,
     }
 
@@ -217,4 +214,9 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     msg = msg.replace("— Risco:", "— Info:")
     items.append(build_item("uuid-112-sitemap", msg, "info", time.time()-t0, ai_fn, "sitemap.xml / sitemap_index.xml"))
 
-    return {"plugin": "curl_files", "result": items}
+    return {
+        "plugin": "CurlFiles", 
+        "file_name": "curl_files.py",
+        "description": "Uses curl to download specific files from a web server and check for their existence.",
+        "category": "Information Gathering",
+        "result": items}

@@ -186,7 +186,14 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         "analysis_ai": ai_fn("nma_top_ports", UUIDS[301], result_text),
         "severity": severity,
         "duration": duration,
-        "auto": True
+        "auto": True,
+        "reference": "https://nmap.org",
+        "item_name": "Nmap Top Ports Scan"
     }
 
-    return {"plugin": "nma_top_ports", "result": [item]}
+    return {
+        "plugin": "nma_top_ports", 
+        "file_name": "nmap_top_ports.py",
+        "description": "Scans all TCP ports using Nmap to identify open and filtered ports.",
+        "category": "Information Gathering",
+        "result": [item]}

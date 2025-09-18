@@ -3,7 +3,7 @@ from utils import run_cmd, Timer, extract_host
 from typing import Dict, Any, List, Optional
 import shutil, re, json, os
 
-PLUGIN_NAME = "dig_dns"
+PLUGIN_NAME = "DigDNS"
 
 # UUIDs default – podem ser sobrescritos via configs/dig_dns.json
 DEFAULT_UUIDS: Dict[str, str] = {
@@ -84,10 +84,7 @@ def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item
         "severity": severity,
         "duration": duration,
         "auto": True,
-        "file_name": "dig_dns.py",
-        "description": "Consult DNS registries (A/AAAA/MX/TXT), reverse PTR and valid SPF/DMARC.",
         "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
-        "category": "Information Gathering",
         "item_name": item_name,
     }
 
@@ -187,4 +184,9 @@ def run_plugin(target: str, ai_fn):
     sev13 = cfg.get("severity_overrides", {}).get("dmarc", sev13)
     items.append(_build_item(uuids["dmarc"], res13, sev13, t13.duration, ai_fn, "DMARC Record (TXT v=DMARC1)"))
 
-    return {"plugin": PLUGIN_NAME, "result": items}
+    return {
+        "plugin": PLUGIN_NAME, 
+        "file_name": "dig_dns.py",
+        "description": "Consult DNS registries (A/AAAA/MX/TXT), reverse PTR and valid SPF/DMARC.",
+        "category": "Information Gathering",
+        "result": items}

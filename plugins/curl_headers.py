@@ -26,10 +26,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
             "severity": severity,
             "duration": t.duration,
             "auto": True,
-            "file_name": "curl_headers.py",  # mantido
-            "description": "Uses curl to get and parse HTTP headers from a web server.",
             "reference": "https://owasp.org/www-project-secure-headers/",
-            "category": "Information Gathering",
             "item_name": item_name
         }
 
@@ -80,5 +77,10 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     has_samesite = "samesite" in cookies.lower() if cookies else False
     items.append(make_item("uuid-040-cookie-samesite", cookies if cookies else "sem Set-Cookie", "low" if cookies and not has_samesite else "info", "Cookies SameSite Attribute"))
 
-    return {"plugin": "CurlHeaders", "result": items}
+    return {
+        "plugin": "CurlHeaders", 
+        "file_name": "curl_headers.py",
+        "description": "Uses curl to get and parse HTTP headers from a web server.",
+        "category": "Information Gathering",
+        "result": items}
 

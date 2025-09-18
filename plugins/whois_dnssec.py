@@ -5,7 +5,7 @@ from utils import run_cmd, Timer, extrair_host
 PLUGIN_CONFIG_NAME = "whois_dnssec"
 PLUGIN_CONFIG_ALIASES = ["whois", "dnssec"]
 
-UUID_009 = "uuid-009"  # (9) WHOIS / DNSSEC
+UUID_009 = "uuid-009-whois_dnssec"  # (9) WHOIS / DNSSEC
 
 def _pick(lines: List[str], keys: List[str]) -> List[str]:
     out = []
@@ -37,12 +37,20 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
     summary = "\n".join(f"- {e}" for e in evid) if evid else "Nenhum achado para WHOIS / DNSSEC"
 
     item = {
-        "plugin_uuid": UUID_009,
+
         "scan_item_uuid": UUID_009,
         "result": summary,
         "analysis_ai": ai_fn("WhoisDNSSEC", UUID_009, summary),
         "severity": sev,
         "duration": t.duration,
-        "auto": True
+        "auto": True,
+        "reference": "https://en.wikipedia.org/wiki/WHOIS",
+        "item_name": "WHOIS and DNSSEC Information",
     }
-    return {"plugin": "WhoisDNSSEC", "result": [item]}
+
+    return {
+        "plugin": "WhoisDNSSEC", 
+        "file_name": "whois_dnssec.py",
+        "description": "Consulta informações WHOIS e verifica se DNSSEC está habilitado.",
+        "category": "Information Gathering",        
+        "result": [item]}

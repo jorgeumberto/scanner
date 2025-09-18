@@ -187,10 +187,7 @@ def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn, it
         "severity": severity,
         "duration": duration,
         "auto": True,
-        "file_name": "nmap_http_methods.py",
-        "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap.",
-        "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
-        "category": "Information Gathering",
+        "reference": "https://nmap.org/nsedoc/scripts/http-methods.html", 
         "item_name": item_name
     }
 
@@ -258,4 +255,9 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         "CORS Preflight (not checked by Nmap)"
     ))
 
-    return {"plugin": "nmap_http_methods", "result": items}
+    return {
+        "plugin": "NmapHTTPMethods", 
+        "file_name": "nmap_http_methods.py",
+        "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap.",
+        "category": "Information Gathering",
+        "result": items}
