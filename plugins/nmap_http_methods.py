@@ -179,7 +179,7 @@ def _parse_nmap_scripts(xml_text: str) -> Dict[str, Any]:
 
     return data
 
-def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn) -> Dict[str, Any]:
+def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn, item_name:str) -> Dict[str, Any]:
     return {
         "scan_item_uuid": uuid,
         "result": result,
@@ -189,6 +189,9 @@ def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn) ->
         "auto": True,
         "file_name": "nmap_http_methods.py",
         "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap.",
+        "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
+        "category": "Information Gathering",
+        "item_name": item_name
     }
 
 # ===== plugin =====
@@ -212,7 +215,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     else:
         msg = (f"{host}:{port} — Não foi possível extrair métodos via Nmap (http-methods). "
                "Info: servidor pode não anunciar Allow ou requer caminhos específicos.")
-    items.append(_make_item(UUIDS[201], msg, "info", round(time.time()-t0, 3), ai_fn))
+    items.append(_make_item(UUIDS[201], msg, "info", round(time.time()-t0, 3), ai_fn, "HTTP Methods Summary: OPTIONS / Allow"))
 
     # 202) TRACE
     if trace_on:
@@ -221,7 +224,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     else:
         msg = f"{host}:{port} — TRACE desabilitado (não detectado) — Seguro."
         sev = "info"
-    items.append(_make_item(UUIDS[202], msg, sev, round(time.time()-t0, 3), ai_fn))
+    items.append(_make_item(UUIDS[202], msg, sev, round(time.time()-t0, 3), ai_fn, "HTTP TRACE Method"))
 
     # 203..209) Métodos de risco (com motivo)
     for verb, uuid in [
@@ -243,7 +246,7 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         else:
             msg = f"{host}:{port} — {verb} não anunciado/detectado — Seguro (no contexto desta rota/host)."
             sev = "info"
-        items.append(_make_item(uuid, msg, sev, round(time.time()-t0, 3), ai_fn))
+        items.append(_make_item(uuid, msg, sev, round(time.time()-t0, 3), ai_fn, f"HTTP {verb} Method"))
 
     # 210) CORS (não aplicável via nmap)
     items.append(_make_item(
@@ -251,7 +254,8 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         f"{host}:{port} — CORS/Preflight não avaliado por Nmap — Info: use o plugin curl_http_methods para testar ACA*.",
         "info",
         round(time.time()-t0, 3),
-        ai_fn
+        ai_fn, 
+        "CORS Preflight (not checked by Nmap)"
     ))
 
     return {"plugin": "nmap_http_methods", "result": items}

@@ -236,18 +236,12 @@ def main():
     }
 
     out_my = Path("results") / f"scan_myjson.json"
-    out_api = Path("results") / f"scan_controller_payload.json"
-
+ 
     with out_my.open("w") as f:
         json.dump(my_json, f, indent=2, ensure_ascii=False)
     print(f"[+] Seu JSON salvo em: {out_my}")
 
-    controller_payload = to_controller_payload(my_json)
-    with out_api.open("w") as f:
-        json.dump(controller_payload, f, indent=2, ensure_ascii=False)
-    print(f"[+] Payload da API salvo em: {out_api}")
-
-    api_resp = post_results(controller_payload)
+    api_resp = post_results(my_json)
     print("[API]", api_resp)
 
 if __name__ == "__main__":

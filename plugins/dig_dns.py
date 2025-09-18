@@ -76,7 +76,7 @@ def _has_mx(mx_output: str) -> bool:
 
 # ---------- helpers padronizados (espelhando curl_files) ----------
 
-def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn) -> Dict[str, Any]:
+def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_name:str) -> Dict[str, Any]:
     return {
         "scan_item_uuid": uuid,
         "result": msg,
@@ -85,7 +85,10 @@ def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn) -> D
         "duration": duration,
         "auto": True,
         "file_name": "dig_dns.py",
-        "description": "Consulta registros DNS (A/AAAA/MX/TXT), PTR reverso e valida SPF/DMARC.",
+        "description": "Consult DNS registries (A/AAAA/MX/TXT), reverse PTR and valid SPF/DMARC.",
+        "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
+        "category": "Information Gathering",
+        "item_name": item_name,
     }
 
 # ---------- plugin ----------
@@ -117,7 +120,7 @@ def run_plugin(target: str, ai_fn):
             uuid = uuids[key]
             with Timer() as t_dep:
                 pass
-            items.append(_build_item(uuid, msg, "info", t_dep.duration, ai_fn))
+            items.append(_build_item(uuid, msg, "info", t_dep.duration, ai_fn, "Dig not found in PATH"))
         return {"plugin": PLUGIN_NAME, "result": items}
 
     # 10) Registros DNS (A/AAAA/MX/TXT)
@@ -141,7 +144,7 @@ def run_plugin(target: str, ai_fn):
                 mx_raw = out
 
     res10 = "\n".join(outputs).strip()
-    items.append(_build_item(uuids["dns_records"], res10, "info", t10.duration, ai_fn))
+    items.append(_build_item(uuids["dns_records"], res10, "info", t10.duration, ai_fn, "DNS Records (A/AAAA/MX/TXT)"))
 
     # 11) PTR reverso (se habilitado)
     if reverse_enabled:
@@ -156,7 +159,7 @@ def run_plugin(target: str, ai_fn):
                     out_ptr = out_ptr.strip() if out_ptr.strip() else "(sem PTR)"
                     ptrs.append(f"{ipaddr} -> {out_ptr}")
                 res11 = "\n".join(ptrs) if ptrs else "Sem IPs para resolver PTR"
-        items.append(_build_item(uuids["reverse_ptr"], res11, "info", t11.duration, ai_fn))
+        items.append(_build_item(uuids["reverse_ptr"], res11, "info", t11.duration, ai_fn, "Reverse PTR Lookup"))
 
     # 12) SPF (TXT com v=spf1)
     with Timer() as t12:
@@ -169,7 +172,7 @@ def run_plugin(target: str, ai_fn):
     if not spf_hit and spf_required_if_mx and _has_mx(mx_raw):
         sev12 = "medium"
     sev12 = cfg.get("severity_overrides", {}).get("spf", sev12)
-    items.append(_build_item(uuids["spf"], res12, sev12, t12.duration, ai_fn))
+    items.append(_build_item(uuids["spf"], res12, sev12, t12.duration, ai_fn, "SPF Record (TXT v=spf1)"))
 
     # 13) DMARC (TXT em _dmarc.<host> com v=DMARC1)
     with Timer() as t13:
@@ -182,6 +185,6 @@ def run_plugin(target: str, ai_fn):
     if not dmarc_hit and dmarc_required_if_mx and _has_mx(mx_raw):
         sev13 = "medium"
     sev13 = cfg.get("severity_overrides", {}).get("dmarc", sev13)
-    items.append(_build_item(uuids["dmarc"], res13, sev13, t13.duration, ai_fn))
+    items.append(_build_item(uuids["dmarc"], res13, sev13, t13.duration, ai_fn, "DMARC Record (TXT v=DMARC1)"))
 
     return {"plugin": PLUGIN_NAME, "result": items}
