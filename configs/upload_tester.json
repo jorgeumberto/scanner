@@ -1,6 +1,6 @@
 {
   "timeout": 30,
-  "endpoints": ["/upload"],
+  "endpoints": ["/upload","/public","/files", "store", "/images", "/img", "/temp"],
   "field_name": "file",
   "headers": [],
   "extra_fields": {},

@@ -219,4 +219,5 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         "file_name": "curl_files.py",
         "description": "Uses curl to download specific files from a web server and check for their existence.",
         "category": "Information Gathering",
-        "result": items}
+        "result": items
+        }

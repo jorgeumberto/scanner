@@ -232,6 +232,12 @@ def main():
     except Exception:
         ip_origem = None  
 
+    login = None
+    try:
+        login = os.getlogin()
+    except Exception:
+        login = None
+
     my_json = {
         "cliente_api": API_KEY,
         "name": "Scan Automático",
@@ -242,7 +248,7 @@ def main():
         "data_hora": datetime.now().isoformat(),
         "ip_origem": ip_origem,
         "hostname": hostname,
-        "usuario": os.getlogin(),
+        "usuario": login,
         "sistema": platform.platform(),
         "scan_results": plugins_output
     }
@@ -253,8 +259,8 @@ def main():
         json.dump(my_json, f, indent=2, ensure_ascii=False)
     print(f"[+] Seu JSON salvo em: {out_my}")
 
-    api_resp = post_results(my_json)
-    print("[API]", api_resp)
+    #api_resp = post_results(my_json)
+    #print("[API]", api_resp)
 
 if __name__ == "__main__":
     main()

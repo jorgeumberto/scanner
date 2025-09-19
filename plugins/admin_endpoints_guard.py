@@ -3,8 +3,6 @@ from typing import Dict, Any, List
 from utils import run_cmd, Timer
 from urllib.parse import urljoin
 
-PLUGIN_CONFIG_NAME = "admin_endpoints_guard"
-PLUGIN_CONFIG_ALIASES = ["admin_guard"]
 UUID_071 = "uuid-071-admin-protected"  # (71)
 
 COMMON = ["/admin", "/admin/", "/admin/login", "/administrator", "/manage", "/panel", "/wp-admin", "/phpmyadmin"]
@@ -31,7 +29,23 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str,Any]=None):
             else:
                 evid.append(f"{p} -> {st}")
 
-    sev = "low" if issues else "info"
+    sev = "high" if issues else "info"
     txt = "\n".join(f"- {e}" for e in evid)
-    item = {"plugin_uuid":UUID_071,"scan_item_uuid":UUID_071,"result":txt,"analysis_ai":ai_fn("AdminEndpointsGuard",UUID_071,txt),"severity":sev,"duration":t.duration,"auto":True}
-    return {"plugin":"AdminEndpointsGuard","result":[item]}
+    
+    item = {
+        "scan_item_uuid":UUID_071,
+        "result":txt,
+        "analysis_ai":ai_fn("AdminEndpointsGuard",UUID_071,txt),
+        "severity":sev,
+        "duration":t.duration,
+        "auto":True,
+        "item_name": "Admin Endpoints Guard",
+        }
+    
+    return {
+        "plugin":"AdminEndpointsGuard",
+        "file_name": "admin_endpoints_guard.py",
+        "description": "Detecta possíveis endpoints administrativos expostos sem autenticação.",
+        "category": "Information Gathering",
+        "result":[item],
+    }

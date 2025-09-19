@@ -1,9 +1,10 @@
 {
-  "timeout": 15,
-  "login_url": "https://example.com/login",
+
   "user_field": "username",
   "pass_field": "password",
   "user": "admin",
-  "tries": 6,
-  "sleep": 0
+  "tries": 8,
+  "sleep": 0,
+  "timeout": 10,
+  "severity_if_vulnerable": "high"
 }
