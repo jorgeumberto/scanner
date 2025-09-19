@@ -4,8 +4,8 @@
   "target": "http://192.168.248.113",
   "description": "Scan automático via API",
   "finding_count": 15,
-  "duration": 0.789,
-  "data_hora": "2025-09-18T20:39:36.122268",
+  "duration": 0.601,
+  "data_hora": "2025-09-18T21:34:20.536392",
   "ip_origem": "127.0.1.1",
   "hostname": "jorge-Inspiron-15-3520",
   "usuario": "jorge",
@@ -23,7 +23,7 @@
           "result": "Server: Apache/2.4.58 (Ubuntu) PHP/8.3.6",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Server Header"
@@ -34,7 +34,7 @@
           "result": "X-Powered-By: PHP/8.3.6",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Powered-By Header"
@@ -45,7 +45,7 @@
           "result": "HSTS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "HTTP Strict Transport Security (HSTS)"
@@ -56,7 +56,7 @@
           "result": "X-Content-Type-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Content-Type-Options Header"
@@ -67,7 +67,7 @@
           "result": "X-Frame-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Frame-Options Header"
@@ -78,7 +78,7 @@
           "result": "CSP ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Content-Security-Policy (CSP) Header"
@@ -89,7 +89,7 @@
           "result": "Access-Control-Allow-Origin: *",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Access-Control-Allow-Origin Header"
@@ -100,7 +100,7 @@
           "result": "Proteção MIME ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "MIME Sniffing Protection"
@@ -111,7 +111,7 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies Secure Flag"
@@ -122,7 +122,7 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies HttpOnly Flag"
@@ -133,7 +133,7 @@
           "result": "sem Set-Cookie",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.032,
+          "duration": 0.012,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies SameSite Attribute"
@@ -151,7 +151,7 @@
           "result": "== A ==\n(vazio)\n== AAAA ==\n(vazio)\n== MX ==\n(vazio)\n== TXT ==\n(vazio)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.178,
+          "duration": 0.179,
           "auto": true,
           "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
           "item_name": "DNS Records (A/AAAA/MX/TXT)"
@@ -171,7 +171,7 @@
           "result": "SPF não encontrado",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.024,
+          "duration": 0.025,
           "auto": true,
           "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
           "item_name": "SPF Record (TXT v=spf1)"
@@ -181,28 +181,10 @@
           "result": "DMARC não encontrado",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.021,
+          "duration": 0.026,
           "auto": true,
           "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
           "item_name": "DMARC Record (TXT v=DMARC1)"
-        }
-      ]
-    },
-    {
-      "plugin": "WhoisDNSSEC",
-      "file_name": "whois_dnssec.py",
-      "description": "Consulta informações WHOIS e verifica se DNSSEC está habilitado.",
-      "category": "Information Gathering",
-      "result": [
-        {
-          "scan_item_uuid": "uuid-009-whois_dnssec",
-          "result": "- DNSSEC: sem flag AD",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "low",
-          "duration": 0.025,
-          "auto": true,
-          "reference": "https://en.wikipedia.org/wiki/WHOIS",
-          "item_name": "WHOIS and DNSSEC Information"
         }
       ]
     },
@@ -217,7 +199,7 @@
           "result": "http://192.168.248.113:80 — Não foi possível extrair métodos via Nmap (http-methods). Info: servidor pode não anunciar Allow ou requer caminhos específicos.",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP Methods Summary: OPTIONS / Allow"
@@ -227,7 +209,7 @@
           "result": "http://192.168.248.113:80 — TRACE desabilitado (não detectado) — Seguro.",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP TRACE Method"
@@ -237,7 +219,7 @@
           "result": "http://192.168.248.113:80 — PUT não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP PUT Method"
@@ -247,7 +229,7 @@
           "result": "http://192.168.248.113:80 — DELETE não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP DELETE Method"
@@ -257,7 +239,7 @@
           "result": "http://192.168.248.113:80 — PATCH não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP PATCH Method"
@@ -267,7 +249,7 @@
           "result": "http://192.168.248.113:80 — PROPFIND não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP PROPFIND Method"
@@ -277,7 +259,7 @@
           "result": "http://192.168.248.113:80 — MKCOL não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP MKCOL Method"
@@ -287,7 +269,7 @@
           "result": "http://192.168.248.113:80 — MOVE não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP MOVE Method"
@@ -297,7 +279,7 @@
           "result": "http://192.168.248.113:80 — COPY não anunciado/detectado — Seguro (no contexto desta rota/host).",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "HTTP COPY Method"
@@ -307,10 +289,28 @@
           "result": "http://192.168.248.113:80 — CORS/Preflight não avaliado por Nmap — Info: use o plugin curl_http_methods para testar ACA*.",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.339,
+          "duration": 0.247,
           "auto": true,
           "reference": "https://nmap.org/nsedoc/scripts/http-methods.html",
           "item_name": "CORS Preflight (not checked by Nmap)"
+        }
+      ]
+    },
+    {
+      "plugin": "WhoisDNSSEC",
+      "file_name": "whois_dnssec.py",
+      "description": "Consulta informações WHOIS e verifica se DNSSEC está habilitado.",
+      "category": "Information Gathering",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-009-whois_dnssec",
+          "result": "- DNSSEC: sem flag AD",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.028,
+          "auto": true,
+          "reference": "https://en.wikipedia.org/wiki/WHOIS",
+          "item_name": "WHOIS and DNSSEC Information"
         }
       ]
     },
@@ -325,7 +325,7 @@
           "result": "http://192.168.248.113/ — HTTP 200 — Risco: diretório responde 200 (potencial listagem/índice acessível) | http://192.168.248.113/uploads/ — HTTP 200 — Risco: diretório responde 200 (potencial listagem/índice acessível)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.1739516258239746,
+          "duration": 0.07509946823120117,
           "auto": true,
           "item_name": "Common Directories"
         },
@@ -334,7 +334,7 @@
           "result": "http://192.168.248.113/.git/HEAD — HTTP 404 — Seguro: .git não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.18088579177856445,
+          "duration": 0.0865931510925293,
           "auto": true,
           "item_name": "Files in .git"
         },
@@ -343,7 +343,7 @@
           "result": "http://192.168.248.113/.env — HTTP 200 — Risco: .env acessível (segredos/credenciais podem vazar)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.1905832290649414,
+          "duration": 0.09733462333679199,
           "auto": true,
           "item_name": "Files in .env"
         },
@@ -352,7 +352,7 @@
           "result": "http://192.168.248.113/server-status?auto — HTTP 403 — Risco: Apache status presente porém restrito | http://192.168.248.113/server-status — HTTP 403 — Risco: Apache status presente porém restrito",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.2347278594970703,
+          "duration": 0.12750935554504395,
           "auto": true,
           "item_name": "Web Server Status"
         },
@@ -361,7 +361,7 @@
           "result": "Não encontrado(s) — Seguro: arquivos de diagnóstico não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.27826547622680664,
+          "duration": 0.16443276405334473,
           "auto": true,
           "item_name": "Common Diagnostic Files: phpinfo.php, info.php, test.php"
         },
@@ -370,7 +370,7 @@
           "result": "Não encontrado(s) — Seguro: backups não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.36317968368530273,
+          "duration": 0.26974964141845703,
           "auto": true,
           "item_name": "Common Backup Files: ~, .bak, local.settings.php"
         },
@@ -379,7 +379,7 @@
           "result": "Não encontrado(s) — Seguro: dumps/arquivos não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.4550321102142334,
+          "duration": 0.3622550964355469,
           "auto": true,
           "item_name": "Common Archive and Dump Files: .zip, .tar.gz, .sql"
         },
@@ -388,7 +388,7 @@
           "result": "http://192.168.248.113/.DS_Store — HTTP 404 — Seguro: .DS_Store não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.46686768531799316,
+          "duration": 0.37525057792663574,
           "auto": true,
           "item_name": "Files in .DS_Store"
         },
@@ -397,7 +397,7 @@
           "result": "http://192.168.248.113/.svn/entries — HTTP 404 — Seguro: .svn não exposto",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.4792327880859375,
+          "duration": 0.384807825088501,
           "auto": true,
           "item_name": "Files in .svn"
         },
@@ -406,7 +406,7 @@
           "result": "Não encontrado(s) — Seguro: manifests/locks não expostos",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.5365176200866699,
+          "duration": 0.44446754455566406,
           "auto": true,
           "item_name": "Common Manifest and Lock Files: composer.json, package.json, yarn.lock"
         },
@@ -415,7 +415,7 @@
           "result": "http://192.168.248.113/robots.txt — HTTP 200 — Info: arquivo presente (normal; pode listar rotas públicas)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.5493857860565186,
+          "duration": 0.4568607807159424,
           "auto": true,
           "item_name": "robots.txt"
         },
@@ -424,7 +424,7 @@
           "result": "http://192.168.248.113/sitemap.xml — HTTP 200 — Info: sitemap presente (normal; indica URLs públicas para crawlers)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.5799646377563477,
+          "duration": 0.4781627655029297,
           "auto": true,
           "item_name": "sitemap.xml / sitemap_index.xml"
         }
@@ -441,7 +441,7 @@
           "result": "Portas (individuais): 22/tcp open ssh | 80/tcp open http | 443/tcp open https | 1514/tcp open fujitsu-dtcns | 1515/tcp open ifor-protocol | 10050/tcp open zabbix-agent | 55000/tcp open unknown || Agregado: 65528 closed — Motivo: Encontrou porta(s) aberta(s) — serviço exposto; revisar ACL/exposição.",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.746,
+          "duration": 0.583,
           "auto": true,
           "reference": "https://nmap.org",
           "item_name": "Nmap Top Ports Scan"
