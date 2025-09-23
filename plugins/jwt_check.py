@@ -146,6 +146,9 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
 
     return {
         "plugin": "JWTSecurity",
+        "file_name": "jwt_check.py",
+        "description": "Check for common JWT security issues.",
+        "category": "Configuration and Deployment Management",
         "result": [{
             "plugin_uuid": UUID_046,
             "scan_item_uuid": UUID_046,
@@ -153,6 +156,9 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
             "analysis_ai": ai_fn("JWTSecurity", UUID_046, result),
             "severity": worst if summaries else "info",
             "duration": duration,
-            "auto": True
+            "auto": True,
+            "reference": "https://auth0.com/docs/security/tokens/json-web-tokens/json-web-token-best-practices",
+            "item_name": checklist,
+
         }]
     }

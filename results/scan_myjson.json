@@ -3,39 +3,30 @@
   "name": "Scan Automático",
   "target": "http://localhost",
   "description": "Scan automático via API",
-  "finding_count": 1,
-  "duration": 50.48,
-  "data_hora": "2025-09-19T17:09:57.552974",
+  "finding_count": 0,
+  "duration": 0.005,
+  "data_hora": "2025-09-22T17:07:37.317238",
   "ip_origem": "127.0.1.1",
   "hostname": "FIN-NB-55570",
   "usuario": null,
   "sistema": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "scan_results": [
     {
-      "plugin": "upload_tester",
-      "category": "File Uploads",
+      "plugin": "JWTSecurity",
+      "file_name": "jwt_check.py",
+      "description": "Check for common JWT security issues.",
+      "category": "Configuration and Deployment Management",
       "result": [
         {
-          "plugin_uuid": "uuid-026-upload-policy",
-          "scan_item_uuid": "uuid-026-upload-policy",
-          "item_name": "Upload policy overview",
-          "result": "Nenhum upload claramente aceito (todas as tentativas indicam bloqueio/erro).",
-          "analysis_ai": "[AI desabilitada]",
-          "severity": "low",
-          "duration": 50.47866408999835,
-          "auto": true,
-          "reference": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html"
-        },
-        {
-          "plugin_uuid": "uuid-058-upload-validation",
-          "scan_item_uuid": "uuid-058-upload-validation",
-          "item_name": "Upload validation evidence",
-          "result": "Evidências de bloqueio/erro:\n- :///upload :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///upload :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///upload :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///upload :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///upload :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- :///public :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///public :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///public :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///public :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///public :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- :///files :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///files :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///files :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///files :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///files :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- ://store :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- ://store :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- ://store :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- ://store :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- ://store :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- :///images :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///images :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///images :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///images :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///images :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- :///img :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///img :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///img :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///img :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///img :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente\n- :///temp :: pixel.png (image/png) -> ? | bloqueio/erro aparente\n- :///temp :: test.php (application/x-php) -> ? | bloqueio/erro aparente\n- :///temp :: test.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///temp :: test.php.txt (text/plain) -> ? | bloqueio/erro aparente\n- :///temp :: shell.php.jpg (image/jpeg) -> ? | bloqueio/erro aparente",
+          "plugin_uuid": "uuid-046",
+          "scan_item_uuid": "uuid-046",
+          "result": "Nenhum achado para JWT seguro (alg!=none, exp/iat/aud/iss)",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 50.47866408999835,
+          "duration": 0.0,
           "auto": true,
-          "reference": "https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload"
+          "reference": "https://auth0.com/docs/security/tokens/json-web-tokens/json-web-token-best-practices",
+          "item_name": "JWT seguro (alg!=none, exp/iat/aud/iss)"
         }
       ]
     }

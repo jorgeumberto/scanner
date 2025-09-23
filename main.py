@@ -259,8 +259,12 @@ def main():
         json.dump(my_json, f, indent=2, ensure_ascii=False)
     print(f"[+] Seu JSON salvo em: {out_my}")
 
-    #api_resp = post_results(my_json)
-    #print("[API]", api_resp)
+    if(os.getenv("SEND_TO_API", "0")=="0"):
+        print("[+] SEND_TO_API=0 ativo, pulando envio para API.")
+        return
+    
+    api_resp = post_results(my_json)
+    print("[API]", api_resp)
 
 if __name__ == "__main__":
     main()

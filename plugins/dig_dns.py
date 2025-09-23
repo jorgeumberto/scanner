@@ -189,4 +189,5 @@ def run_plugin(target: str, ai_fn):
         "file_name": "dig_dns.py",
         "description": "Consult DNS registries (A/AAAA/MX/TXT), reverse PTR and valid SPF/DMARC.",
         "category": "Information Gathering",
-        "result": items}
+        "result": items
+        }
