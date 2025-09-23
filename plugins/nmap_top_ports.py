@@ -192,7 +192,8 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     }
 
     return {
-        "plugin": "nma_top_ports", 
+        "plugin": "nmap_top_ports", 
+        "plugin_uuid": "uuid-nmap-top-ports",
         "file_name": "nmap_top_ports.py",
         "description": "Scans all TCP ports using Nmap to identify open and filtered ports.",
         "category": "Information Gathering",

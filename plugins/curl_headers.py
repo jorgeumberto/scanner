@@ -19,7 +19,6 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
 
     def make_item(uuid: str, result: str, severity: str, item_name:str) -> Dict[str, Any]:
         return {
-            "plugin_uuid": uuid,           # mantido
             "scan_item_uuid": uuid,        # novo → já sai no JSON final
             "result": result,
             "analysis_ai": ai_fn("CurlHeaders", uuid, result),
@@ -67,18 +66,19 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
 
     # 38) Cookies Secure
     has_secure = "secure" in cookies.lower() if cookies else False
-    items.append(make_item("uuid-038-cookie-sec", cookies if cookies else "sem Set-Cookie", "medium" if cookies and not has_secure else "info", "Cookies Secure Flag"))
+    items.append(make_item("uuid-038-cookie-sec", cookies if cookies else "Sem Set-Cookies Secure", "medium" if cookies and not has_secure else "info", "Cookies Secure Flag"))
 
     # 39) Cookies HttpOnly
     has_httponly = "httponly" in cookies.lower() if cookies else False
-    items.append(make_item("uuid-039-cookie-httponly", cookies if cookies else "sem Set-Cookie", "medium" if cookies and not has_httponly else "info", "Cookies HttpOnly Flag"))
+    items.append(make_item("uuid-039-cookie-httponly", cookies if cookies else "Sem Cookies-HttpOnly", "medium" if cookies and not has_httponly else "info", "Cookies HttpOnly Flag"))
 
     # 40) Cookies SameSite
     has_samesite = "samesite" in cookies.lower() if cookies else False
-    items.append(make_item("uuid-040-cookie-samesite", cookies if cookies else "sem Set-Cookie", "low" if cookies and not has_samesite else "info", "Cookies SameSite Attribute"))
+    items.append(make_item("uuid-040-cookie-samesite", cookies if cookies else "Sem Set-Cookies-SameSite", "low" if cookies and not has_samesite else "info", "Cookies SameSite Attribute"))
 
     return {
         "plugin": "CurlHeaders", 
+        "plugin_uuid": "uuid-curl-headers",
         "file_name": "curl_headers.py",
         "description": "Uses curl to get and parse HTTP headers from a web server.",
         "category": "Information Gathering",

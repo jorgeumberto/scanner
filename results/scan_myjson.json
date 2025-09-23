@@ -3,30 +3,149 @@
   "name": "Scan Automático",
   "target": "http://localhost",
   "description": "Scan automático via API",
-  "finding_count": 0,
-  "duration": 0.005,
-  "data_hora": "2025-09-22T17:07:37.317238",
+  "finding_count": 7,
+  "duration": 0.045,
+  "data_hora": "2025-09-23T11:30:13.965384",
   "ip_origem": "127.0.1.1",
   "hostname": "FIN-NB-55570",
   "usuario": null,
   "sistema": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "scan_results": [
     {
-      "plugin": "JWTSecurity",
-      "file_name": "jwt_check.py",
-      "description": "Check for common JWT security issues.",
-      "category": "Configuration and Deployment Management",
+      "plugin": "CurlHeaders",
+      "plugin_uuid": "uuid-curl-headers",
+      "file_name": "curl_headers.py",
+      "description": "Uses curl to get and parse HTTP headers from a web server.",
+      "category": "Information Gathering",
       "result": [
         {
-          "plugin_uuid": "uuid-046",
-          "scan_item_uuid": "uuid-046",
-          "result": "Nenhum achado para JWT seguro (alg!=none, exp/iat/aud/iss)",
+          "scan_item_uuid": "uuid-001-server",
+          "result": "Server: Apache/2.4.58 (Ubuntu)",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Server Header"
+        },
+        {
+          "scan_item_uuid": "uuid-002-powered-by",
+          "result": "X-Powered-By ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.0,
+          "duration": 0.019,
           "auto": true,
-          "reference": "https://auth0.com/docs/security/tokens/json-web-tokens/json-web-token-best-practices",
-          "item_name": "JWT seguro (alg!=none, exp/iat/aud/iss)"
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "X-Powered-By Header"
+        },
+        {
+          "scan_item_uuid": "uuid-019-hsts",
+          "result": "HSTS ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "HTTP Strict Transport Security (HSTS)"
+        },
+        {
+          "scan_item_uuid": "uuid-020-xcontent",
+          "result": "X-Content-Type-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "X-Content-Type-Options Header"
+        },
+        {
+          "scan_item_uuid": "uuid-031-xframe",
+          "result": "X-Frame-Options ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "X-Frame-Options Header"
+        },
+        {
+          "scan_item_uuid": "uuid-032-csp",
+          "result": "CSP ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "high",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Content-Security-Policy (CSP) Header"
+        },
+        {
+          "scan_item_uuid": "uuid-033-cors",
+          "result": "CORS ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "low",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Access-Control-Allow-Origin Header"
+        },
+        {
+          "scan_item_uuid": "uuid-034-mimesniff",
+          "result": "Proteção MIME ausente",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "medium",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "MIME Sniffing Protection"
+        },
+        {
+          "scan_item_uuid": "uuid-038-cookie-sec",
+          "result": "Sem Set-Cookies Secure",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Cookies Secure Flag"
+        },
+        {
+          "scan_item_uuid": "uuid-039-cookie-httponly",
+          "result": "Sem Cookies-HttpOnly",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Cookies HttpOnly Flag"
+        },
+        {
+          "scan_item_uuid": "uuid-040-cookie-samesite",
+          "result": "Sem Set-Cookies-SameSite",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.019,
+          "auto": true,
+          "reference": "https://owasp.org/www-project-secure-headers/",
+          "item_name": "Cookies SameSite Attribute"
+        }
+      ]
+    },
+    {
+      "plugin": "nmap_top_ports",
+      "plugin_uuid": "uuid-nmap-top-ports",
+      "file_name": "nmap_top_ports.py",
+      "description": "Scans all TCP ports using Nmap to identify open and filtered ports.",
+      "category": "Information Gathering",
+      "result": [
+        {
+          "scan_item_uuid": "uuid-301-nmap-top-ports",
+          "result": "Portas (individuais): (sem portas individuais) || Agregado: (sem agregado) — Motivo: Apenas fechadas (agregado) — sem serviços ouvindo nas amostras.",
+          "analysis_ai": "[AI desabilitada]",
+          "severity": "info",
+          "duration": 0.041,
+          "auto": true,
+          "reference": "https://nmap.org",
+          "item_name": "Nmap Top Ports Scan"
         }
       ]
     }
