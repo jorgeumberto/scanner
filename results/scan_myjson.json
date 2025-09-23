@@ -4,12 +4,12 @@
   "target": "http://localhost",
   "description": "Scan automático via API",
   "finding_count": 7,
-  "duration": 0.045,
-  "data_hora": "2025-09-23T11:30:13.965384",
+  "duration": 1.609,
+  "data_hora": "2025-09-23T19:02:34.662531",
   "ip_origem": "127.0.1.1",
-  "hostname": "FIN-NB-55570",
-  "usuario": null,
-  "sistema": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "hostname": "jorge-Inspiron-15-3520",
+  "usuario": "jorge",
+  "sistema": "Linux-5.15.0-139-generic-x86_64-with-glibc2.29",
   "scan_results": [
     {
       "plugin": "CurlHeaders",
@@ -20,10 +20,10 @@
       "result": [
         {
           "scan_item_uuid": "uuid-001-server",
-          "result": "Server: Apache/2.4.58 (Ubuntu)",
+          "result": "Header Server ausente",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "low",
-          "duration": 0.019,
+          "severity": "info",
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Server Header"
@@ -33,7 +33,7 @@
           "result": "X-Powered-By ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Powered-By Header"
@@ -43,7 +43,7 @@
           "result": "HSTS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "HTTP Strict Transport Security (HSTS)"
@@ -53,7 +53,7 @@
           "result": "X-Content-Type-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Content-Type-Options Header"
@@ -63,7 +63,7 @@
           "result": "X-Frame-Options ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "X-Frame-Options Header"
@@ -73,7 +73,7 @@
           "result": "CSP ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "high",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Content-Security-Policy (CSP) Header"
@@ -83,7 +83,7 @@
           "result": "CORS ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "low",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Access-Control-Allow-Origin Header"
@@ -93,7 +93,7 @@
           "result": "Proteção MIME ausente",
           "analysis_ai": "[AI desabilitada]",
           "severity": "medium",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "MIME Sniffing Protection"
@@ -103,7 +103,7 @@
           "result": "Sem Set-Cookies Secure",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies Secure Flag"
@@ -113,7 +113,7 @@
           "result": "Sem Cookies-HttpOnly",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies HttpOnly Flag"
@@ -123,7 +123,7 @@
           "result": "Sem Set-Cookies-SameSite",
           "analysis_ai": "[AI desabilitada]",
           "severity": "info",
-          "duration": 0.019,
+          "duration": 0.007,
           "auto": true,
           "reference": "https://owasp.org/www-project-secure-headers/",
           "item_name": "Cookies SameSite Attribute"
@@ -139,10 +139,10 @@
       "result": [
         {
           "scan_item_uuid": "uuid-301-nmap-top-ports",
-          "result": "Portas (individuais): (sem portas individuais) || Agregado: (sem agregado) — Motivo: Apenas fechadas (agregado) — sem serviços ouvindo nas amostras.",
+          "result": "Portas (individuais): 631/tcp open ipp | 5432/tcp open postgresql | 5689/tcp open qmvideo | 35931/tcp open - | 38689/tcp open - || Agregado: 65530 closed — Motivo: Encontrou porta(s) aberta(s) — serviço exposto; revisar ACL/exposição.",
           "analysis_ai": "[AI desabilitada]",
-          "severity": "info",
-          "duration": 0.041,
+          "severity": "high",
+          "duration": 1.607,
           "auto": true,
           "reference": "https://nmap.org",
           "item_name": "Nmap Top Ports Scan"
