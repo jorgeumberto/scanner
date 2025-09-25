@@ -39,11 +39,13 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str,Any]=None):
         "severity":sev,
         "duration":t.duration,
         "auto":True,
+        "reference": "https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control",
         "item_name": "Admin Endpoints Guard",
         }
     
     return {
         "plugin":"AdminEndpointsGuard",
+        "plugin_uuid": UUID_071,
         "file_name": "admin_endpoints_guard.py",
         "description": "Detecta possíveis endpoints administrativos expostos sem autenticação.",
         "category": "Information Gathering",

@@ -90,6 +90,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
 
     return {
         "plugin": "AuthRateLimitProbe",
+        "plugin_uuid": "auth_rate_limit_probe-001",
         "file_name": "auth_rate_limit_probe.py",
         "description": "Probes for authentication rate limiting by sending multiple failed login attempts.",
         "category": "Brute Force Protection",

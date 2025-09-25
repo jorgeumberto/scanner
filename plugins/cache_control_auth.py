@@ -149,6 +149,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
 
     return {
         "plugin": "CacheControlAuth",
+        "plugin_uuid": "cache_control_auth-001",
         "file_name": "cache_control_auth.py",
         "description": "Checks Cache-Control and Pragma headers on responses that set cookies to ensure they are not cached improperly.",
         "category": "HTTP Security Headers",
