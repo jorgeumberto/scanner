@@ -41,3 +41,10 @@ class Timer:
     @property
     def duration(self) -> float:
         return round(self.t1 - self.t0, 3)
+
+import shutil
+import subprocess
+
+def ensure_tool(bin_name: str):
+    if shutil.which(bin_name) is None:
+        raise RuntimeError(f"Dependência ausente: {bin_name} não encontrado no PATH.")

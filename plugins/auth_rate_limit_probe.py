@@ -1,7 +1,28 @@
 # plugins/auth_rate_limit_probe.py
 from typing import Dict, Any
-from utils import run_cmd, Timer
+from utils import run_cmd as _run_cmd_shadow, Timer
 from urllib.parse import urlencode
+
+# === injected: capture executed shell commands for tagging ===
+try:
+    from utils import run_cmd as __run_cmd_orig  # keep original
+except Exception as _e_inject:
+    __run_cmd_orig = None
+
+EXEC_CMDS = []  # type: list[str]
+
+def run_cmd(cmd, timeout=None):
+    """
+    Wrapper injected to capture the exact command used.
+    Keeps the original behavior, but records the command string.
+    """
+    cmd_str = " ".join(cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+    EXEC_CMDS.append(cmd_str)
+    if __run_cmd_orig is None:
+        raise RuntimeError("run_cmd original não disponível para execução.")
+    return __run_cmd_orig(cmd, timeout=timeout)
+# === end injected ===
+
 
 PLUGIN_CONFIG_NAME = "auth_rate_limit_probe"
 PLUGIN_CONFIG_ALIASES = ["rl_auth"]
@@ -103,7 +124,8 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "duration": t.duration,
                 "auto": True,
                 "reference": "https://owasp.org/www-project-top-ten/2017/A02_2021-Cryptographic_Failures",  # pode ajustar
-                "item_name": "Brute Force Protection"
+                "item_name": "Brute Force Protection",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
             },
             {
                 "scan_item_uuid": UUID_084,
@@ -113,7 +135,8 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "duration": t.duration,
                 "auto": True,
                 "reference": "https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication",
-                "item_name": "Rate Limit Probe Details"
+                "item_name": "Rate Limit Probe Details",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
             }
         ]
     }

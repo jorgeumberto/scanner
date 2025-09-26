@@ -1,7 +1,7 @@
-# plugins/dig_dns.py (alinhado ao padrão de saída do curl_files)
-from utils import run_cmd, Timer, extract_host
+# plugins/dig_dns.py (alinhado ao padrão de saída do curl_files, com tag 'command' por item)
+from utils import run_cmd, Timer, extract_host,  ensure_tool
 from typing import Dict, Any, List, Optional
-import shutil, re, json, os
+import re, json, os
 
 PLUGIN_NAME = "DigDNS"
 
@@ -13,36 +13,62 @@ DEFAULT_UUIDS: Dict[str, str] = {
     "dmarc":       "uuid-013-dmarc",        # DMARC (TXT v=DMARC1)
 }
 
-def _load_config() -> Dict[str, Any]:
-    path = os.path.join("configs", f"{PLUGIN_NAME}.json")
-    if not os.path.isfile(path):
-        return {}
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return {}
+# Config default
+DEFAULT_CFG: Dict[str, Any] = {
+    # extras seguros (performance) – podem ser sobrescritos em configs/dig_dns.json
+    "dig_extra_args": ["+time=2", "+tries=1"],
+    "dns_server": None,                 # ex.: "8.8.8.8" → vira "@8.8.8.8"
+    "enable_reverse_ptr": True,         # ativa 11) PTR reverso
+    "spf_required_if_mx": True,         # se tem MX e não tem SPF → escalar severidade
+    "dmarc_required_if_mx": True,       # se tem MX e não tem DMARC → escalar severidade
+    "severity_overrides": {},           # ex.: {"spf":"medium","dmarc":"high"}
+    "timeout": 10,                      # timeout base por consulta dig
+}
 
-def _uuids(cfg: Dict[str, Any]) -> Dict[str, str]:
-    u = DEFAULT_UUIDS.copy()
-    u.update(cfg.get("uuids", {}))
-    return u
+def _load_config_file() -> Dict[str, Any]:
+    """Lê configs/dig_dns.json se existir; caso contrário, {}."""
+    path = os.path.join("configs", "dig_dns.json")
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
 
-def _ai(ai_fn, scan_item_uuid: str, text: str) -> str:
+def _merge_cfg(user_cfg: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    cfg = dict(DEFAULT_CFG)
+    file_cfg = _load_config_file()
+    if file_cfg:
+        cfg.update(file_cfg)
+    if user_cfg:
+        cfg.update(user_cfg)
+    # normalizações simples
+    if isinstance(cfg.get("dig_extra_args"), str):
+        cfg["dig_extra_args"] = [cfg["dig_extra_args"]]
+    return cfg
+
+def _ai(ai_fn, uuid: str, msg: str) -> str:
     try:
-        if callable(ai_fn):
-            return ai_fn(PLUGIN_NAME, scan_item_uuid, text)
+        return ai_fn(PLUGIN_NAME, uuid, msg)
     except Exception:
-        pass
-    return "[AI desabilitada]"
+        return "[AI desabilitada]"
+
+# -------- helpers para dig --------
 
 def _dig_args(base: List[str], cfg: Dict[str, Any]) -> List[str]:
     args = base[:]
     # Extras seguros para performance
-    args.extend(cfg.get("dig_extra_args", ["+time=2", "+tries=1"]))
+    extras = cfg.get("dig_extra_args") or []
+    if isinstance(extras, list):
+        args.extend(extras)
     if cfg.get("dns_server"):
         args.append(f"@{cfg['dns_server']}")
     return args
+
+def _cmd_str(base_args: List[str], cfg: Dict[str, Any]) -> str:
+    """String exata do comando que será (ou foi) executado."""
+    return " ".join(_dig_args(base_args, cfg))
 
 def _run_dig(host_or_ip: str, rr: Optional[str], cfg: Dict[str, Any], timeout: int = 10) -> str:
     cmd = ["dig", "+short"]
@@ -58,25 +84,24 @@ def _txt_lines_to_strings(txt_output: str) -> List[str]:
     Concatena segmentos entre aspas que o `dig +short` às vezes separa.
     Ex.: "\"v=spf1 include:_spf.example\" \"-all\"" -> "v=spf1 include:_spf.example-all"
     """
-    lines = []
+    lines: List[str] = []
     for line in txt_output.splitlines():
         parts = re.findall(r'"([^"]*)"', line)
         if parts:
             lines.append("".join(parts))
         else:
-            # Pode vir sem aspas dependendo do resolver
             line = line.strip()
             if line:
                 lines.append(line)
     return lines
 
 def _has_mx(mx_output: str) -> bool:
-    # `dig +short MX` -> "10 mx1.example.com." linhas; qualquer conteúdo não vazio conta
+    # qualquer conteúdo não vazio conta como presença de MX
     return any(line.strip() for line in mx_output.splitlines())
 
 # ---------- helpers padronizados (espelhando curl_files) ----------
 
-def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_name:str) -> Dict[str, Any]:
+def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_name: str, command: str) -> Dict[str, Any]:
     return {
         "scan_item_uuid": uuid,
         "result": msg,
@@ -86,108 +111,121 @@ def _build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item
         "auto": True,
         "reference": "https://en.wikipedia.org/wiki/List_of_DNS_record_types",
         "item_name": item_name,
+        "command": command,
     }
 
-# ---------- plugin ----------
+# ========== plugin principal ==========
 
-def run_plugin(target: str, ai_fn):
-    """
-    Contrato igual ao dos plugins curl_*:
-      retorna {"plugin": "dig_dns", "result": [items]}
-      e cada item contém:
-        - scan_item_uuid, result, analysis_ai, severity, duration, auto, file_name, description
-    """
-    cfg = _load_config()
-    uuids = _uuids(cfg)
-    timeout = int(cfg.get("timeout", 10))
-    reverse_enabled = bool(cfg.get("reverse_enabled", True))
-    records: List[str] = cfg.get("records", ["A", "AAAA", "MX", "TXT"])
+def run_plugin(target: str, ai_fn, cfg_in: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
 
-    # Política: elevar severidade se houver MX mas faltarem SPF/DMARC
-    spf_required_if_mx = bool(cfg.get("spf_required_if_mx", True))
-    dmarc_required_if_mx = bool(cfg.get("dmarc_required_if_mx", True))
+    ensure_tool('dig')  # lança erro se não houver
 
+    cfg = _merge_cfg(cfg_in)
+    timeout = int(cfg.get("timeout", 10) or 10)
+
+    host = extract_host(target)
     items: List[Dict[str, Any]] = []
-    host = extract_host(target) or target
 
-    # Dependência
-    if shutil.which("dig") is None:
-        msg = "Dependência ausente: 'dig' não encontrado no PATH."
-        for key in ["dns_records", "reverse_ptr", "spf", "dmarc"]:
-            uuid = uuids[key]
-            with Timer() as t_dep:
-                pass
-            items.append(_build_item(uuid, msg, "info", t_dep.duration, ai_fn, "Dig not found in PATH"))
-        return {"plugin": PLUGIN_NAME, "result": items}
+    # UUIDs (sobrescrevíveis)
+    uuids = dict(DEFAULT_UUIDS)
+    uuids.update({k: v for k, v in (cfg.get("uuids") or {}).items() if k in uuids})
 
-    # 10) Registros DNS (A/AAAA/MX/TXT)
+    # 10) A/AAAA/MX/TXT
     with Timer() as t10:
-        outputs = []
-        a_addrs: List[str] = []
-        aaaa_addrs: List[str] = []
-        mx_raw = ""
-        for rr in records:
-            out = _run_dig(host, rr, cfg, timeout=timeout)
-            if rr.upper() == "TXT":
-                txt_norm = "\n".join(_txt_lines_to_strings(out))
-                outputs.append(f"== {rr.upper()} ==\n{txt_norm if txt_norm else '(vazio)'}")
-            else:
-                outputs.append(f"== {rr.upper()} ==\n{out if out else '(vazio)'}")
-            if rr.upper() == "A":
-                a_addrs = [l.strip() for l in out.splitlines() if l.strip()]
-            elif rr.upper() == "AAAA":
-                aaaa_addrs = [l.strip() for l in out.splitlines() if l.strip()]
-            elif rr.upper() == "MX":
-                mx_raw = out
+        a_raw    = _run_dig(host, "A",    cfg, timeout=timeout)
+        aaaa_raw = _run_dig(host, "AAAA", cfg, timeout=timeout)
+        mx_raw   = _run_dig(host, "MX",   cfg, timeout=timeout)
+        txt_raw  = _run_dig(host, "TXT",  cfg, timeout=timeout)
 
-    res10 = "\n".join(outputs).strip()
-    items.append(_build_item(uuids["dns_records"], res10, "info", t10.duration, ai_fn, "DNS Records (A/AAAA/MX/TXT)"))
+        a_txt    = a_raw.strip()    if a_raw.strip()    else "(vazio)"
+        aaaa_txt = aaaa_raw.strip() if aaaa_raw.strip() else "(vazio)"
+        mx_txt   = mx_raw.strip()   if mx_raw.strip()   else "(vazio)"
+        txt_txt  = txt_raw.strip()  if txt_raw.strip()  else "(vazio)"
+
+        res10 = f"== A ==\n{a_txt}\n== AAAA ==\n{aaaa_txt}\n== MX ==\n{mx_txt}\n== TXT ==\n{txt_txt}"
+
+    cmds10 = [
+        _cmd_str(["dig", "+short", host, "A"], cfg),
+        _cmd_str(["dig", "+short", host, "AAAA"], cfg),
+        _cmd_str(["dig", "+short", host, "MX"], cfg),
+        _cmd_str(["dig", "+short", host, "TXT"], cfg),
+    ]
+    items.append(_build_item(
+        uuids["dns_records"], res10, "info", t10.duration, ai_fn,
+        "DNS Records (A/AAAA/MX/TXT)",
+        " ; ".join(cmds10)
+    ))
+
+    # Preparação para PTR
+    a_addrs    = [l.strip() for l in a_raw.splitlines() if l.strip()]
+    aaaa_addrs = [l.strip() for l in aaaa_raw.splitlines() if l.strip()]
 
     # 11) PTR reverso (se habilitado)
-    if reverse_enabled:
+    if bool(cfg.get("enable_reverse_ptr", True)):
         with Timer() as t11:
             ips = [*a_addrs, *aaaa_addrs]
             if not ips:
                 res11 = "A/AAAA não resolvidos – PTR ignorado"
+                cmds11: List[str] = []
             else:
                 ptrs: List[str] = []
+                cmds11 = []
                 for ipaddr in ips:
-                    out_ptr = run_cmd(_dig_args(["dig", "+short", "-x", ipaddr], cfg), timeout=timeout) or ""
+                    cmds11.append(_cmd_str(["dig", "+short", "-x", ipaddr], cfg))
+                    out_ptr = _run_dig(ipaddr, None, cfg, timeout=timeout) if False else (
+                        run_cmd(_dig_args(["dig", "+short", "-x", ipaddr], cfg), timeout=timeout) or ""
+                    )
                     out_ptr = out_ptr.strip() if out_ptr.strip() else "(sem PTR)"
                     ptrs.append(f"{ipaddr} -> {out_ptr}")
                 res11 = "\n".join(ptrs) if ptrs else "Sem IPs para resolver PTR"
-        items.append(_build_item(uuids["reverse_ptr"], res11, "info", t11.duration, ai_fn, "Reverse PTR Lookup"))
+
+        items.append(_build_item(
+            uuids["reverse_ptr"], res11, "info", t11.duration, ai_fn,
+            "Reverse PTR Lookup",
+            " ; ".join(cmds11)
+        ))
 
     # 12) SPF (TXT com v=spf1)
     with Timer() as t12:
-        txt_raw = _run_dig(host, "TXT", cfg, timeout=timeout)
-        txt_lines = _txt_lines_to_strings(txt_raw)
-        spf_hit = next((l for l in txt_lines if "v=spf1" in l.lower()), "")
+        txt_raw_spf = _run_dig(host, "TXT", cfg, timeout=timeout)
+        txt_lines   = _txt_lines_to_strings(txt_raw_spf)
+        spf_hit     = next((l for l in txt_lines if "v=spf1" in l.lower()), "")
     res12 = spf_hit if spf_hit else "SPF não encontrado"
     base_sev_spf = "info" if spf_hit else "low"
     sev12 = base_sev_spf
-    if not spf_hit and spf_required_if_mx and _has_mx(mx_raw):
+    if not spf_hit and bool(cfg.get("spf_required_if_mx", True)) and _has_mx(mx_raw):
         sev12 = "medium"
-    sev12 = cfg.get("severity_overrides", {}).get("spf", sev12)
-    items.append(_build_item(uuids["spf"], res12, sev12, t12.duration, ai_fn, "SPF Record (TXT v=spf1)"))
+    sev12 = (cfg.get("severity_overrides", {}) or {}).get("spf", sev12)
+    cmd12 = _cmd_str(["dig", "+short", host, "TXT"], cfg)
+    items.append(_build_item(
+        uuids["spf"], res12, sev12, t12.duration, ai_fn,
+        "SPF Record (TXT v=spf1)",
+        cmd12
+    ))
 
-    # 13) DMARC (TXT em _dmarc.<host> com v=DMARC1)
+    # 13) DMARC (TXT com v=DMARC1)
     with Timer() as t13:
-        dmarc_raw = _run_dig(f"_dmarc.{host}", "TXT", cfg, timeout=timeout)
+        dmarc_host = f"_dmarc.{host}"
+        dmarc_raw  = _run_dig(dmarc_host, "TXT", cfg, timeout=timeout)
         dmarc_lines = _txt_lines_to_strings(dmarc_raw)
-        dmarc_hit = next((l for l in dmarc_lines if "v=dmarc1" in l.lower()), "")
+        dmarc_hit   = next((l for l in dmarc_lines if "v=dmarc1" in l.lower()), "")
     res13 = dmarc_hit if dmarc_hit else "DMARC não encontrado"
     base_sev_dm = "info" if dmarc_hit else "low"
     sev13 = base_sev_dm
-    if not dmarc_hit and dmarc_required_if_mx and _has_mx(mx_raw):
+    if not dmarc_hit and bool(cfg.get("dmarc_required_if_mx", True)) and _has_mx(mx_raw):
         sev13 = "medium"
-    sev13 = cfg.get("severity_overrides", {}).get("dmarc", sev13)
-    items.append(_build_item(uuids["dmarc"], res13, sev13, t13.duration, ai_fn, "DMARC Record (TXT v=DMARC1)"))
+    sev13 = (cfg.get("severity_overrides", {}) or {}).get("dmarc", sev13)
+    cmd13 = _cmd_str(["dig", "+short", dmarc_host, "TXT"], cfg)
+    items.append(_build_item(
+        uuids["dmarc"], res13, sev13, t13.duration, ai_fn,
+        "DMARC Record (TXT v=DMARC1)",
+        cmd13
+    ))
 
     return {
-        "plugin": PLUGIN_NAME, 
+        "plugin": PLUGIN_NAME,
         "file_name": "dig_dns.py",
         "description": "Consult DNS registries (A/AAAA/MX/TXT), reverse PTR and valid SPF/DMARC.",
         "category": "Information Gathering",
         "result": items
-        }
+    }

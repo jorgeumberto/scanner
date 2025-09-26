@@ -1,7 +1,28 @@
 from typing import Dict, Any, List, Tuple
 from urllib.parse import urljoin
-from utils import run_cmd
+from utils import run_cmd as _run_cmd_shadow
 import time
+
+# === injected: capture executed shell commands for tagging ===
+try:
+    from utils import run_cmd as __run_cmd_orig  # keep original
+except Exception as _e_inject:
+    __run_cmd_orig = None
+
+EXEC_CMDS = []  # type: list[str]
+
+def run_cmd(cmd, timeout=None):
+    """
+    Wrapper injected to capture the exact command used.
+    Keeps the original behavior, but records the command string.
+    """
+    cmd_str = " ".join(cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+    EXEC_CMDS.append(cmd_str)
+    if __run_cmd_orig is None:
+        raise RuntimeError("run_cmd original não disponível para execução.")
+    return __run_cmd_orig(cmd, timeout=timeout)
+# === end injected ===
+
 
 # ---------- helpers ----------
 
@@ -48,6 +69,7 @@ def build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_
         "duration": duration,
         "auto": True,
         "item_name": item_name,
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
     }
 
 def check_one(base: str, path: str, motivo_ok: str, motivo_risco_200: str, motivo_risco_restr: str,

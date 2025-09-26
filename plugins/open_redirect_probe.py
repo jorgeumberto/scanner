@@ -2,13 +2,13 @@
 from typing import Dict, Any, List, Tuple
 from urllib.parse import urlparse
 import itertools
+import os
 
 from utils import run_cmd, Timer
 
-PLUGIN_CONFIG_NAME = "open_redirect"
-PLUGIN_CONFIG_ALIASES = ["openredirect", "redirect_probe"]
+PLUGIN_CONFIG_NAME = "open_redirect_probe"
 
-UUID_35 = "uuid-035"  # Redirecionamento aberto ausente/presente
+UUID_35 = "uuid-035-open_redirect_probe"  # Redirecionamento aberto ausente/presente
 
 COMMON_PARAMS = [
     "next", "url", "redirect", "return", "continue", "dest", "destination",
@@ -19,9 +19,10 @@ COMMON_PATHS = [
     "/", "/login", "/logout", "/signin", "/redirect", "/out"
 ]
 
-EXTERNAL_TEST = "https://example.org/"
+EXTERNAL_TEST = os.getenv("TARGET", "http://example.com")
 
-def _build_tests(base_url: str, params: List[str], paths: List[str], extra_params: List[str], extra_paths: List[str]) -> List[str]:
+def _build_tests(base_url: str, params: List[str], paths: List[str],
+                 extra_params: List[str], extra_paths: List[str]) -> List[str]:
     tests: List[str] = []
     P = params + (extra_params or [])
     S = paths + (extra_paths or [])
@@ -32,9 +33,17 @@ def _build_tests(base_url: str, params: List[str], paths: List[str], extra_param
         tests.append(f"{url}{sep}{prm}={EXTERNAL_TEST}")
     return tests
 
+# -------- helpers de comando/exec --------
+def _curl_cmd_args(url: str, timeout: int) -> List[str]:
+    # não seguir redirecionamentos: queremos inspecionar Location
+    return ["curl", "-sS", "-I", "-m", str(timeout), url]
+
+def _curl_cmd_str(url: str, timeout: int) -> str:
+    return " ".join(_curl_cmd_args(url, timeout))
+
 def _head(url: str, timeout: int) -> str:
     # não seguir redirecionamentos: queremos inspecionar Location
-    return run_cmd(["curl", "-sS", "-I", "-m", str(timeout), url], timeout=timeout+2)
+    return run_cmd(_curl_cmd_args(url, timeout), timeout=timeout + 2)
 
 def _parse_location(raw_headers: str) -> str:
     for ln in raw_headers.splitlines():
@@ -77,6 +86,8 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
         tests = tests[:limit]
 
     vulnerable: List[str] = []
+    vuln_cmds: List[str] = []
+
     with Timer() as t:
         for test_url in tests:
             try:
@@ -84,7 +95,9 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 loc = _parse_location(hdrs)
                 if loc and EXTERNAL_TEST in loc:
                     vulnerable.append(f"{test_url} -> {loc}")
+                    vuln_cmds.append(_curl_cmd_str(test_url, timeout))
             except Exception:
+                # ignora erros individuais e segue testando os demais
                 continue
     duration = t.duration
 
@@ -92,9 +105,12 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
     if vulnerable:
         severity = "high"
         result = _summarize(vulnerable, checklist)
+        command = " ; ".join(vuln_cmds)  # comandos que reproduzem os achados
     else:
         severity = "info"
-        result = f"Nenhum achado para {checklist}"
+        result = f"Nenhum achado para {checklist}. Recomanda-se revisão manua com a ferramenta OWASP ZAP ou Burp Suite."
+        # comando representativo do primeiro teste (se houver)
+        command = _curl_cmd_str(tests[0], timeout) if tests else ""
 
     return {
         "plugin": "OpenRedirectProbe",
@@ -105,6 +121,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
             "analysis_ai": ai_fn("OpenRedirectProbe", UUID_35, result),
             "severity": severity,
             "duration": duration,
-            "auto": True
+            "auto": True,
+            "command": command
         }]
     }

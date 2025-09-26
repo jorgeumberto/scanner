@@ -1,8 +1,29 @@
 from typing import Dict, Any, List, Tuple, Set
-from utils import run_cmd
+from utils import run_cmd as _run_cmd_shadow
 import xml.etree.ElementTree as ET
 import time
 import re
+
+# === injected: capture executed shell commands for tagging ===
+try:
+    from utils import run_cmd as __run_cmd_orig  # keep original
+except Exception as _e_inject:
+    __run_cmd_orig = None
+
+EXEC_CMDS = []  # type: list[str]
+
+def run_cmd(cmd, timeout=None):
+    """
+    Wrapper injected to capture the exact command used.
+    Keeps the original behavior, but records the command string.
+    """
+    cmd_str = " ".join(cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+    EXEC_CMDS.append(cmd_str)
+    if __run_cmd_orig is None:
+        raise RuntimeError("run_cmd original não disponível para execução.")
+    return __run_cmd_orig(cmd, timeout=timeout)
+# === end injected ===
+
 
 # ===== tenta usar normalizador do utils (se existir) =====
 _utils_fmt = None
@@ -188,7 +209,8 @@ def _make_item(uuid: str, result: str, severity: str, duration: float, ai_fn, it
         "duration": duration,
         "auto": True,
         "reference": "https://nmap.org/nsedoc/scripts/http-methods.html", 
-        "item_name": item_name
+        "item_name": item_name,
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
     }
 
 # ===== plugin =====

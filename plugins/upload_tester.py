@@ -1,8 +1,29 @@
 # plugins/upload_tester.py
 from typing import Dict, Any, List, Tuple
 from urllib.parse import urlparse
-from utils import run_cmd  # não usamos mais Timer daqui
+from utils import run_cmd as _run_cmd_shadow  # não usamos mais Timer daqui
 import tempfile, os, base64, time
+
+# === injected: capture executed shell commands for tagging ===
+try:
+    from utils import run_cmd as __run_cmd_orig  # keep original
+except Exception as _e_inject:
+    __run_cmd_orig = None
+
+EXEC_CMDS = []  # type: list[str]
+
+def run_cmd(cmd, timeout=None):
+    """
+    Wrapper injected to capture the exact command used.
+    Keeps the original behavior, but records the command string.
+    """
+    cmd_str = " ".join(cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+    EXEC_CMDS.append(cmd_str)
+    if __run_cmd_orig is None:
+        raise RuntimeError("run_cmd original não disponível para execução.")
+    return __run_cmd_orig(cmd, timeout=timeout)
+# === end injected ===
+
 
 PLUGIN_CONFIG_NAME = "upload_tester"
 PLUGIN_CONFIG_ALIASES = ["upload_check", "file_upload"]
@@ -248,6 +269,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                     "plugin_uuid": UUID_026,
                     "scan_item_uuid": UUID_026,
                     "item_name": "Upload policy overview",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                     "result": txt,
                     "analysis_ai": ai_fn("UploadTester", UUID_026, txt),
                     "severity": "info",
@@ -259,6 +281,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                     "plugin_uuid": UUID_058,
                     "scan_item_uuid": UUID_058,
                     "item_name": "Upload validation evidence",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                     "result": txt,
                     "analysis_ai": ai_fn("UploadTester", UUID_058, txt),
                     "severity": "info",
@@ -336,6 +359,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "plugin_uuid": UUID_026,
                 "scan_item_uuid": UUID_026,
                 "item_name": "Upload policy overview",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                 "result": res26,
                 "analysis_ai": ai_fn("UploadTester", UUID_026, res26),
                 "severity": sev26,
@@ -347,6 +371,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "plugin_uuid": UUID_058,
                 "scan_item_uuid": UUID_058,
                 "item_name": "Upload validation evidence",
+            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                 "result": res58,
                 "analysis_ai": ai_fn("UploadTester", UUID_058, res58),
                 "severity": sev58,

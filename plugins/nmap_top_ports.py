@@ -1,5 +1,5 @@
 from typing import Dict, Any, List, Tuple
-from utils import run_cmd
+from utils import ensure_tool, run_cmd
 import xml.etree.ElementTree as ET
 import time
 
@@ -73,12 +73,14 @@ def _normalize_target(target: str) -> Tuple[str, List[str]]:
     return _fallback_normalize(target)
 
 # ====== nmap helpers ======
-def _run_nmap_xml(host: str, af_flags: List[str], timeout: int = 600) -> str:
+def _build_nmap_cmd(host: str, af_flags: List[str]) -> List[str]:
     """
     Varre TODAS as portas TCP (1–65535), sem ping e sem DNS, saída em XML (-oX -).
     -sT: TCP connect (não exige root).
     """
-    cmd = ["nmap", "-sT", "-Pn", "-n"] + (af_flags or []) + ["-p-", "-oX", "-", host]
+    return ["nmap", "-sT", "-Pn", "-n"] + (af_flags or []) + ["-p-", "-oX", "-", host]
+
+def _run_nmap_xml(cmd: List[str], timeout: int = 600) -> str:
     return run_cmd(cmd, timeout=timeout) or ""
 
 def _parse_nmap_ports(xml_text: str) -> Tuple[str, List[Dict[str, str]], List[Dict[str, str]]]:
@@ -155,10 +157,14 @@ def _severity(ports: List[Dict[str, str]], extras: List[Dict[str, str]]) -> str:
 
 # ====== plugin ======
 def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
+
+    ensure_tool('nmap')  # lança erro se não houver
+
     t0 = time.time()
 
     host, af_flags = _normalize_target(target)
-    xml = _run_nmap_xml(host, af_flags)
+    cmd_list = _build_nmap_cmd(host, af_flags)
+    xml = _run_nmap_xml(cmd_list)
     host_state, ports, extras = _parse_nmap_ports(xml)
 
     if host_state and host_state != "up":
@@ -183,18 +189,21 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
     item = {
         "scan_item_uuid": UUIDS[301],
         "result": result_text,
-        "analysis_ai": ai_fn("nma_top_ports", UUIDS[301], result_text),
+        "analysis_ai": ai_fn("nmap_top_ports", UUIDS[301], result_text),
         "severity": severity,
         "duration": duration,
         "auto": True,
         "reference": "https://nmap.org",
-        "item_name": "Nmap Top Ports Scan"
+        "item_name": "Nmap Top Ports Scan",
+        # novo: comando puro que foi executado
+        "command": " ".join(cmd_list),
     }
 
     return {
-        "plugin": "nmap_top_ports", 
+        "plugin": "nmap_top_ports",
         "plugin_uuid": "uuid-nmap-top-ports",
         "file_name": "nmap_top_ports.py",
         "description": "Scans all TCP ports using Nmap to identify open and filtered ports.",
         "category": "Information Gathering",
-        "result": [item]}
+        "result": [item]
+    }

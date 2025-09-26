@@ -192,6 +192,7 @@ def main():
     os.makedirs("logs", exist_ok=True)
 
     plugin_paths = discover_plugin_files()
+
     if not plugin_paths:
         print(f"[!] Nenhum plugin encontrado em {PLUGINS_DIR}")
         return
