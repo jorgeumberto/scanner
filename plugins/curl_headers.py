@@ -73,6 +73,6 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         "plugin_uuid": "uuid-curl-headers",
         "file_name": "curl_headers.py",
         "description": "Uses curl to get and parse HTTP headers from a web server.",
-        "category": "Information Gathering",
+        "category": "Client-Side Testing",
         "result": items
     }

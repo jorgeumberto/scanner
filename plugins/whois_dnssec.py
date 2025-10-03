@@ -67,7 +67,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
         "auto": True,
         "reference": "https://en.wikipedia.org/wiki/WHOIS",
         "item_name": "WHOIS and DNSSEC Information",
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+        "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
     }
 
     return {
@@ -75,4 +75,5 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
         "file_name": "whois_dnssec.py",
         "description": "Consulta informações WHOIS e verifica se DNSSEC está habilitado.",
         "category": "Information Gathering",        
-        "result": [item]}
+        "result": [item]
+    }

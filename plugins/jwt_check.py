@@ -29,7 +29,7 @@ def run_cmd(cmd, timeout=None):
 PLUGIN_CONFIG_NAME = "jwt_check"
 PLUGIN_CONFIG_ALIASES = ["jwt", "jwt_security"]
 
-UUID_046 = "uuid-046"  # Item 46: JWT seguro (alg!=none, exp/iat/aud/iss)
+UUID_046 = "uuid-046-jwt-check"  # Item 46: JWT seguro (alg!=none, exp/iat/aud/iss)
 
 JWT_RE = re.compile(r"eyJ[0-9A-Za-z_\-]+=*\.[0-9A-Za-z_\-]+=*\.[0-9A-Za-z_\-]+=*", re.ASCII)
 

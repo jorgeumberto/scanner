@@ -70,6 +70,6 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str,Any]=None):
         "plugin_uuid": UUID_071,
         "file_name": "admin_endpoints_guard.py",
         "description": "Detecta possíveis endpoints administrativos expostos sem autenticação.",
-        "category": "Information Gathering",
+        "category": "Authorization and Access Control",
         "result":[item],
     }

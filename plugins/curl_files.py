@@ -69,7 +69,8 @@ def build_item(uuid: str, msg: str, severity: str, duration: float, ai_fn, item_
         "duration": duration,
         "auto": True,
         "item_name": item_name,
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+        "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+        "reference": "https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html"
     }
 
 def check_one(base: str, path: str, motivo_ok: str, motivo_risco_200: str, motivo_risco_restr: str,

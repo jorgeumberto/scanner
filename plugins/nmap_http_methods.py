@@ -281,5 +281,6 @@ def run_plugin(target: str, ai_fn) -> Dict[str, Any]:
         "plugin": "NmapHTTPMethods", 
         "file_name": "nmap_http_methods.py",
         "description": "Verifica métodos HTTP suportados e configurações relacionadas via Nmap.",
-        "category": "Information Gathering",
-        "result": items}
+        "category": "Configuration and Implementation",
+        "result": items
+    }

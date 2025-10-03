@@ -7,7 +7,7 @@ PLUGIN_CONFIG_NAME = "cache_control_auth"
 PLUGIN_CONFIG_ALIASES = ["cache_auth", "cachecontrol"]
 
 # (21) Cache-Control/Pragma para conteúdo sensível
-UUID_021 = "uuid-021"
+UUID_021 = "uuid-021-cache-control-auth"
 
 def _fetch_headers(url: str, timeout: int) -> List[str]:
     """

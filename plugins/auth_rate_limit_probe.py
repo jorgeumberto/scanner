@@ -135,7 +135,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "duration": t.duration,
                 "auto": True,
                 "reference": "https://owasp.org/www-project-top-ten/2017/A2_2017-Broken_Authentication",
-                "item_name": "Rate Limit Probe Details",
+                "item_name": "Others Commons Tests",
             "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
             }
         ]

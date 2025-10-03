@@ -269,7 +269,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                     "plugin_uuid": UUID_026,
                     "scan_item_uuid": UUID_026,
                     "item_name": "Upload policy overview",
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+                    "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                     "result": txt,
                     "analysis_ai": ai_fn("UploadTester", UUID_026, txt),
                     "severity": "info",
@@ -281,7 +281,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                     "plugin_uuid": UUID_058,
                     "scan_item_uuid": UUID_058,
                     "item_name": "Upload validation evidence",
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+                    "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                     "result": txt,
                     "analysis_ai": ai_fn("UploadTester", UUID_058, txt),
                     "severity": "info",
@@ -353,13 +353,13 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
 
     return {
         "plugin": "upload_tester",
-        "category": "File Uploads",
+        "category": "Input Validation",
         "result": [
             {
                 "plugin_uuid": UUID_026,
                 "scan_item_uuid": UUID_026,
                 "item_name": "Upload policy overview",
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+                "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                 "result": res26,
                 "analysis_ai": ai_fn("UploadTester", UUID_026, res26),
                 "severity": sev26,
@@ -371,7 +371,7 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
                 "plugin_uuid": UUID_058,
                 "scan_item_uuid": UUID_058,
                 "item_name": "Upload validation evidence",
-            "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
+                "command": EXEC_CMDS[-1] if EXEC_CMDS else "",
                 "result": res58,
                 "analysis_ai": ai_fn("UploadTester", UUID_058, res58),
                 "severity": sev58,

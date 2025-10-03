@@ -263,6 +263,6 @@ def run_plugin(target: str, *args) -> Dict[str, Any]:
         "plugin": "curl_http_methods",
         "file_name": "curl_http_methods.py",
         "description": "Check HTTP methods (OPTIONS, TRACE, PUT, DELETE, PATCH, WebDAV) and CORS preflight.",
-        "category": "Information Gathering",
+        "category": "Configuration and Implementation",
         "result": items
     }
