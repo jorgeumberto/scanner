@@ -1,0 +1,23 @@
+{
+  "plugin": "session_id_entropy",
+  "description": "Calcula a entropia média dos valores de Session ID retornados em Set-Cookie. Entropia baixa indica previsibilidade.",
+  "enabled": true,
+
+  "timeout": 12,
+  "samples": 3,
+
+  "references": [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+    "https://owasp.org/www-project-top-ten/",
+    "https://en.wikipedia.org/wiki/Entropy_(information_theory)"
+  ],
+
+  "severity_thresholds": {
+    "high_entropy": 3.5,
+    "medium_entropy": 2.5
+  },
+
+  "category": "Session Management",
+  "uuid": "uuid-041",
+  "file_name": "session_id_entropy.py"
+}

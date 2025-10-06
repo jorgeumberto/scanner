@@ -1,0 +1,23 @@
+{
+  "plugin": "session_timeout_probe",
+  "description": "Verifica se cookies de sessão possuem expiração explícita (Max-Age/Expires) e identifica potenciais riscos de sessão permanente.",
+  "enabled": true,
+
+  "timeout": 12,
+  "paths": ["/"],
+  "look_cookies": ["session", "sid"],
+
+  "references": [
+    "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+    "https://datatracker.ietf.org/doc/html/rfc6265"
+  ],
+
+  "severity_thresholds": {
+    "info": "Cookies com expiração explícita detectados (sessões temporárias)",
+    "low": "Nenhum cookie com expiração detectado (sessões possivelmente permanentes)"
+  },
+
+  "category": "Session Management",
+  "uuid": "uuid-043",
+  "file_name": "session_timeout_probe.py"
+}
