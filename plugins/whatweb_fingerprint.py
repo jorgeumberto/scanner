@@ -12,7 +12,7 @@ PLUGIN_CONFIG_NAME = "whatweb"
 PLUGIN_CONFIG_ALIASES = ["whatweb_fingerprint"]
 
 # UUID placeholder — troque pelo UUID real do item 7 (Fingerprints de tecnologias)
-UUID_7 = "uuid-007"
+UUID_7 = "uuid-007-fingerprints"
 
 def _run_whatweb_json(target: str, timeout: int, aggression: int, user_agent: str,
                       follow_redirects: bool, plugins: List[str], extra_args: List[str]) -> Dict[str, Any]:
@@ -145,6 +145,34 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
     plugins          = cfg.get("plugins") or []
     extra_args       = cfg.get("extra_args") or []
 
+    # -- Verificação: whatweb instalado? --
+    try:
+        which_out = run_cmd(["which", "whatweb"], timeout=5)
+    except Exception:
+        which_out = ""
+
+    if not which_out or not which_out.strip():
+        # Retorna um item informando a ausência do whatweb, sem executar nada.
+        items = [{
+            "plugin_uuid": UUID_7,
+            "scan_item_uuid": UUID_7,
+            "result": "whatweb não encontrado no PATH. Instale o whatweb para usar este plugin.",
+            "analysis_ai": ai_fn("WhatWeb", "uuid-whatweb-missing", "whatweb não encontrado"),
+            "severity": "info",
+            "duration": 0,
+            "auto": True,
+            "command": "which whatweb",
+            "reference": "https://github.com/urbanadventurer/WhatWeb"
+        }]
+        return {
+            "plugin": "WhatWeb",
+            "plugin_uuid": "uuid-whatweb",
+            "file_name": "whatweb_fingerprint.py",
+            "description": "Fingerprinting de tecnologias usando WhatWeb (verifica se whatweb está instalado antes de executar).",
+            "category": "Fingerprinting",
+            "result": items
+        }
+
     items: List[Dict[str, Any]] = []
 
     # 1) tenta JSON
@@ -192,4 +220,11 @@ def run_plugin(target: str, ai_fn, cfg: Dict[str, Any] = None):
         "auto": True
     })
 
-    return {"plugin": "WhatWeb", "result": items}
+    return {
+        "plugin": "WhatWeb",
+        "plugin_uuid": "uuid-whatweb",
+        "file_name": "whatweb_fingerprint.py",
+        "description": "Fingerprinting de tecnologias usando WhatWeb.",
+        "category": "Fingerprinting",
+        "result": items
+    }
