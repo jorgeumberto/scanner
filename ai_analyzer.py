@@ -12,11 +12,15 @@ def _prompt(target: str, plugin: str, item_uuid: str, result_text: str) -> str:
     return (
         "Analise o seguinte resultado de teste de segurança web e responda curto:\n"
         "Se o risco for baixo, não mostre Impacto, recomendações ou explicações.\n"
-        "- Risco (Alto, Médio ou Baixo)\n - Impacto (1–2 linhas)\n - Explicação (1 linha)\n- Recomendações (bullets curtos)\n\n"
+        "Risco (HIG, MED ou LOW)\n" 
+        "- Impacto (1–2 linhas, Por que a falta (ou má configuração) é considerada uma vulnerabilidade, Vetores de ataque comuns mitigados)\n"
+        "- Explicação (1 linha, O que é essa técnica utilizada)\n"
+        "- Recomendações e Boas práticas de configuração (bullets curtos)\n"
         f"Alvo: {target}\n"
         f"Plugin: {plugin}\n"
         f"Item UUID: {item_uuid}\n"
         f"Resultado:\n{result_text}\n"
+        "Explique sobre a técnica utilizada e como mitigar."
     )
 
 def analyze_item(target: str, plugin: str, item_uuid: str, result_text: str) -> str:
