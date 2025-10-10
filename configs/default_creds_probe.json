@@ -1,10 +1,17 @@
-{
-  "enabled": false,
-  "timeout": 20,
-  "login_url": "http://example.com/login",
-  "user_field": "username",
-  "pass_field": "password",
-  "success_like": ["dashboard","logout","minha conta","profile"],
-  "headers": {},
-  "pairs": [["admin","admin"],["admin","password"],["root","root"],["test","test"]]
-}
+    {
+      "enabled": false,
+      "timeout": 20,
+      "user_field": "username",
+      "pass_field": "password",
+      "headers": {},
+
+      "tool": "hydra",              
+      "hydra_tasks": 4,             
+      "hydra_wait": 5,               
+      "hydra_fail_like": ["invalid","incorrect","failed"],  
+      "hydra_success_like": ["dashboard","logout","bem-vindo"], 
+      "pairs": [["admin","admin"], ["test","test"]],         
+      "users": ["admin","test"],     
+      "passwords": ["admin","test"], 
+      "mask_passwords": false       
+    }

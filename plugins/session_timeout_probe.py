@@ -21,7 +21,7 @@ from typing import Dict, Any, List, Optional
 
 PLUGIN_CONFIG_NAME = "session_timeout_probe"
 PLUGIN_CONFIG_ALIASES = ["sess_timeout"]
-UUID_043 = "uuid-043"  # (43) Session timeout / cookie expiration
+UUID_043 = "uuid-043-sess_timeout"  # (43) Session timeout / cookie expiration
 
 # referências padrão úteis para este check
 DEFAULT_REFERENCES = [

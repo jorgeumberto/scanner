@@ -20,7 +20,8 @@ def _prompt(target: str, plugin: str, item_uuid: str, result_text: str) -> str:
         f"Plugin: {plugin}\n"
         f"Item UUID: {item_uuid}\n"
         f"Resultado:\n{result_text}\n"
-        "Explique sobre a técnica utilizada e como mitigar."
+        "Explique sobre a técnica utilizada\n"
+        "Explique o objetivo do teste\n"
     )
 
 def analyze_item(target: str, plugin: str, item_uuid: str, result_text: str) -> str:
